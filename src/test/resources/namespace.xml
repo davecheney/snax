@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<rootelement> 
+<firstelement 
+xmlns:fe="http://www.benztech.com/schemas/verybasic" 
+position="1"> 
+<fe:level1 children="0">This is level 1 of the nested 
+elements</fe:level1> 
+</firstelement> 
+<secondelement 
+xmlns:se="http://www.benztech.com/schemas/verybasic" 
+position="2"> 
+<se:level1 children="1"> 
+<se:level2>This is level 2 of the nested 
+elements</se:level2> 
+</se:level1> 
+</secondelement> 
+</rootelement>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instant SYSTEM "final.dtd">
+<?xml-stylesheet href="final.xsl" type="text/xsl"?>
+<instant>
+   <!-- Greenwich Mean Time -->
+   <utc xmlns="http://www.wyeast.net/utc" offset="-08:00" />
+   <date month="December" day="1" year="2002" /> 
+   <time>
+      <hour>10</hour >
+      <minute>17</minute>
+      <second>33</second>
+      <zone xmlns="http://www.wyeast.net/utc">PST</zone>
+   </time>
+</instant>
