@@ -33,11 +33,11 @@ public final class XMLParser {
 
 	}
 	
-	private final EventHandler handler;
+	protected final EventHandler handler;
 	
-	int offset, length = 0;
+	protected int offset, length = 0;
 	
-	State CHARACTERS = new State() {
+	protected State CHARACTERS = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -55,7 +55,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State STAG_NAME_START = new State() {
+	protected State STAG_NAME_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -81,7 +81,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State DECLARATION_START = new State() {
+	protected State DECLARATION_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -98,7 +98,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State DECLARATION = new State() {
+	protected State DECLARATION = new State() {
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
 			if(c == '>') {
@@ -114,7 +114,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State CDATA_START = new State() {
+	protected State CDATA_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -129,7 +129,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State CDATA = new State() {
+	protected State CDATA = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -143,7 +143,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State CDATA_END_1 = new State() {
+	protected State CDATA_END_1 = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -157,7 +157,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State CDATA_END_2 = new State() {
+	protected State CDATA_END_2 = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -174,7 +174,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ETAG_NAME_START = new State() {
+	protected State ETAG_NAME_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -188,7 +188,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ETAG_NAME = new State() {
+	protected State ETAG_NAME = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -212,7 +212,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State STAG_NAME = new State() {
+	protected State STAG_NAME = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -245,7 +245,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ATTRIBUTE_NAME_START = new State() {
+	protected State ATTRIBUTE_NAME_START = new State() {
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
 			if (isNameChar(c)) {
@@ -274,7 +274,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ELEMENT_END = new State() {
+	protected State ELEMENT_END = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -295,7 +295,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ELEMENT_EMPTY_END = new State() {
+	protected State ELEMENT_EMPTY_END = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -311,7 +311,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ATTRIBUTE_NAME = new State() {
+	protected State ATTRIBUTE_NAME = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -338,7 +338,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State EQUALS_START = new State() {
+	protected State EQUALS_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -358,7 +358,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ATTRIBUTE_VALUE_START = new State() {
+	protected State ATTRIBUTE_VALUE_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -382,7 +382,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ATTRIBUTE_VALUE_APOS = new State() {
+	protected State ATTRIBUTE_VALUE_APOS = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -402,7 +402,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State ATTRIBUTE_VALUE_QUOT = new State() {
+	protected State ATTRIBUTE_VALUE_QUOT = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -422,7 +422,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State PROCESSING_INSTRUCTION_START = new State() {
+	protected State PROCESSING_INSTRUCTION_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -436,7 +436,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State PROCESSING_INSTRUCTION = new State() {
+	protected State PROCESSING_INSTRUCTION = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -453,7 +453,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State PROCESSING_INSTRUCTION_CHARS = new State() {
+	protected State PROCESSING_INSTRUCTION_CHARS = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -473,7 +473,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State PROCESSING_INSTRUCTION_END = new State() {
+	protected State PROCESSING_INSTRUCTION_END = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -488,7 +488,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State COMMENT_START = new State() {
+	protected State COMMENT_START = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -505,7 +505,7 @@ public final class XMLParser {
 		}
 	};
 	
-	State COMMENT = new State() {
+	protected State COMMENT = new State() {
 		@Override
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
@@ -526,7 +526,7 @@ public final class XMLParser {
 		this.handler = handler;
 	}
 
-	State state = CHARACTERS;
+	protected State state = CHARACTERS;
 	
 	public void parse(@Nonnull CharSequence seq) {
 		int max = seq.length();
