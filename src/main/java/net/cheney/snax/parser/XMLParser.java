@@ -4,15 +4,6 @@ import javax.annotation.Nonnull;
 
 public final class XMLParser {
 
-	enum Mode { CHARACTERS, STAG_NAME_START, DECLARATION_START, 
-		PROCESSING_INSTRUCTION_START, STAG_NAME, COMMENT_START, 
-		COMMENT, ATTRIBUTE_NAME_START, ATTRIBUTE_NAME, EQUALS_START, 
-		ATTRIBUTE_VALUE_START, ATTRIBUTE_VALUE_APOS, ATTRIBUTE_VALUE_QUOT, 
-		ELEMENT_EMPTY_END, ETAG_NAME_START, ETAG_NAME, 
-		ELEMENT_END, PROCESSING_INSTRUCTION, PROCESSSING_INSTRUCTION_ATTRIBUTE_NAME_START, 
-		PROCESSING_INSTRUCTION_END, PROCESSING_INSTRUCTION_ATTRIBUTE_NAME, 
-		PROCESSING_INSTRUCTION_CHARS, DECLARATION, CDATA_START, CDATA, CDATA_END_1, CDATA_END_2 }
-
 	public interface EventHandler {
 		
 		void doElementEnd();
@@ -63,16 +54,13 @@ public final class XMLParser {
 				++length;
 				return STAG_NAME;
 			} else if (c == '!') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return DECLARATION_START;
 			} else if (c == '?') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_START;
 			} else if (c == '/') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ETAG_NAME_START;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -86,8 +74,7 @@ public final class XMLParser {
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
 			if(c == '[') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CDATA_START;
 			} else if(isNameChar(c)) {
 				++length;
@@ -102,8 +89,7 @@ public final class XMLParser {
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
 			if(c == '>') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if(isChar(c)) {
 				++length;
@@ -119,8 +105,7 @@ public final class XMLParser {
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
 			if (c == '[') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CDATA;
 			} else {
 				++length; // consume chars up to the 2nd [
@@ -164,8 +149,7 @@ public final class XMLParser {
 			if (c == '>') {
 				handler.doCharacters(seq.subSequence(offset, offset
 						+ length - 2));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				++length;
@@ -197,13 +181,11 @@ public final class XMLParser {
 				++length;
 				return this;
 			} else if (isWhitespace(c)) {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ELEMENT_END;
 			} else if (c == '>') {
 				handler.doElementEnd();
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -223,20 +205,17 @@ public final class XMLParser {
 			} else if (isWhitespace(c)) {
 				handler.doElementStart(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (c == '>') {
 				handler.doElementStart(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (c == '/') {
 				handler.doElementStart(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -253,19 +232,16 @@ public final class XMLParser {
 				return ATTRIBUTE_NAME;
 			} else if (isWhitespace(c)) {
 				// skip
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return this;
 			} else if (c == '/') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else if (c == '>') {
 				// do not close the element, here, it is closed on the
 				// corresponding </element>
 				// this.handler.doElementEnd();
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -280,13 +256,11 @@ public final class XMLParser {
 			char c = seq.charAt(offset + length);
 			if (c == '>') {
 				handler.doElementEnd();
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (isWhitespace(c)) {
 				// skip
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return this;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -301,8 +275,7 @@ public final class XMLParser {
 			char c = seq.charAt(offset + length);
 			if (c == '>') {
 				handler.doElementEnd();
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -322,14 +295,12 @@ public final class XMLParser {
 			} else if (isWhitespace(c)) {
 				handler.doAttributeName(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return EQUALS_START;
 			} else if (c == '=') {
 				handler.doAttributeName(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -344,12 +315,10 @@ public final class XMLParser {
 			char c = seq.charAt(offset + length);
 			if (isWhitespace(c)) {
 				// skip
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return this;
 			} else if (c == '=') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -364,16 +333,13 @@ public final class XMLParser {
 			char c = seq.charAt(offset + length);
 			if (isWhitespace(c)) {
 				// skip
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return this;
 			} else if (c == '\'') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_APOS;
 			} else if (c == '"') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_QUOT;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -389,8 +355,7 @@ public final class XMLParser {
 			if (c == '\'') {
 				handler.doAttributeValue(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
 				++length;
@@ -409,8 +374,7 @@ public final class XMLParser {
 			if (c == '\"') {
 				handler.doAttributeValue(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
 				++length;
@@ -460,8 +424,7 @@ public final class XMLParser {
 			if (c == '?') {
 				handler.doProcessingInstruction(seq.subSequence(offset, offset
 						+ length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
 				++length;
@@ -478,8 +441,7 @@ public final class XMLParser {
 		public State parse(CharSequence seq) {
 			char c = seq.charAt(offset + length);
 			if (c == '>') {
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				throw new IllegalArgumentException(String.format(
@@ -494,8 +456,7 @@ public final class XMLParser {
 			char c = seq.charAt(offset + length);
 			switch (c) {
 			case '-':
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return COMMENT;
 
 			default:
@@ -512,8 +473,7 @@ public final class XMLParser {
 			switch (c) {
 			case '>':
 				handler.doComment(seq.subSequence(offset, offset + length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			default:
 				++length;
@@ -524,6 +484,11 @@ public final class XMLParser {
 	
 	public XMLParser(@Nonnull EventHandler handler) {
 		this.handler = handler;
+	}
+
+	protected void incrementOffsetAndResetLength() {
+		offset += length + 1;
+		length = 0;
 	}
 
 	protected State state = CHARACTERS;
