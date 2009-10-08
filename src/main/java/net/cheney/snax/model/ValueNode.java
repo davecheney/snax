@@ -1,7 +1,9 @@
 package net.cheney.snax.model;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
+@Immutable
 abstract class ValueNode extends Node {
 
 	private final String value;
