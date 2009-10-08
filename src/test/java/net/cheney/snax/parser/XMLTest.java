@@ -37,7 +37,11 @@ public class XMLTest {
 			{"basic.xml"},
 			{"time.xml"},
 			{"cdata.xml"},
-			{"namespace.xml"}
+			{"namespace.xml"},
+			{"xmltest.xml"},
+			{"oasis.xml"},
+			{"ibm_oasis_not-wf.xml"},
+			{"errata4e.xml"}
 		});
 	}
 }
