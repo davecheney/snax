@@ -3,7 +3,6 @@ package net.cheney.snax.parser;
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Document;
-import net.cheney.snax.model.Node;
 import net.cheney.snax.parser.XMLParser.EventHandler;
 
 public class ContentHandler implements EventHandler {
@@ -15,7 +14,7 @@ public class ContentHandler implements EventHandler {
 	}
 	
 	public final Document document() {
-		return new Document(builder.contents().toArray(new Node[0]));
+		return new Document(builder.contents());
 	}
 
 	@Override
