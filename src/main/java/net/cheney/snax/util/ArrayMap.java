@@ -7,11 +7,12 @@ import java.util.Set;
 public final class ArrayMap<K, V> implements Map<K, V> {
 
 	private Object[] keys, values;
-	private int limit = 0, size = 1;
+	private int limit = 0, size;
 	
 	public ArrayMap(int initialSize) {
 		keys = new Object[initialSize];
 		values = new Object[initialSize];
+		size = initialSize;
 	}
 
 	@Override
