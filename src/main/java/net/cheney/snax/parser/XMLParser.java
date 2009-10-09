@@ -499,40 +499,5 @@ public final class XMLParser {
 			state = state.parse(seq);
 		}
 	}
-
-	abstract class State {
-		
-		protected final boolean isNameStartChar(char c) {
-			return (c == ':' || (c >= 'A' && c <= 'Z') || c == '_'
-					|| (c >= 'a' && c <= 'z')
-					|| (c >= '\u00C0' && c <= '\u00D6')
-					|| (c >= '\u00D8' && c <= '\u00F6')
-					|| (c >= '\u00F8' && c <= '\u02FF')
-					|| (c >= '\u0370' && c <= '\u037D')
-					|| (c >= '\u037F' && c <= '\u1FFF')
-					|| (c >= '\u200C' && c <= '\u200D')
-					|| (c >= '\u2070' && c <= '\u218F')
-					|| (c >= '\u2C00' && c <= '\u2FEF')
-					|| (c >= '\u3001' && c <= '\uD7FF')
-					|| (c >= '\uF900' && c <= '\uFDCF') || (c >= '\uFDF0' && c <= '\uFFFD'));
-		}
-
-		public abstract State parse(CharSequence seq);
-
-		protected final boolean isNameChar(char c) {
-			return (isNameStartChar(c) || c == '-' || c == '.'
-					|| (c >= '0' && c <= '9') || c == '\u00B7'
-					|| (c >= '\u0300' && c <= '\u036F') || (c >= '\u023F' && c <= '\u2040'));
-		}
-
-		protected final boolean isWhitespace(char c) {
-			return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
-		}
-
-		protected final boolean isChar(char c) {
-			return (c == '\t' || c == '\r' || c == '\n'
-					|| (c >= '\u0020' && c <= '\uD7FF') || (c >= '\uE000' && c <= '\uFFFD'));
-		}
-	}
 	
 }
