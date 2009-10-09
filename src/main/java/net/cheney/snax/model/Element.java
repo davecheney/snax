@@ -87,7 +87,7 @@ public class Element extends ParentNode implements Namespaced {
 
 	@Override
 	public final int hashCode() {
-		return qname.hashCode() * 37 * super.hashCode();
+		return qname.hashCode() ^ super.hashCode();
 	}
 
 	@SuppressWarnings("unchecked")

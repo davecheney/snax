@@ -80,7 +80,7 @@ public abstract class XMLPrinter {
 		printEscapedText(text.value());
 	}
 
-	private final void printEscapedText(@Nonnull String str) throws IOException {
+	private void printEscapedText(@Nonnull String str) throws IOException {
 		for (int i = 0, n = str.length(); i < n; ++i) {
 			final char c = str.charAt(i);
 			switch (c) {

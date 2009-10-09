@@ -26,7 +26,7 @@ public final class Attribute extends ValueNode implements Namespaced {
 	}
 	
 	@Override
-	public final Type type() {
+	public Type type() {
 		return Type.ATTRIBUTE;
 	}
 
@@ -68,7 +68,7 @@ public final class Attribute extends ValueNode implements Namespaced {
 	
 	@Override
 	public int hashCode() {
-		return qname.hashCode() * 37 * super.hashCode();
+		return qname.hashCode() ^ super.hashCode();
 	}
 	
 	@Override

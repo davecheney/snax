@@ -17,7 +17,7 @@ public final class Document extends ParentNode {
 	
 	private static final class ChildElementPredicate extends Predicate<Node> {
 		@Override
-		protected final boolean apply(@Nonnull Node node) {
+		protected boolean apply(@Nonnull Node node) {
 			final Type t = node.type();
 			return (t == Type.ELEMENT || t == Type.COMMENT || t == Type.PROCESSING_INSTRUCTION);
 		}
@@ -49,7 +49,7 @@ public final class Document extends ParentNode {
 	}
 	
 	@Override
-	protected final Predicate<Node> childElementPredicate() {
+	protected Predicate<Node> childElementPredicate() {
 		return CHILD_ELEMENT_PREDICATE;
 	}
 

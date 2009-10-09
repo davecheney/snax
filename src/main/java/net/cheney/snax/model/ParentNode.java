@@ -10,7 +10,7 @@ public abstract class ParentNode extends Node {
 
 	private static final class ElementTypePredicate extends Predicate<Node> {
 		@Override
-		protected final boolean apply(Node t) {
+		protected boolean apply(Node t) {
 			return t.type() == Type.ELEMENT;
 		}
 	}

@@ -93,7 +93,9 @@ public final class XMLWriter implements Node.Visitor {
 	}
 
 	private void visitAttributes(@Nonnull Iterable<Attribute> attributes) throws IOException {
-		for(Iterator<Attribute> i = attributes.iterator() ; i.hasNext() ; visit(i.next()));
+		for(Iterator<Attribute> i = attributes.iterator() ; i.hasNext() ; ) {
+			visit(i.next());
+		}
 	}
 
 	@Override
@@ -107,8 +109,7 @@ public final class XMLWriter implements Node.Visitor {
 		try {
 			node.accept(visitor);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// unpossible
 		}
 		return sb.toString();
 	}
