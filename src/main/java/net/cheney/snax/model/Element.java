@@ -63,7 +63,8 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Node... content) {
-		this(qname, asList(content));
+		super(asList(content));
+		this.qname = qname;
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
