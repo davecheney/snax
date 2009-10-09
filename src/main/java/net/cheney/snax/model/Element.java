@@ -30,14 +30,14 @@ public class Element extends ParentNode implements Namespaced {
 
 	private static final class TextTypePredicate extends Predicate<Node> {
 		@Override
-		protected final boolean apply(@Nonnull Node t) {
+		protected boolean apply(@Nonnull Node t) {
 			return t.type() == Type.TEXT;
 		}
 	}
 
 	private static final class AttributeTypePredicate extends Predicate<Node> {
 		@Override
-		protected final boolean apply(@Nonnull Node t) {
+		protected boolean apply(@Nonnull Node t) {
 			return t.type() == Type.ATTRIBUTE;
 		}
 	}
