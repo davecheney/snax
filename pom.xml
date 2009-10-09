@@ -64,9 +64,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.cheney.predicate</groupId>
-			<artifactId>predicate</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+			<version>1.0-rc2</version>
 		</dependency>
 	</dependencies>
 
