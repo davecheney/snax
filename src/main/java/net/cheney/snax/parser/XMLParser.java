@@ -3,30 +3,6 @@ package net.cheney.snax.parser;
 import javax.annotation.Nonnull;
 
 public final class XMLParser {
-
-	public interface EventHandler {
-		
-		void doElementEnd();
-
-		void doAttributeValue(CharSequence seq);
-
-		void doAttributeName(CharSequence seq);
-
-		void doElementStart(CharSequence seq);
-
-		void doComment(CharSequence seq);
-
-		void doCharacters(CharSequence seq);
-
-		void doProcessingInstruction(CharSequence seq);
-
-		void doProcessingInstructionEnd();
-
-	}
-	
-	protected final EventHandler handler;
-	
-	protected int offset, length = 0;
 	
 	protected State CHARACTERS = new State() {
 		@Override
@@ -481,8 +457,14 @@ public final class XMLParser {
 			}
 		}
 	};
+
+	protected State state = CHARACTERS;
 	
-	public XMLParser(@Nonnull EventHandler handler) {
+	protected final ContentHandler handler;
+	
+	protected int offset, length = 0;
+	
+	public XMLParser(@Nonnull ContentHandler handler) {
 		this.handler = handler;
 	}
 
@@ -490,8 +472,6 @@ public final class XMLParser {
 		offset += length + 1;
 		length = 0;
 	}
-
-	protected State state = CHARACTERS;
 	
 	public void parse(@Nonnull CharSequence seq) {
 		int max = seq.length();

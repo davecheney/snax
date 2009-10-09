@@ -3,9 +3,8 @@ package net.cheney.snax.parser;
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Document;
-import net.cheney.snax.parser.XMLParser.EventHandler;
 
-public class ContentHandler implements EventHandler {
+public final class ContentHandler {
 
 	private NodeBuilder builder;
 
@@ -13,22 +12,19 @@ public class ContentHandler implements EventHandler {
 		this.builder = new DocumentBuilder();
 	}
 	
-	public final Document document() {
+	public Document document() {
 		return new Document(builder.contents());
 	}
 
-	@Override
-	public final void doAttributeName(@Nonnull CharSequence seq) {
+	public void doAttributeName(@Nonnull CharSequence seq) {
 		builder.doAttributeName(seq);
 	}
 
-	@Override
-	public final void doAttributeValue(@Nonnull CharSequence seq) {
+	public void doAttributeValue(@Nonnull CharSequence seq) {
 		builder.doAttributeValue(seq);
 	}
 
-	@Override
-	public final void doCharacters(@Nonnull CharSequence seq) {
+	public void doCharacters(@Nonnull CharSequence seq) {
 		if(isBlank(seq)) {
 			return;
 		} else {
@@ -36,27 +32,22 @@ public class ContentHandler implements EventHandler {
 		}
 	}
 
-	@Override
-	public final void doComment(@Nonnull CharSequence seq) {
+	public void doComment(@Nonnull CharSequence seq) {
 		builder.doComment(seq);
 	}
 
-	@Override
-	public final void doElementEnd() {
+	public void doElementEnd() {
 		builder = builder.doElementEnd();
 	}
 
-	@Override
-	public final void doElementStart(@Nonnull CharSequence seq) {
+	public void doElementStart(@Nonnull CharSequence seq) {
 		builder = builder.doElementStart(seq);
 	}
 
-	@Override
-	public final void doProcessingInstruction(@Nonnull CharSequence seq) {
+	public void doProcessingInstruction(@Nonnull CharSequence seq) {
 		builder.doProcessingInstruction(seq);
 	}
 
-	@Override
 	public void doProcessingInstructionEnd() {
 		// 
 	}
