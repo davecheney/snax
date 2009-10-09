@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class ArrayMap<K, V> implements Map<K, V> {
+public final class ArrayMap<K, V> implements Map<K, V> {
 
-	Object[] keys, values;
-	int limit = 0, size = 1;
+	private Object[] keys, values;
+	private int limit = 0, size = 1;
 	
 	public ArrayMap(int initialSize) {
 		keys = new Object[initialSize];
@@ -66,12 +66,12 @@ public class ArrayMap<K, V> implements Map<K, V> {
 		throw new UnsupportedOperationException();	
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public V put(K key, V value) {
 		ensureCapacity();
 		keys[limit] = key;
-		return (V) (values[limit++] = value);
+		values[limit++] = value;
+		return value;
 	}
 
 	private void ensureCapacity() {
