@@ -15,7 +15,7 @@ class ElementBuilder extends NodeBuilder {
 	
 	private final NodeBuilder parent;
 	
-	private final Map<String, Namespace> declaredNamespaces = new ArrayMap<String, Namespace>();
+	private final Map<String, Namespace> declaredNamespaces = new ArrayMap<String, Namespace>(1);
 	
 	private final String elementName; // unqualified name, possibly containing namespace prefix
 

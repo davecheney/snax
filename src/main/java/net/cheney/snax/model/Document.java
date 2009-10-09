@@ -10,7 +10,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import net.cheney.predicate.Predicate;
+import net.cheney.snax.util.Predicate;
 
 @Immutable
 public final class Document extends ParentNode {

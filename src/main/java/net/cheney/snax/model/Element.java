@@ -3,15 +3,14 @@ package net.cheney.snax.model;
 import static java.util.Arrays.asList;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import net.cheney.predicate.Predicate;
+import com.google.common.collect.Lists;
+
+import net.cheney.snax.util.Predicate;
 
 @Immutable
 public class Element extends ParentNode implements Namespaced {
@@ -68,16 +67,8 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
-		super(newArrayList(content.iterator()));
+		super(Lists.newArrayList(content));
 		this.qname = qname;
-	}
-
-	private static List<Node> newArrayList(@Nonnull Iterator<? extends Node> content) {
-		ArrayList<Node> list = new ArrayList<Node>();
-		while (content.hasNext()) {
-			list.add(content.next());
-		}
-		return list;
 	}
 
 	@Override
@@ -125,10 +116,7 @@ public class Element extends ParentNode implements Namespaced {
 
 	@Nullable
 	public final Element getFirstChild(@Nonnull QName name) {
-		for (Element element : getChildren(name)) {
-			return element;
-		}
-		return null;
+		return new QNamePredicate<Namespaced>(name).first(getChildren(name));
 	}
 
 	@Override

@@ -1,13 +1,7 @@
 package net.cheney.snax.model;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 public class DocumentTest extends ParentNodeTest {
 

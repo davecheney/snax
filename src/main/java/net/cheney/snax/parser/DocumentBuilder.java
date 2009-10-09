@@ -1,15 +1,15 @@
 package net.cheney.snax.parser;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Namespace;
+import net.cheney.snax.util.ArrayMap;
 
 class DocumentBuilder extends NodeBuilder {
 	
-	private final Map<String, Namespace> declaredNamespaces = new HashMap<String, Namespace>();
+	private final Map<String, Namespace> declaredNamespaces = new ArrayMap<String, Namespace>(1);
 	
 	DocumentBuilder() {
 		declaredNamespaces.put(Namespace.NO_NAMESPACE.prefix(), Namespace.NO_NAMESPACE);

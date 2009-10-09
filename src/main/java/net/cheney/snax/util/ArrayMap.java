@@ -9,14 +9,14 @@ public class ArrayMap<K, V> implements Map<K, V> {
 	Object[] keys, values;
 	int limit = 0, size = 1;
 	
-	public ArrayMap() {
-		clear();
+	public ArrayMap(int initialSize) {
+		keys = new Object[initialSize];
+		values = new Object[initialSize];
 	}
 
 	@Override
 	public void clear() {
-		keys = new Object[1];
-		values = new Object[1];
+		limit = 0;
 	}
 
 	@Override
@@ -45,6 +45,7 @@ public class ArrayMap<K, V> implements Map<K, V> {
 		throw new UnsupportedOperationException();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public V get(Object key) {
 		for(int i = 0 ; i < limit ; ++i) {
@@ -65,6 +66,7 @@ public class ArrayMap<K, V> implements Map<K, V> {
 		throw new UnsupportedOperationException();	
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public V put(K key, V value) {
 		ensureCapacity();

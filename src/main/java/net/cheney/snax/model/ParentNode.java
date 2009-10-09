@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import net.cheney.predicate.Predicate;
+import net.cheney.snax.util.Predicate;
 
 public abstract class ParentNode extends Node {
 
