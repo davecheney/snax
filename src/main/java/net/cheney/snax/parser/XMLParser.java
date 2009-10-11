@@ -28,6 +28,7 @@ public final class XMLParser {
 
 	public void doCharacters() {
 		CharSequence seq = subsequence();
+		incrementOffsetAndResetLength();
 		if(isBlank(seq)) {
 			return;
 		} else {

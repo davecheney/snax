@@ -7,7 +7,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if(c == '<') {
 				parser.doCharacters();
-				parser.incrementOffsetAndResetLength();
 				return STAG_NAME_START;
 			} else {
 				return this;
