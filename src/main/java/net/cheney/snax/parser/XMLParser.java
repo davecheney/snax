@@ -18,15 +18,16 @@ public final class XMLParser {
 		return new Document(builder.contents());
 	}
 
-	public void doAttributeName(@Nonnull CharSequence seq) {
-		builder.doAttributeName(seq);
+	public void doAttributeName() {
+		builder.doAttributeName(subsequence());
 	}
 
-	public void doAttributeValue(@Nonnull CharSequence seq) {
-		builder.doAttributeValue(seq);
+	public void doAttributeValue() {
+		builder.doAttributeValue(subsequence());
 	}
 
-	public void doCharacters(@Nonnull CharSequence seq) {
+	public void doCharacters() {
+		CharSequence seq = subsequence();
 		if(isBlank(seq)) {
 			return;
 		} else {
@@ -34,20 +35,20 @@ public final class XMLParser {
 		}
 	}
 
-	public void doComment(@Nonnull CharSequence seq) {
-		builder.doComment(seq);
+	public void doComment() {
+		builder.doComment(subsequence());
 	}
 
 	public void doElementEnd() {
 		builder = builder.doElementEnd();
 	}
 
-	public void doElementStart(@Nonnull CharSequence seq) {
-		builder = builder.doElementStart(seq);
+	public void doElementStart() {
+		builder = builder.doElementStart(subsequence());
 	}
 
-	public void doProcessingInstruction(@Nonnull CharSequence seq) {
-		builder.doProcessingInstruction(seq);
+	public void doProcessingInstruction() {
+		builder.doProcessingInstruction(subsequence());
 	}
 
 	public void doProcessingInstructionEnd() {
@@ -72,11 +73,11 @@ public final class XMLParser {
 		offset++;
 	}
 	
-	CharSequence subsequence() {
+	private CharSequence subsequence() {
 		return sequence.subSequence(offset, limit);
 	}
 	
-	public void parse(@Nonnull CharSequence seq) {
+	public void parse(CharSequence seq) {
 		int max = seq.length();
 		// Yank state into a stack local, reduces benchmark by 10%
 		State currentState = this.state;
@@ -88,7 +89,8 @@ public final class XMLParser {
 		this.state = currentState;
 	}
 
-	public void doCData(CharSequence cdata) {
+	public void doCData() {
+		CharSequence cdata = subsequence();
 		builder.doCharacters(cdata.subSequence(0, cdata.length() - 2));
 	}
 	

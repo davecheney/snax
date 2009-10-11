@@ -6,7 +6,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if(c == '<') {
-				parser.doCharacters(parser.subsequence());
+				parser.doCharacters();
 				parser.incrementOffsetAndResetLength();
 				return STAG_NAME_START;
 			} else {
@@ -102,7 +102,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
-				parser.doCData(parser.subsequence());
+				parser.doCData();
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -148,15 +148,15 @@ enum State {
 				// consume
 				return this;
 			} else if (isWhitespace(c)) {
-				parser.doElementStart(parser.subsequence());
+				parser.doElementStart();
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (c == '>') {
-				parser.doElementStart(parser.subsequence());
+				parser.doElementStart();
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (c == '/') {
-				parser.doElementStart(parser.subsequence());
+				parser.doElementStart();
 				parser.incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else {
@@ -226,11 +226,11 @@ enum State {
 				// consume!
 				return this;
 			} else if (isWhitespace(c)) {
-				parser.doAttributeName(parser.subsequence());
+				parser.doAttributeName();
 				parser.incrementOffsetAndResetLength();
 				return EQUALS_START;
 			} else if (c == '=') {
-				parser.doAttributeName(parser.subsequence());
+				parser.doAttributeName();
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
@@ -278,7 +278,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '\'') {
-				parser.doAttributeValue(parser.subsequence());
+				parser.doAttributeValue();
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
@@ -293,7 +293,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '\"') {
-				parser.doAttributeValue(parser.subsequence());
+				parser.doAttributeValue();
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
@@ -332,7 +332,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '?') {
-				parser.doProcessingInstruction(parser.subsequence());
+				parser.doProcessingInstruction();
 				parser.incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
@@ -371,7 +371,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if(c == '>') { 
-				parser.doComment(parser.subsequence());
+				parser.doComment();
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
