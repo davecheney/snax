@@ -12,8 +12,8 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:svn:svn://svn.cheney.net/public/snax/trunk</connection>
-		<developerConnection>scm:svn:svn://svn.cheney.net/public/snax/trunk</developerConnection>
+		<connection>scm:git:git://github.com/davecheney/snax.git</connection>
+		<developerConnection>scm:git:git@github.com:davecheney/snax.git</developerConnection>
 	</scm>
 	<organization>
 		<url>http://dave.cheney.net/</url>
