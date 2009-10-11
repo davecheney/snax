@@ -6,7 +6,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if(c == '<') {
-				parser.handler.doCharacters(parser.subsequence());
+				parser.doCharacters(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return STAG_NAME_START;
 			} else {
@@ -103,7 +103,7 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
 				CharSequence s = parser.subsequence();
-				parser.handler.doCharacters(s.subSequence(0, s.length() - 2));
+				parser.doCharacters(s.subSequence(0, s.length() - 2));
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -133,7 +133,7 @@ enum State {
 				parser.incrementOffsetAndResetLength();
 				return ELEMENT_END;
 			} else if (c == '>') {
-				parser.handler.doElementEnd();
+				parser.doElementEnd();
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -149,15 +149,15 @@ enum State {
 				// consume
 				return this;
 			} else if (isWhitespace(c)) {
-				parser.handler.doElementStart(parser.subsequence());
+				parser.doElementStart(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (c == '>') {
-				parser.handler.doElementStart(parser.subsequence());
+				parser.doElementStart(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (c == '/') {
-				parser.handler.doElementStart(parser.subsequence());
+				parser.doElementStart(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else {
@@ -194,7 +194,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
-				parser.handler.doElementEnd();
+				parser.doElementEnd();
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (isWhitespace(c)) {
@@ -211,7 +211,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
-				parser.handler.doElementEnd();
+				parser.doElementEnd();
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -227,11 +227,11 @@ enum State {
 				// consume!
 				return this;
 			} else if (isWhitespace(c)) {
-				parser.handler.doAttributeName(parser.subsequence());
+				parser.doAttributeName(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return EQUALS_START;
 			} else if (c == '=') {
-				parser.handler.doAttributeName(parser.subsequence());
+				parser.doAttributeName(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
@@ -279,7 +279,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '\'') {
-				parser.handler.doAttributeValue(parser.subsequence());
+				parser.doAttributeValue(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
@@ -294,7 +294,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '\"') {
-				parser.handler.doAttributeValue(parser.subsequence());
+				parser.doAttributeValue(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
@@ -333,7 +333,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '?') {
-				parser.handler.doProcessingInstruction(parser.subsequence());
+				parser.doProcessingInstruction(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
@@ -372,7 +372,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if(c == '>') { 
-				parser.handler.doComment(parser.subsequence());
+				parser.doComment(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -381,7 +381,7 @@ enum State {
 		}
 	};
 	
-	static final boolean[] NAME_START_CHARS = new boolean[Character.MAX_VALUE], NAME_CHARS = new boolean[Character.MAX_VALUE], CHARS = new boolean[Character.MAX_VALUE];
+	private static final boolean[] NAME_START_CHARS = new boolean[Character.MAX_VALUE], NAME_CHARS = new boolean[Character.MAX_VALUE], CHARS = new boolean[Character.MAX_VALUE];
 	
 	static {
 		for(char c = 0 ; c < Character.MAX_VALUE ; ++c) {
@@ -397,7 +397,7 @@ enum State {
 		}
 	}
 	
-	protected final boolean isNameStartChar(char c) {
+	protected boolean isNameStartChar(char c) {
 		return NAME_START_CHARS[c];
 	}
 	
@@ -417,7 +417,7 @@ enum State {
 	}
 
 
-	protected final boolean isNameChar(char c) {
+	protected boolean isNameChar(char c) {
 		return NAME_CHARS[c];
 	}
 	
@@ -429,11 +429,11 @@ enum State {
 
 	abstract State parse(char c, XMLParser parser);
 
-	protected final boolean isWhitespace(char c) {
+	protected boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
 	}
 	
-	protected final boolean isChar(char c) {
+	protected boolean isChar(char c) {
 		return CHARS[c];
 	}
 

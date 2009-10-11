@@ -10,12 +10,10 @@ import net.cheney.snax.model.Document;
 
 public class XMLBuilder {
 
-	private final ContentHandler handler;
 	private final XMLParser parser;
 
 	public XMLBuilder() {
-		this.handler = new ContentHandler();
-		this.parser = new XMLParser(handler);
+		this.parser = new XMLParser();
 	}
 	
 	public Document build(@Nonnull CharSequence cs) {
@@ -28,17 +26,17 @@ public class XMLBuilder {
 
 	public Document build(@Nonnull char[] xml) {
 		parser.parse(CharBuffer.wrap(xml));
-		return handler.document();
+		return parser.document();
 	}
 	
 	public Document build(@Nonnull CharBuffer buffer) {
 		parser.parse(buffer);
-		return handler.document();
+		return parser.document();
 	}
 
 	public Document parse(@Nonnull CharSequence seq) {
 		parser.parse(seq);
-		return handler.document();
+		return parser.document();
 	}
 
 }
