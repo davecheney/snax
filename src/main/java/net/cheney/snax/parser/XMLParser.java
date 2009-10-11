@@ -387,7 +387,7 @@ public final class XMLParser {
 	
 	protected final ContentHandler handler;
 	
-	private int offset, length = 0;
+	private int offset, limit = 0;
 
 	private CharSequence sequence;
 	
@@ -395,13 +395,13 @@ public final class XMLParser {
 		this.handler = handler;
 	}
 
-	final void incrementOffsetAndResetLength() {
-		offset += ++length;
-		length = -1;
+	void incrementOffsetAndResetLength() {
+		offset = limit;
+		offset++;
 	}
 	
-	final CharSequence subsequence() {
-		return sequence.subSequence(offset, offset + length);
+	CharSequence subsequence() {
+		return sequence.subSequence(offset, limit);
 	}
 	
 	public void parse(@Nonnull CharSequence seq) {
@@ -410,8 +410,8 @@ public final class XMLParser {
 		State currentState = this.state;
 		// make seq available to the subsequence method without making offset and length visible
 		this.sequence = seq;
-		for(offset = 0, length = 0 ; offset + length < max ; ++length ) {
-			currentState = currentState.parse(seq.charAt(offset + length));
+		for(offset = 0, limit = 0 ; limit < max ; ++limit ) {
+			currentState = currentState.parse(seq.charAt(limit));
 		}
 		this.state = currentState;
 	}
