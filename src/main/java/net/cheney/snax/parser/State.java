@@ -16,7 +16,6 @@ abstract class State {
 		for(char c = 0 ; c < Character.MAX_VALUE ; ++c) {
 			CHARS[c] = isChar0(c);
 		}
-
 	}
 	
 	protected final boolean isNameStartChar(char c) {
@@ -49,7 +48,7 @@ abstract class State {
 				|| (c >= '\u0300' && c <= '\u036F') || (c >= '\u023F' && c <= '\u2040'));
 	}
 
-	public abstract State parse(CharSequence seq);
+	abstract State parse(char c, CharSequence seq);
 
 	protected final boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
