@@ -87,5 +87,9 @@ public final class XMLParser {
 		}
 		this.state = currentState;
 	}
+
+	public void doCData(CharSequence cdata) {
+		builder.doCharacters(cdata.subSequence(0, cdata.length() - 2));
+	}
 	
 }

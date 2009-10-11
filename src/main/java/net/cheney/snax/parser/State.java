@@ -102,8 +102,7 @@ enum State {
 		@Override
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
-				CharSequence s = parser.subsequence();
-				parser.doCharacters(s.subSequence(0, s.length() - 2));
+				parser.doCData(parser.subsequence());
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
