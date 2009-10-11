@@ -29,4 +29,19 @@ public class XMLParserUnitTest {
 		Document doc = new XMLBuilder().parse(xml);
 		Assert.assertEquals(expected, doc.rootElement());
 	}
+	
+	@Test(expected=IllegalParseStateException.class)
+	public void testEmptyElementWithIllegalTrailingWhitespace() {
+		String xml = "<element / >";
+		Element expected = new Element("element", new Attribute("foo", "bar"));
+		Document doc = new XMLBuilder().parse(xml);
+		Assert.assertEquals(expected, doc.rootElement());
+	}
+	
+	@Test 
+	public void testCDataWithWhitespace() {
+		String xml = "<script><![CDATA[foo()] ]] ]]></script>";
+		Document doc = new XMLBuilder().parse(xml);
+		Assert.assertEquals("foo()] ]] ", doc.rootElement().text());	
+	}
 }
