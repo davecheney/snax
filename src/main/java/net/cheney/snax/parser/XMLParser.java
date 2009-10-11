@@ -468,7 +468,7 @@ public final class XMLParser {
 	}
 
 	protected void incrementOffsetAndResetLength() {
-		offset += length + 1;
+		offset += ++length;
 		length = 0;
 	}
 	

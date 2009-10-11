@@ -2,7 +2,7 @@ package net.cheney.snax.parser;
 
 abstract class State {
 	
-	static final boolean[] NAME_START_CHARS = new boolean[Character.MAX_VALUE], NAME_CHARS = new boolean[Character.MAX_VALUE];
+	static final boolean[] NAME_START_CHARS = new boolean[Character.MAX_VALUE], NAME_CHARS = new boolean[Character.MAX_VALUE], CHARS = new boolean[Character.MAX_VALUE];
 	
 	static {
 		for(char c = 0 ; c < Character.MAX_VALUE ; ++c) {
@@ -13,6 +13,10 @@ abstract class State {
 			NAME_CHARS[c] = isNameChar0(c);
 		}
 		
+		for(char c = 0 ; c < Character.MAX_VALUE ; ++c) {
+			CHARS[c] = isChar0(c);
+		}
+
 	}
 	
 	protected final boolean isNameStartChar(char c) {
@@ -50,9 +54,14 @@ abstract class State {
 	protected final boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
 	}
-
+	
 	protected final boolean isChar(char c) {
+		return CHARS[c];
+	}
+
+	private static boolean isChar0(char c) {
 		return (c == '\t' || c == '\r' || c == '\n'
 				|| (c >= '\u0020' && c <= '\uD7FF') || (c >= '\uE000' && c <= '\uFFFD'));
 	}
+	
 }
