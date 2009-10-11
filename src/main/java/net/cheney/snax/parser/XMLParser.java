@@ -6,9 +6,9 @@ public final class XMLParser {
 	
 	protected final State CHARACTERS = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if(c == '<') {
-				handler.doCharacters(seq.subSequence(offset, offset + length));
+				handler.doCharacters(subsequence());
 				incrementOffsetAndResetLength();
 				return STAG_NAME_START;
 			} else {
@@ -19,7 +19,7 @@ public final class XMLParser {
 	
 	protected final State STAG_NAME_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameStartChar(c)) {
 				return STAG_NAME;
 			} else if (c == '!') {
@@ -39,7 +39,7 @@ public final class XMLParser {
 	
 	protected final State DECLARATION_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if(c == '[') {
 				incrementOffsetAndResetLength();
 				return CDATA_START;
@@ -53,7 +53,7 @@ public final class XMLParser {
 	
 	protected final State DECLARATION = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if(c == '>') {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
@@ -67,7 +67,7 @@ public final class XMLParser {
 	
 	protected final State CDATA_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '[') {
 				incrementOffsetAndResetLength();
 				return CDATA;
@@ -80,7 +80,7 @@ public final class XMLParser {
 	
 	protected final State CDATA = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == ']') {
 				return CDATA_END_1;
 			} else {
@@ -91,7 +91,7 @@ public final class XMLParser {
 	
 	protected final State CDATA_END_1 = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == ']') {
 				return CDATA_END_2;
 			} else {
@@ -102,9 +102,10 @@ public final class XMLParser {
 	
 	protected final State CDATA_END_2 = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '>') {
-				handler.doCharacters(seq.subSequence(offset, offset + length - 2));
+				CharSequence s = subsequence();
+				handler.doCharacters(s.subSequence(0, s.length() - 2));
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -115,7 +116,7 @@ public final class XMLParser {
 	
 	protected final State ETAG_NAME_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameStartChar(c)) {
 				return ETAG_NAME;
 			} else {
@@ -126,7 +127,7 @@ public final class XMLParser {
 	
 	protected final State ETAG_NAME = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameChar(c)) {
 				// consume
 				return this;
@@ -145,20 +146,20 @@ public final class XMLParser {
 	
 	protected final State STAG_NAME = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameChar(c)) {
 				// consume
 				return this;
 			} else if (isWhitespace(c)) {
-				handler.doElementStart(seq.subSequence(offset, offset + length));
+				handler.doElementStart(subsequence());
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (c == '>') {
-				handler.doElementStart(seq.subSequence(offset, offset + length));
+				handler.doElementStart(subsequence());
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (c == '/') {
-				handler.doElementStart(seq.subSequence(offset, offset + length));
+				handler.doElementStart(subsequence());
 				incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else {
@@ -169,7 +170,7 @@ public final class XMLParser {
 	
 	protected final State ATTRIBUTE_NAME_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameChar(c)) {
 				return ATTRIBUTE_NAME;
 			} else if (isWhitespace(c)) {
@@ -193,7 +194,7 @@ public final class XMLParser {
 	
 	protected final State ELEMENT_END = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '>') {
 				handler.doElementEnd();
 				incrementOffsetAndResetLength();
@@ -210,7 +211,7 @@ public final class XMLParser {
 	
 	protected final State ELEMENT_EMPTY_END = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '>') {
 				handler.doElementEnd();
 				incrementOffsetAndResetLength();
@@ -223,16 +224,16 @@ public final class XMLParser {
 	
 	protected final State ATTRIBUTE_NAME = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameChar(c)) {
 				// consume!
 				return this;
 			} else if (isWhitespace(c)) {
-				handler.doAttributeName(seq.subSequence(offset, offset + length));
+				handler.doAttributeName(subsequence());
 				incrementOffsetAndResetLength();
 				return EQUALS_START;
 			} else if (c == '=') {
-				handler.doAttributeName(seq.subSequence(offset, offset + length));
+				handler.doAttributeName(subsequence());
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
@@ -243,7 +244,7 @@ public final class XMLParser {
 	
 	protected final State EQUALS_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isWhitespace(c)) {
 				// skip
 				incrementOffsetAndResetLength();
@@ -259,7 +260,7 @@ public final class XMLParser {
 	
 	protected final State ATTRIBUTE_VALUE_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isWhitespace(c)) {
 				// skip
 				incrementOffsetAndResetLength();
@@ -278,9 +279,9 @@ public final class XMLParser {
 	
 	protected final State ATTRIBUTE_VALUE_APOS = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '\'') {
-				handler.doAttributeValue(seq.subSequence(offset, offset + length));
+				handler.doAttributeValue(subsequence());
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
@@ -293,9 +294,9 @@ public final class XMLParser {
 	
 	protected final State ATTRIBUTE_VALUE_QUOT = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '\"') {
-				handler.doAttributeValue(seq.subSequence(offset, offset + length));
+				handler.doAttributeValue(subsequence());
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
@@ -308,7 +309,7 @@ public final class XMLParser {
 	
 	protected final State PROCESSING_INSTRUCTION_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameChar(c)) {
 				return PROCESSING_INSTRUCTION;
 			} else {
@@ -319,7 +320,7 @@ public final class XMLParser {
 	
 	protected final State PROCESSING_INSTRUCTION = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (isNameChar(c)) {
 				return this;
 			} else if (isWhitespace(c)) {
@@ -332,9 +333,9 @@ public final class XMLParser {
 	
 	protected final State PROCESSING_INSTRUCTION_CHARS = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '?') {
-				handler.doProcessingInstruction(seq.subSequence(offset, offset + length));
+				handler.doProcessingInstruction(subsequence());
 				incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
@@ -347,7 +348,7 @@ public final class XMLParser {
 	
 	protected final State PROCESSING_INSTRUCTION_END = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if (c == '>') {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
@@ -359,7 +360,7 @@ public final class XMLParser {
 	
 	protected final State COMMENT_START = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if(c == '-') {
 				incrementOffsetAndResetLength();
 				return COMMENT;
@@ -371,9 +372,9 @@ public final class XMLParser {
 	
 	protected final State COMMENT = new State() {
 		@Override
-		State parse(char c, CharSequence seq) {
+		State parse(char c) {
 			if(c == '>') { 
-				handler.doComment(seq.subSequence(offset, offset + length));
+				handler.doComment(subsequence());
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -386,23 +387,30 @@ public final class XMLParser {
 	
 	protected final ContentHandler handler;
 	
-	protected int offset, length = 0;
+	private int offset, length = 0;
+
+	private CharSequence sequence;
 	
 	public XMLParser(@Nonnull ContentHandler handler) {
 		this.handler = handler;
 	}
 
-	protected void incrementOffsetAndResetLength() {
+	final void incrementOffsetAndResetLength() {
 		offset += ++length;
 		length = -1;
+	}
+	
+	final CharSequence subsequence() {
+		return sequence.subSequence(offset, offset + length);
 	}
 	
 	public void parse(@Nonnull CharSequence seq) {
 		int max = seq.length();
 		// Yank state into a stack local, reduces benchmark by 10%
 		State currentState = this.state;
+		this.sequence = seq;
 		for(offset = 0, length = 0 ; offset + length < max ; ++length ) {
-			currentState = currentState.parse(seq.charAt(offset + length), seq);
+			currentState = currentState.parse(seq.charAt(offset + length));
 		}
 		this.state = currentState;
 	}

@@ -48,7 +48,7 @@ abstract class State {
 				|| (c >= '\u0300' && c <= '\u036F') || (c >= '\u023F' && c <= '\u2040'));
 	}
 
-	abstract State parse(char c, CharSequence seq);
+	abstract State parse(char c);
 
 	protected final boolean isWhitespace(char c) {
 		return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
