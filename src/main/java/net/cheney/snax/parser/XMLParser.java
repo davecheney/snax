@@ -475,6 +475,7 @@ public final class XMLParser {
 	
 	public void parse(@Nonnull CharSequence seq) {
 		int max = seq.length();
+		// Yank state into a stack local, reduces benchmark by 10%
 		State currentState = this.state;
 		for(offset = 0, length = 0 ; offset + length < max ; ) {
 			currentState = currentState.parse(seq);
