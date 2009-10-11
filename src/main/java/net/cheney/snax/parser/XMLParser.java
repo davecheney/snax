@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 public final class XMLParser {
 	
-	protected final State CHARACTERS = new State() {
+	final State CHARACTERS = new State() {
 		@Override
 		State parse(char c) {
 			if(c == '<') {
@@ -17,7 +17,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State STAG_NAME_START = new State() {
+	final State STAG_NAME_START = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameStartChar(c)) {
@@ -37,7 +37,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State DECLARATION_START = new State() {
+	final State DECLARATION_START = new State() {
 		@Override
 		State parse(char c) {
 			if(c == '[') {
@@ -51,7 +51,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State DECLARATION = new State() {
+	final State DECLARATION = new State() {
 		@Override
 		State parse(char c) {
 			if(c == '>') {
@@ -65,7 +65,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State CDATA_START = new State() {
+	final State CDATA_START = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '[') {
@@ -78,7 +78,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State CDATA = new State() {
+	final State CDATA = new State() {
 		@Override
 		State parse(char c) {
 			if (c == ']') {
@@ -89,7 +89,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State CDATA_END_1 = new State() {
+	final State CDATA_END_1 = new State() {
 		@Override
 		State parse(char c) {
 			if (c == ']') {
@@ -100,7 +100,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State CDATA_END_2 = new State() {
+	final State CDATA_END_2 = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '>') {
@@ -114,7 +114,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ETAG_NAME_START = new State() {
+	final State ETAG_NAME_START = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameStartChar(c)) {
@@ -125,7 +125,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ETAG_NAME = new State() {
+	final State ETAG_NAME = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameChar(c)) {
@@ -144,7 +144,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State STAG_NAME = new State() {
+	final State STAG_NAME = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameChar(c)) {
@@ -168,7 +168,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ATTRIBUTE_NAME_START = new State() {
+	final State ATTRIBUTE_NAME_START = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameChar(c)) {
@@ -192,7 +192,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ELEMENT_END = new State() {
+	final State ELEMENT_END = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '>') {
@@ -209,7 +209,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ELEMENT_EMPTY_END = new State() {
+	final State ELEMENT_EMPTY_END = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '>') {
@@ -222,7 +222,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ATTRIBUTE_NAME = new State() {
+	final State ATTRIBUTE_NAME = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameChar(c)) {
@@ -242,7 +242,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State EQUALS_START = new State() {
+	final State EQUALS_START = new State() {
 		@Override
 		State parse(char c) {
 			if (isWhitespace(c)) {
@@ -258,7 +258,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ATTRIBUTE_VALUE_START = new State() {
+	final State ATTRIBUTE_VALUE_START = new State() {
 		@Override
 		State parse(char c) {
 			if (isWhitespace(c)) {
@@ -277,7 +277,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ATTRIBUTE_VALUE_APOS = new State() {
+	final State ATTRIBUTE_VALUE_APOS = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '\'') {
@@ -292,7 +292,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State ATTRIBUTE_VALUE_QUOT = new State() {
+	final State ATTRIBUTE_VALUE_QUOT = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '\"') {
@@ -307,7 +307,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State PROCESSING_INSTRUCTION_START = new State() {
+	final State PROCESSING_INSTRUCTION_START = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameChar(c)) {
@@ -318,7 +318,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State PROCESSING_INSTRUCTION = new State() {
+	final State PROCESSING_INSTRUCTION = new State() {
 		@Override
 		State parse(char c) {
 			if (isNameChar(c)) {
@@ -331,7 +331,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State PROCESSING_INSTRUCTION_CHARS = new State() {
+	final State PROCESSING_INSTRUCTION_CHARS = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '?') {
@@ -346,7 +346,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State PROCESSING_INSTRUCTION_END = new State() {
+	final State PROCESSING_INSTRUCTION_END = new State() {
 		@Override
 		State parse(char c) {
 			if (c == '>') {
@@ -358,7 +358,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State COMMENT_START = new State() {
+	final State COMMENT_START = new State() {
 		@Override
 		State parse(char c) {
 			if(c == '-') {
@@ -370,7 +370,7 @@ public final class XMLParser {
 		}
 	};
 	
-	protected final State COMMENT = new State() {
+	final State COMMENT = new State() {
 		@Override
 		State parse(char c) {
 			if(c == '>') { 
@@ -408,6 +408,7 @@ public final class XMLParser {
 		int max = seq.length();
 		// Yank state into a stack local, reduces benchmark by 10%
 		State currentState = this.state;
+		// make seq available to the subsequence method without making offset and length visible
 		this.sequence = seq;
 		for(offset = 0, length = 0 ; offset + length < max ; ++length ) {
 			currentState = currentState.parse(seq.charAt(offset + length));
