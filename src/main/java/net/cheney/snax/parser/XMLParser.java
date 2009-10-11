@@ -11,8 +11,7 @@ public final class XMLParser {
 			switch(c) { 
 			case '<':
 				handler.doCharacters(seq.subSequence(offset, offset + length));
-				offset += length + 1;
-				length = 0;
+				incrementOffsetAndResetLength();
 				return STAG_NAME_START;
 
 			default:
