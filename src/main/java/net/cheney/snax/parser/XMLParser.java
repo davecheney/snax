@@ -408,7 +408,7 @@ public final class XMLParser {
 		int max = seq.length();
 		// Yank state into a stack local, reduces benchmark by 10%
 		State currentState = this.state;
-		// make seq available to the subsequence method without making offset and length visible
+		// make seq available to the subsequence method without making offset and limit visible
 		this.sequence = seq;
 		for(offset = 0, limit = 0 ; limit < max ; ++limit ) {
 			currentState = currentState.parse(seq.charAt(limit));
