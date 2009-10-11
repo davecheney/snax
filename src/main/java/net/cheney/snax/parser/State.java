@@ -102,7 +102,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
 				parser.doCData();
-				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				return CDATA;
@@ -132,7 +131,6 @@ enum State {
 				return ELEMENT_END;
 			} else if (c == '>') {
 				parser.doElementEnd();
-				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				throw new IllegalParseStateException(c, ETAG_NAME);
@@ -148,15 +146,12 @@ enum State {
 				return this;
 			} else if (isWhitespace(c)) {
 				parser.doElementStart();
-				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (c == '>') {
 				parser.doElementStart();
-				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (c == '/') {
 				parser.doElementStart();
-				parser.incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else {
 				throw new IllegalParseStateException(c, STAG_NAME);
@@ -193,7 +188,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
 				parser.doElementEnd();
-				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (isWhitespace(c)) {
 				// skip
@@ -210,7 +204,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '>') {
 				parser.doElementEnd();
-				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				throw new IllegalParseStateException(c, ELEMENT_EMPTY_END);
@@ -226,11 +219,9 @@ enum State {
 				return this;
 			} else if (isWhitespace(c)) {
 				parser.doAttributeName();
-				parser.incrementOffsetAndResetLength();
 				return EQUALS_START;
 			} else if (c == '=') {
 				parser.doAttributeName();
-				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
 				throw new IllegalParseStateException(c, ATTRIBUTE_NAME);
@@ -278,7 +269,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '\'') {
 				parser.doAttributeValue();
-				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
 				return this;
@@ -293,7 +283,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '\"') {
 				parser.doAttributeValue();
-				parser.incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
 				return this;
@@ -332,7 +321,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if (c == '?') {
 				parser.doProcessingInstruction();
-				parser.incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
 				return this;
@@ -371,7 +359,6 @@ enum State {
 		State parse(char c, XMLParser parser) {
 			if(c == '>') { 
 				parser.doComment();
-				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
 				return this;

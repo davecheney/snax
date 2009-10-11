@@ -20,10 +20,12 @@ public final class XMLParser {
 
 	public void doAttributeName() {
 		builder.doAttributeName(subsequence());
+		incrementOffsetAndResetLength();
 	}
 
 	public void doAttributeValue() {
 		builder.doAttributeValue(subsequence());
+		incrementOffsetAndResetLength();
 	}
 
 	public void doCharacters() {
@@ -38,19 +40,22 @@ public final class XMLParser {
 
 	public void doComment() {
 		builder.doComment(subsequence());
+		incrementOffsetAndResetLength();
 	}
 
 	public void doElementEnd() {
-		incrementOffsetAndResetLength();
 		builder = builder.doElementEnd();
+		incrementOffsetAndResetLength();
 	}
 
 	public void doElementStart() {
 		builder = builder.doElementStart(subsequence());
+		incrementOffsetAndResetLength();
 	}
 
 	public void doProcessingInstruction() {
 		builder.doProcessingInstruction(subsequence());
+		incrementOffsetAndResetLength();
 	}
 
 	public void doProcessingInstructionEnd() {
@@ -93,6 +98,7 @@ public final class XMLParser {
 
 	public void doCData() {
 		CharSequence cdata = subsequence();
+		incrementOffsetAndResetLength();
 		builder.doCharacters(cdata.subSequence(0, cdata.length() - 2));
 	}
 	
