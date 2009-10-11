@@ -458,7 +458,7 @@ public final class XMLParser {
 		}
 	};
 
-	protected State state = CHARACTERS;
+	private State state = CHARACTERS;
 	
 	protected final ContentHandler handler;
 	
@@ -475,9 +475,11 @@ public final class XMLParser {
 	
 	public void parse(@Nonnull CharSequence seq) {
 		int max = seq.length();
+		State currentState = this.state;
 		for(offset = 0, length = 0 ; offset + length < max ; ) {
-			state = state.parse(seq);
+			currentState = currentState.parse(seq);
 		}
+		this.state = currentState;
 	}
 	
 }
