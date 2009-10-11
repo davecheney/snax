@@ -17,7 +17,7 @@ public class XMLParserUnitTest {
 	}
 	
 	@Test public void testWhitespaceOnElementEnd() {
-		String xml = "<element foo='bar' ></element>";
+		String xml = "<element foo='bar' ></element >";
 		Element expected = new Element("element", new Attribute("foo", "bar"));
 		Document doc = new XMLBuilder().parse(xml);
 		Assert.assertEquals(expected, doc.rootElement());

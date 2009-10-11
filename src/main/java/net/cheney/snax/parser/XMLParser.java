@@ -12,7 +12,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return STAG_NAME_START;
 			} else {
-				++length;
 				return this;
 			}
 		}
@@ -22,7 +21,6 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (isNameStartChar(c)) {
-				++length;
 				return STAG_NAME;
 			} else if (c == '!') {
 				incrementOffsetAndResetLength();
@@ -46,7 +44,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CDATA_START;
 			} else if(isNameChar(c)) {
-				++length;
 				return DECLARATION;
 			} else {
 				throw new IllegalParseStateException(c, DECLARATION_START);
@@ -61,7 +58,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if(isChar(c)) {
-				++length;
 				return this;
 			} else {
 				throw new IllegalParseStateException(c, CHARACTERS);
@@ -76,7 +72,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CDATA;
 			} else {
-				++length; // consume chars up to the 2nd [
+				// consume chars up to the 2nd [
 				return this;
 			}
 		}
@@ -86,10 +82,8 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (c == ']') {
-				++length;
 				return CDATA_END_1;
 			} else {
-				++length;
 				return this;
 			}
 		}
@@ -99,10 +93,8 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (c == ']') {
-				++length;
 				return CDATA_END_2;
 			} else {
-				++length;
 				return CDATA;
 			}
 		}
@@ -116,7 +108,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
-				++length;
 				return CDATA;
 			}
 		}
@@ -126,7 +117,6 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (isNameStartChar(c)) {
-				++length;
 				return ETAG_NAME;
 			} else {
 				throw new IllegalParseStateException(c, ETAG_NAME_START);
@@ -139,7 +129,6 @@ public final class XMLParser {
 		State parse(char c, CharSequence seq) {
 			if (isNameChar(c)) {
 				// consume
-				++length;
 				return this;
 			} else if (isWhitespace(c)) {
 				incrementOffsetAndResetLength();
@@ -159,7 +148,6 @@ public final class XMLParser {
 		State parse(char c, CharSequence seq) {
 			if (isNameChar(c)) {
 				// consume
-				++length;
 				return this;
 			} else if (isWhitespace(c)) {
 				handler.doElementStart(seq.subSequence(offset, offset + length));
@@ -183,7 +171,6 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (isNameChar(c)) {
-				++length;
 				return ATTRIBUTE_NAME;
 			} else if (isWhitespace(c)) {
 				// skip
@@ -239,7 +226,6 @@ public final class XMLParser {
 		State parse(char c, CharSequence seq) {
 			if (isNameChar(c)) {
 				// consume!
-				++length;
 				return this;
 			} else if (isWhitespace(c)) {
 				handler.doAttributeName(seq.subSequence(offset, offset + length));
@@ -298,7 +284,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
-				++length;
 				return this;
 			} else {
 				throw new IllegalParseStateException(c, ATTRIBUTE_VALUE_APOS);
@@ -314,7 +299,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
-				++length;
 				return this;
 			} else {
 				throw new IllegalParseStateException(c, ATTRIBUTE_VALUE_QUOT);
@@ -326,7 +310,6 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (isNameChar(c)) {
-				++length;
 				return PROCESSING_INSTRUCTION;
 			} else {
 				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION_START);
@@ -338,10 +321,8 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (isNameChar(c)) {
-				++length;
 				return this;
 			} else if (isWhitespace(c)) {
-				++length;
 				return PROCESSING_INSTRUCTION_CHARS;
 			} else {
 				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION);
@@ -357,7 +338,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
-				++length;
 				return this;
 			} else {
 				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION_CHARS);
@@ -397,7 +377,6 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
-				++length;
 				return this;
 			}
 		}
@@ -415,14 +394,14 @@ public final class XMLParser {
 
 	protected void incrementOffsetAndResetLength() {
 		offset += ++length;
-		length = 0;
+		length = -1;
 	}
 	
 	public void parse(@Nonnull CharSequence seq) {
 		int max = seq.length();
 		// Yank state into a stack local, reduces benchmark by 10%
 		State currentState = this.state;
-		for(offset = 0, length = 0 ; offset + length < max ; ) {
+		for(offset = 0, length = 0 ; offset + length < max ; ++length ) {
 			currentState = currentState.parse(seq.charAt(offset + length), seq);
 		}
 		this.state = currentState;
