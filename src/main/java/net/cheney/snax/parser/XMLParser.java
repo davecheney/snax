@@ -41,6 +41,7 @@ public final class XMLParser {
 	}
 
 	public void doElementEnd() {
+		incrementOffsetAndResetLength();
 		builder = builder.doElementEnd();
 	}
 
