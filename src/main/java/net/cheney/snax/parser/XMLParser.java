@@ -7,13 +7,11 @@ public final class XMLParser {
 	protected final State CHARACTERS = new State() {
 		@Override
 		State parse(char c, CharSequence seq) {
-			switch(c) { 
-			case '<':
+			if(c == '<') {
 				handler.doCharacters(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return STAG_NAME_START;
-
-			default:
+			} else {
 				++length;
 				return this;
 			}
@@ -36,8 +34,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return ETAG_NAME_START;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, STAG_NAME_START));
+				throw new IllegalParseStateException(c, STAG_NAME_START);
 			}
 		}
 	};
@@ -52,7 +49,7 @@ public final class XMLParser {
 				++length;
 				return DECLARATION;
 			} else {
-				throw new IllegalArgumentException(String.format("'%s' is not allowed in %s", c, DECLARATION_START));
+				throw new IllegalParseStateException(c, DECLARATION_START);
 			}
 		}
 	};
@@ -67,7 +64,7 @@ public final class XMLParser {
 				++length;
 				return this;
 			} else {
-				throw new IllegalArgumentException(String.format("'%s' is not allowed in %s", c, CHARACTERS));
+				throw new IllegalParseStateException(c, CHARACTERS);
 			}
 		}
 	};
@@ -115,8 +112,7 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (c == '>') {
-				handler.doCharacters(seq.subSequence(offset, offset
-						+ length - 2));
+				handler.doCharacters(seq.subSequence(offset, offset + length - 2));
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
@@ -133,8 +129,7 @@ public final class XMLParser {
 				++length;
 				return ETAG_NAME;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ETAG_NAME_START));
+				throw new IllegalParseStateException(c, ETAG_NAME_START);
 			}
 		}
 	};
@@ -154,8 +149,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ETAG_NAME));
+				throw new IllegalParseStateException(c, ETAG_NAME);
 			}
 		}
 	};
@@ -168,23 +162,19 @@ public final class XMLParser {
 				++length;
 				return this;
 			} else if (isWhitespace(c)) {
-				handler.doElementStart(seq.subSequence(offset, offset
-						+ length));
+				handler.doElementStart(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (c == '>') {
-				handler.doElementStart(seq.subSequence(offset, offset
-						+ length));
+				handler.doElementStart(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else if (c == '/') {
-				handler.doElementStart(seq.subSequence(offset, offset
-						+ length));
+				handler.doElementStart(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return ELEMENT_EMPTY_END;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, STAG_NAME));
+				throw new IllegalParseStateException(c, STAG_NAME);
 			}
 		}
 	};
@@ -209,8 +199,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ATTRIBUTE_NAME_START));
+				throw new IllegalParseStateException(c, ATTRIBUTE_NAME_START);
 			}
 		}
 	};
@@ -227,8 +216,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return this;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ELEMENT_END));
+				throw new IllegalParseStateException(c, ELEMENT_END);
 			}
 		}
 	};
@@ -241,8 +229,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ELEMENT_EMPTY_END));
+				throw new IllegalParseStateException(c, ELEMENT_EMPTY_END);
 			}
 		}
 	};
@@ -255,18 +242,15 @@ public final class XMLParser {
 				++length;
 				return this;
 			} else if (isWhitespace(c)) {
-				handler.doAttributeName(seq.subSequence(offset, offset
-						+ length));
+				handler.doAttributeName(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return EQUALS_START;
 			} else if (c == '=') {
-				handler.doAttributeName(seq.subSequence(offset, offset
-						+ length));
+				handler.doAttributeName(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ATTRIBUTE_NAME));
+				throw new IllegalParseStateException(c, ATTRIBUTE_NAME);
 			}
 		}
 	};
@@ -282,8 +266,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_START;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, EQUALS_START));
+				throw new IllegalParseStateException(c, EQUALS_START);
 			}
 		}
 	};
@@ -302,8 +285,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_VALUE_QUOT;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ATTRIBUTE_VALUE_START));
+				throw new IllegalParseStateException(c, ATTRIBUTE_VALUE_START);
 			}
 		}
 	};
@@ -312,16 +294,14 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (c == '\'') {
-				handler.doAttributeValue(seq.subSequence(offset, offset
-						+ length));
+				handler.doAttributeValue(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
 				++length;
 				return this;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ATTRIBUTE_VALUE_APOS));
+				throw new IllegalParseStateException(c, ATTRIBUTE_VALUE_APOS);
 			}
 		}
 	};
@@ -330,16 +310,14 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (c == '\"') {
-				handler.doAttributeValue(seq.subSequence(offset, offset
-						+ length));
+				handler.doAttributeValue(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return ATTRIBUTE_NAME_START;
 			} else if (isChar(c)) {
 				++length;
 				return this;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, ATTRIBUTE_VALUE_QUOT));
+				throw new IllegalParseStateException(c, ATTRIBUTE_VALUE_QUOT);
 			}
 		}
 	};
@@ -351,8 +329,7 @@ public final class XMLParser {
 				++length;
 				return PROCESSING_INSTRUCTION;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, PROCESSING_INSTRUCTION_START));
+				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION_START);
 			}
 		}
 	};
@@ -367,8 +344,7 @@ public final class XMLParser {
 				++length;
 				return PROCESSING_INSTRUCTION_CHARS;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, PROCESSING_INSTRUCTION));
+				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION);
 			}
 		}
 	};
@@ -377,16 +353,14 @@ public final class XMLParser {
 		@Override
 		State parse(char c, CharSequence seq) {
 			if (c == '?') {
-				handler.doProcessingInstruction(seq.subSequence(offset, offset
-						+ length));
+				handler.doProcessingInstruction(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return PROCESSING_INSTRUCTION_END;
 			} else if (isChar(c)) {
 				++length;
 				return this;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, PROCESSING_INSTRUCTION_CHARS));
+				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION_CHARS);
 			}
 		}
 	};
@@ -398,8 +372,7 @@ public final class XMLParser {
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
 			} else {
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, PROCESSING_INSTRUCTION_END));
+				throw new IllegalParseStateException(c, PROCESSING_INSTRUCTION_END);
 			}
 		}
 	};
@@ -407,14 +380,11 @@ public final class XMLParser {
 	protected final State COMMENT_START = new State() {
 		@Override
 		State parse(char c, CharSequence seq) {
-			switch (c) {
-			case '-':
+			if(c == '-') {
 				incrementOffsetAndResetLength();
 				return COMMENT;
-
-			default:
-				throw new IllegalArgumentException(String.format(
-						"'%s' is not allowed in %s", c, COMMENT_START));
+			} else {
+				throw new IllegalParseStateException(c, COMMENT_START);
 			}
 		}
 	};
@@ -422,12 +392,11 @@ public final class XMLParser {
 	protected final State COMMENT = new State() {
 		@Override
 		State parse(char c, CharSequence seq) {
-			switch (c) {
-			case '>':
+			if(c == '>') { 
 				handler.doComment(seq.subSequence(offset, offset + length));
 				incrementOffsetAndResetLength();
 				return CHARACTERS;
-			default:
+			} else {
 				++length;
 				return this;
 			}
