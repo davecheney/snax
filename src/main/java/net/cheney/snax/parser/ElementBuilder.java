@@ -11,7 +11,7 @@ import net.cheney.snax.model.QName;
 import net.cheney.snax.model.Text;
 import net.cheney.snax.util.ArrayMap;
 
-class ElementBuilder extends NodeBuilder {
+final class ElementBuilder extends NodeBuilder {
 	
 	private final NodeBuilder parent;
 	
@@ -90,7 +90,7 @@ class ElementBuilder extends NodeBuilder {
 	@Override
 	protected Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
 		Namespace ns = declaredNamespaces.get(prefix);
-		return ns == null ? parent.declaredNamespaceForPrefix(prefix) : ns;
+		return ns == null ? parent.declaredNamespaceForPrefix(prefix) : declaredNamespaces.get(prefix);
 	}
 
 }

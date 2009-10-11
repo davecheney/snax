@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import net.cheney.snax.model.Namespace;
 import net.cheney.snax.util.ArrayMap;
 
-class DocumentBuilder extends NodeBuilder {
+final class DocumentBuilder extends NodeBuilder {
 	
 	private final Map<String, Namespace> declaredNamespaces = new ArrayMap<String, Namespace>(1);
 	
