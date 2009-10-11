@@ -7,7 +7,7 @@ import net.cheney.snax.model.Element;
 
 import org.junit.Test;
 
-public class XMLParserUnitTests {
+public class XMLParserUnitTest {
 
 	@Test public void testEmptyElement() {
 		String xml = "<element foo='bar'/>";
