@@ -13,7 +13,7 @@
 	</developers>
 	<scm>
 		<connection>scm:git:git://github.com/davecheney/snax.git</connection>
-		<developerConnection>scm:git:git@github.com:davecheney/snax.git</developerConnection>
+		<developerConnection>iscm:git:git://github.com/davecheney/snax.git</developerConnection>
 	</scm>
 	<organization>
 		<url>http://dave.cheney.net/</url>
