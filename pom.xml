@@ -3,7 +3,7 @@
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax</artifactId>
 	<name>Simple Nonblocking API for XML</name>
-	<version>0.2</version>
+	<version>0.3-SNAPSHOT</version>
 	<developers>
 		<developer>
 			<name>Dave Cheney</name>
