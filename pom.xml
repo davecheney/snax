@@ -84,11 +84,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	<properties>
-		<repoUrl>http://repo.cheney.net/maven2</repoUrl>
-		<releaseRepoUrl>${repoUrl}/public</releaseRepoUrl>
-		<snapshotRepoUrl>${repoUrl}/public-snapshot</snapshotRepoUrl>
-	</properties>
 
 	<ciManagement>
 		<system>hudson</system>
@@ -105,6 +100,12 @@
 		</notifiers>
 	</ciManagement>
 
+	<properties>
+		<repoUrl>http://nexus.cheney.net/content/repositories</repoUrl>
+		<releaseRepoUrl>${repoUrl}/releases</releaseRepoUrl>
+		<snapshotRepoUrl>${repoUrl}/snapshots</snapshotRepoUrl>
+	</properties>
+	
 	<distributionManagement>
 		<repository>
 			<id>public</id>
@@ -115,4 +116,5 @@
 			<url>dav:${snapshotRepoUrl}</url>
 		</snapshotRepository>
 	</distributionManagement>
+	
 </project>
