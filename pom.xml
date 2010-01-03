@@ -99,21 +99,15 @@
 			</notifier>
 		</notifiers>
 	</ciManagement>
-
-	<properties>
-		<repoUrl>http://nexus.cheney.net/content/repositories</repoUrl>
-		<releaseRepoUrl>${repoUrl}/releases</releaseRepoUrl>
-		<snapshotRepoUrl>${repoUrl}/snapshots</snapshotRepoUrl>
-	</properties>
 	
 	<distributionManagement>
 		<repository>
 			<id>nexus-releases</id>
-			<url>dav:${releaseRepoUrl}</url>
+			<url>http://nexus.cheney.net/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>nexus-snapshot</id>
-			<url>dav:${snapshotRepoUrl}</url>
+			<id>nexus-snapshots</id>
+			<url>http://nexus.cheney.net/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	
