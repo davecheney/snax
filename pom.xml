@@ -108,11 +108,11 @@
 	
 	<distributionManagement>
 		<repository>
-			<id>public</id>
+			<id>nexus-releases</id>
 			<url>dav:${releaseRepoUrl}</url>
 		</repository>
 		<snapshotRepository>
-			<id>public-snapshot</id>
+			<id>nexus-snapshot</id>
 			<url>dav:${snapshotRepoUrl}</url>
 		</snapshotRepository>
 	</distributionManagement>
