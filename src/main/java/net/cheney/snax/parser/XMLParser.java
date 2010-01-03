@@ -4,6 +4,8 @@ import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Document;
 
+import static java.lang.Character.isWhitespace;
+
 public final class XMLParser {
 	
 	private State state = State.CHARACTERS;
@@ -64,7 +66,7 @@ public final class XMLParser {
 	
     public static boolean isBlank(@Nonnull CharSequence str) {
         for (int i = 0, strLen = str.length(); i < strLen; i++) {
-            if ((Character.isWhitespace(str.charAt(i)) == false)) {
+            if (!isWhitespace(str.charAt(i))) {
                 return false;
             }
         }
