@@ -13,8 +13,9 @@ public abstract class Predicate<T> {
 	protected abstract boolean apply(T t);
 
 	public final Iterable<T> filter(@Nonnull final Iterable<T> iterable) {
-		return new Iterable<T>() {
-
+		
+		class PredicateIterable<V> implements Iterable<T> {
+		
 			@Override
 			public Iterator<T> iterator() {
 				return new AbstractIterator<T>() {
@@ -33,7 +34,9 @@ public abstract class Predicate<T> {
 					}
 				};
 			}
-		};
+		}
+
+		return new PredicateIterable<T>();
 	}
 
 	public final boolean any(@Nonnull Iterable<T> iterable) {
