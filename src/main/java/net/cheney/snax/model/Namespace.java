@@ -48,5 +48,9 @@ public final class Namespace  {
 	public int hashCode() {
 		return uri.hashCode();
 	}
+
+	public static Namespace valueOf(@Nonnull String prefix) {
+		return new Namespace(prefix, BLANK_URI);
+	}
 	
 }

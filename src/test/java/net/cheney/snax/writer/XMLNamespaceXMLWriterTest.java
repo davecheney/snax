@@ -42,7 +42,7 @@ public class XMLNamespaceXMLWriterTest {
 	@Test public void elementWithTwoDecendants() {
 		Element foo = new Element(QName.valueOf(Namespace.XML_NAMESPACE, "foo"), 
 				new Element(QName.valueOf(Namespace.NO_NAMESPACE, "bar"),
-						new Element(QName.valueOf(Namespace.valueOf("dave", ""), "baz"))));
+						new Element(QName.valueOf(Namespace.valueOf("dave"), "baz"))));
 		String  result = XMLWriter.write(foo);
 		Assert.assertEquals("<xml:foo><bar><dave:baz/></bar></xml:foo>", result);
 	}

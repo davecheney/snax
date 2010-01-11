@@ -12,7 +12,7 @@ import org.junit.Test;
 public class NamespaceXMLWriterTest  {
 	
 	@Test public void singlePrefixNamespacedElementTest() {
-		Namespace namespace = Namespace.valueOf("dave", "");
+		Namespace namespace = Namespace.valueOf("dave");
 		Element foo = new Element(QName.valueOf(namespace, "foo"));
 		String  result = XMLWriter.write(foo);
 		Assert.assertEquals("<dave:foo/>", result);
