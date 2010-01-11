@@ -9,9 +9,9 @@ public final class Namespace  {
 	public static final String BLANK_URI = "";
 	public static final String BLANK_PREFIX = "";
 
-	public static final Namespace NO_NAMESPACE = Namespace.valueOf(BLANK_PREFIX, BLANK_URI);
-	public static final Namespace XML_NAMESPACE = Namespace.valueOf("xml", "http://www.w3.org/XML/1998/namespace");
-	public static final Namespace XMLNS_NAMESPACE = Namespace.valueOf("xmlns", "http://www.w3.org/2000/xmlns/");
+	public static final Namespace NO_NAMESPACE = new Namespace(BLANK_PREFIX, BLANK_URI);
+	public static final Namespace XML_NAMESPACE = new Namespace("xml", "http://www.w3.org/XML/1998/namespace");
+	public static final Namespace XMLNS_NAMESPACE = new Namespace("xmlns", "http://www.w3.org/2000/xmlns/");
 
 	private final String uri;
 	private final String prefix;
@@ -22,6 +22,9 @@ public final class Namespace  {
 	}
 
 	public static Namespace valueOf(@Nonnull String prefix, @Nonnull String uri) {
+		if(uri.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
 		return new Namespace(prefix, uri);
 	}
 

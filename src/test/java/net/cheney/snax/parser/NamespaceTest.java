@@ -18,4 +18,11 @@ public class NamespaceTest {
 		Element propfind = new Element(QName.valueOf(Namespace.valueOf("D", "DAV:"), "propfind"));
 		Assert.assertEquals(doc.rootElement(), propfind);
 	}
+	
+	// http://www.w3.org/TR/REC-xml-names#dt-prefix
+	@Test(expected=IllegalArgumentException.class)
+	public void testParseInvalidNamespace() {
+		String xml = "<D:propfind xmlns:D=\"DAV:\"><D:prop><bar:foo xmlns:bar=\"\"/></D:prop></D:propfind>";
+		Document doc = new XMLBuilder().parse(xml);
+	}
 }
