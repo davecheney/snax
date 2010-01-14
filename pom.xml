@@ -38,7 +38,7 @@
 
 	<ciManagement>
 		<system>hudson</system>
-		<url>http://hudson.cheney.net/job/net.cheney.snax-TRUNK/</url>
+		<url>http://hudson.cheney.net/job/snax/</url>
 		<notifiers>
 			<notifier>
 				<type>mail</type>
