@@ -22,7 +22,13 @@ public class NamespaceTest {
 	// http://www.w3.org/TR/REC-xml-names#dt-prefix
 	@Test(expected=IllegalArgumentException.class)
 	public void testParseInvalidNamespace() {
-		String xml = "<D:propfind xmlns:D=\"DAV:\"><D:prop><bar:foo xmlns:bar=\"\"/></D:prop></D:propfind>";
+		String xml = "<D:propfind xmlns:D='DAV:'><D:prop><bar:foo xmlns:bar=''/></D:prop></D:propfind>";
 		Document doc = new XMLBuilder().parse(xml);
 	}
+	
+//	@Test 
+//	public void testNamespaceBoundTwice() {
+//		String xml = "<!-- http://www.w3.org is bound to n1 and n2 --><x xmlns:n1='http://www.w3.org' xmlns:n2='http://www.w3.org' ><bad a='1'     a='2' /><bad n1:a='1'  n2:a='2' /></x>";
+//		Document doc = new XMLBuilder().parse(xml);
+//	}
 }

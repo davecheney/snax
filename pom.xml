@@ -1,95 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.cheney</groupId>
+		<artifactId>cheney-base-pom</artifactId>
+		<version>1</version>
+	</parent>
+
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax</artifactId>
 	<name>Simple Nonblocking API for XML</name>
 	<version>0.3-SNAPSHOT</version>
-	<developers>
-		<developer>
-			<name>Dave Cheney</name>
-			<email>dave@cheney.net</email>
-		</developer>
-	</developers>
+
 	<scm>
 		<connection>scm:git:git://github.com/davecheney/snax.git</connection>
-		<developerConnection>scm:git:git://github.com/davecheney/snax.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:davecheney/snax.git</developerConnection>
+		<url>http://github.com/davecheney/snax</url>
 	</scm>
-	<organization>
-		<url>http://dave.cheney.net/</url>
-	</organization>
 
-	<properties>
-		<project.build.encoding>UTF-8</project.build.encoding>
-		<findbugs-maven-plugin-version>2.3</findbugs-maven-plugin-version>
-	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>findbugs-maven-plugin</artifactId>
-					<version>${findbugs-maven-plugin-version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.findbugs</groupId>
-			<artifactId>jsr305</artifactId>
-			<version>1.3.9</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.collections</groupId>
-			<artifactId>google-collections</artifactId>
-			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>2.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>${findbugs-maven-plugin-version}</version>
-			</plugin>
-		</plugins>
-	</reporting>
 
 	<ciManagement>
 		<system>hudson</system>
@@ -105,16 +50,5 @@
 			</notifier>
 		</notifiers>
 	</ciManagement>
-
-	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<url>http://nexus.cheney.net/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<url>http://nexus.cheney.net/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 </project>
