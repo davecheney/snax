@@ -10,7 +10,7 @@
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax</artifactId>
 	<name>Simple Nonblocking API for XML</name>
-	<version>0.3</version>
+	<version>0.4-SNAPSHOT</version>
 
 	<scm>
 		<connection>scm:git:git://github.com/davecheney/snax.git</connection>
