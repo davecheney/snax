@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Namespace;
-import net.cheney.snax.util.ArrayMap;
 
 final class DocumentBuilder extends NodeBuilder {
 	

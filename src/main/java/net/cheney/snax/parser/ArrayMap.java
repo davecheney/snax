@@ -1,10 +1,10 @@
-package net.cheney.snax.util;
+package net.cheney.snax.parser;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public final class ArrayMap<K, V> implements Map<K, V> {
+final class ArrayMap<K, V> implements Map<K, V> {
 
 	private Object[] keys, values;
 	private int limit = 0, size;

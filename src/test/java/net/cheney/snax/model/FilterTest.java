@@ -1,4 +1,4 @@
-package net.cheney.predicate;
+package net.cheney.snax.model;
 
 import java.util.Arrays;
 

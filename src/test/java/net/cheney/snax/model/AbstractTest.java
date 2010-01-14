@@ -1,9 +1,9 @@
-package net.cheney.predicate;
+package net.cheney.snax.model;
 
 import java.util.Collection;
 import java.util.List;
 
-import net.cheney.snax.util.Predicate;
+import net.cheney.snax.model.Predicate;
 
 import com.google.common.collect.Lists;
 

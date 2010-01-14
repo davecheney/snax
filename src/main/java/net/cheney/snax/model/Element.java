@@ -10,7 +10,6 @@ import javax.annotation.concurrent.Immutable;
 
 import com.google.common.collect.Lists;
 
-import net.cheney.snax.util.Predicate;
 
 @Immutable
 public class Element extends ParentNode implements Namespaced {

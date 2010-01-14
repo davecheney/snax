@@ -9,7 +9,6 @@ import net.cheney.snax.model.Element;
 import net.cheney.snax.model.Namespace;
 import net.cheney.snax.model.QName;
 import net.cheney.snax.model.Text;
-import net.cheney.snax.util.ArrayMap;
 
 final class ElementBuilder extends NodeBuilder {
 	
