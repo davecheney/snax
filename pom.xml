@@ -9,31 +9,20 @@
 
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax</artifactId>
-	<name>Simple Nonblocking API for XML</name>
+	<name>snax</name>
+	<description>Simple Nonblocking API for XML</description>
 	<version>0.4-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<scm>
 		<connection>scm:git:git://github.com/davecheney/snax.git</connection>
 		<developerConnection>scm:git:git@github.com:davecheney/snax.git</developerConnection>
 		<url>http://github.com/davecheney/snax</url>
 	</scm>
-
-	<dependencies>
-		<dependency>
-			<groupId>com.google.collections</groupId>
-			<artifactId>google-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>snax-core</module>
+		<module>snax-benchmark</module>
+	</modules>
 
 	<ciManagement>
 		<system>hudson</system>
