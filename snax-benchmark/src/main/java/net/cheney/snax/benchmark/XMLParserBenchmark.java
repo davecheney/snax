@@ -3,6 +3,7 @@ package net.cheney.snax.benchmark;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.cheney.benchmarker.core.BenchmarkCallable;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.parser.XMLBuilder;
 

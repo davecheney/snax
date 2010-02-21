@@ -1,5 +1,6 @@
 package net.cheney.snax.benchmark;
 
+import net.cheney.benchmarker.core.BenchmarkCallable;
 import net.cheney.snax.writer.XMLWriter;
 
 public class XMLWriterBenchmark extends AbstractBenchmark {
