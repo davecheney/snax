@@ -87,7 +87,7 @@ final class ElementBuilder extends NodeBuilder {
 	@Override
 	protected Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
 		Namespace ns = declaredNamespaces.get(prefix);
-		return ns == null ? parent.declaredNamespaceForPrefix(prefix) : declaredNamespaces.get(prefix);
+		return ns == null ? parent.declaredNamespaceForPrefix(prefix) : ns;
 	}
 
 }
