@@ -77,12 +77,11 @@ final class ArrayMap<K, V> implements Map<K, V> {
 
 	private void ensureCapacity() {
 		if(limit == size) {
-			doubleCapacity();
+			doubleCapacity(size * 2);
 		}
 	}
 
-	private void doubleCapacity() {
-		int newSize = size * 2;
+	private void doubleCapacity(int newSize) {
 		Object[] newKeys = new Object[newSize];
 		Object[] newValues = new Object[newSize];
 		System.arraycopy(keys, 0, newKeys, 0, size);
