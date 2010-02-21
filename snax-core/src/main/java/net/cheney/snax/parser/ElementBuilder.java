@@ -42,23 +42,24 @@ final class ElementBuilder extends NodeBuilder {
 	}
 
 	private void declareNamespace(@Nonnull String prefix, @Nonnull String uri) {
-		Namespace namespace = Namespace.valueOf(prefix, uri);
-		declaredNamespaces.put(namespace.prefix(), namespace);
+//		Namespace namespace = Namespace.valueOf(prefix, uri);
+		declaredNamespaces.put(prefix, Namespace.valueOf(prefix, uri));
 	}
 
 	@Override
 	public NodeBuilder doElementEnd() {
-		Element element = buildElement();
-		parent.addContent(element);
+//		Element element = buildElement();
+		parent.addContent(buildElement());
 		return parent;
 	}
 	
 	private Element buildElement() {
-		String prefix = fetchPrefixFromName();
-		Namespace namespace = declaredNamespaceForPrefix(prefix);
-		String localpart = fetchLocalPartFromName();
-		QName qname = QName.valueOf(namespace, localpart);
-		return new Element(qname, contents());
+//		Inling these next 4 lines reduces the number of bytecodes from 36 to 26
+//		String prefix = fetchPrefixFromName();
+//		Namespace namespace = declaredNamespaceForPrefix(prefix);
+//		String localpart = fetchLocalPartFromName();
+//		QName qname = QName.valueOf(namespace, localpart);
+		return new Element(QName.valueOf(declaredNamespaceForPrefix(fetchPrefixFromName()), fetchLocalPartFromName()), contents());
 	}
 
 	private String fetchLocalPartFromName() {
