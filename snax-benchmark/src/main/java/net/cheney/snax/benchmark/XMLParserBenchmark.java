@@ -2,54 +2,63 @@ package net.cheney.snax.benchmark;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
-import net.cheney.benchmarker.core.BenchmarkCallable;
+import net.cheney.benchmark.Benchmark;
+import net.cheney.benchmark.BenchmarkResult;
+import net.cheney.benchmark.Benchmarkable;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.parser.XMLBuilder;
 
 import org.apache.commons.io.IOUtils;
 
-public class XMLParserBenchmark implements Runnable {
+public class XMLParserBenchmark  {
 	
-	public static final int ITERATIONS = 10, OUTER_LOOP_COUNT = 50, INNER_LOOP_COUNT = 200;
-	
-	protected static void benchmark(BenchmarkCallable c) {
-		System.out.println(String.format("Warmup: %s", c.call().toString()));
-		for(int iteractions = 0 ; iteractions < ITERATIONS ; ++iteractions) {
-			System.out.println(String.format("Iteraction %d: %s", iteractions+1, c.call().toString()));
+	public static class XMLBenchmark extends Benchmarkable {
+		
+		String doc;
+		private String name;
+		
+		public XMLBenchmark(String name) {
+			this.name = name;
 		}
-	}
 
-	public String doc;
-	
-	@Override
-	public void run() {
-		setup();
-		for(int outer = 0 ; outer < OUTER_LOOP_COUNT ; ++outer) {
-			for(int inner = 0 ; inner < INNER_LOOP_COUNT ; ++inner) {
-				Document d = parseDocument(doc);
-				assert d.rootElement() != null;
+		@Override
+		public void setup() throws IOException {
+			doc = readInputStream(getInputStream(name));
+		}
+		
+		private static InputStream getInputStream(String string) {
+			return XMLParserBenchmark.class.getClassLoader().getResourceAsStream(string);
+		}
+
+		private static String readInputStream(InputStream stream) throws IOException {
+			try {
+				return IOUtils.toString(stream);
+			} finally {
+				IOUtils.closeQuietly(stream);
 			}
 		}
-	}
-
-	private Document parseDocument(String string) {
-		return new XMLBuilder().parse(string);
-	}
-
-
-	private void setup() {
-		try {
-			InputStream stream = XMLParserBenchmark.class.getClassLoader().getResourceAsStream("periodic.xml");
-			doc = IOUtils.toString(stream);
-			IOUtils.closeQuietly(stream);
-		} catch (IOException e) {
-			throw new Error(e);
+		
+		@Override
+		public void benchmark() {
+			Document d = parseDocument(doc);
+			assert d.rootElement() != null;
 		}
+		
+		private Document parseDocument(String string) {
+			return new XMLBuilder().parse(string);
+		}
+		
 	}
 	
 	public static void main(String[] args) {
-		benchmark(new BenchmarkCallable(new XMLParserBenchmark()));
+		Benchmark.Builder benchmark = Benchmark.newBenchmark("XMLWriterBenchmark");
+		for(String name : Arrays.asList(args)) {
+			benchmark = benchmark.of(name, new XMLBenchmark(name));
+		}
+		BenchmarkResult results = benchmark.setRepetitions(100).run();
+		System.out.println(results.toString());
 	}
 
 }

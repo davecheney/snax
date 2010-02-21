@@ -7,6 +7,6 @@ import org.junit.Test;
 public class XMLParserBenchmarkTest extends XMLParserBenchmark {
 
 	@Test public void testXMLParserBenchmark() {
-		main(new String[] { } );
+		main(new String[] { "benchmark.xml", "oasis.xml", "periodic.xml", "xmltest.xml" } );
 	}
 }
