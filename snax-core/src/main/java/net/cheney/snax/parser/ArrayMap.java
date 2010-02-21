@@ -18,7 +18,7 @@ final class ArrayMap<K, V> {
 		limit = 0;
 	}
 
-	public boolean containsKey(Object key) {
+	public boolean containsKey(K key) {
 		for(int i = 0 ; i < limit ; ++i) {
 			if(key.equals(keys[i])) {
 				return true;
@@ -27,7 +27,7 @@ final class ArrayMap<K, V> {
 		return false;
 	}
 
-	public boolean containsValue(Object value) {
+	public boolean containsValue(V value) {
 		for(int i = 0 ; i < limit ; ++i) {
 			if(value.equals(values[i])) {
 				return true;
