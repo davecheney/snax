@@ -1,7 +1,5 @@
 package net.cheney.snax.parser;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Attribute;
@@ -14,7 +12,7 @@ final class ElementBuilder extends NodeBuilder {
 	
 	private final NodeBuilder parent;
 	
-	private final Map<String, Namespace> declaredNamespaces = new ArrayMap<String, Namespace>(1);
+	private final ArrayMap<String, Namespace> declaredNamespaces = new ArrayMap<String, Namespace>(1);
 	
 	private final String elementName; // unqualified name, possibly containing namespace prefix
 
