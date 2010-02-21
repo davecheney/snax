@@ -3,13 +3,12 @@ package net.cheney.snax.model;
 import static java.util.Arrays.asList;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import com.google.common.collect.Lists;
-
 
 @Immutable
 public class Element extends ParentNode implements Namespaced {
@@ -67,8 +66,14 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
-		super(Lists.newArrayList(content));
+		super(newArrayList(content));
 		this.qname = qname;
+	}
+
+	private static List<Node> newArrayList(Iterable<? extends Node> content) {
+		ArrayList<Node> l = new ArrayList<Node>();
+		for(Node n : content) l.add(n);
+		return l;
 	}
 
 	@Override
