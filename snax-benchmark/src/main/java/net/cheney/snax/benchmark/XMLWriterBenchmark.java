@@ -1,5 +1,7 @@
 package net.cheney.snax.benchmark;
 
+import static org.apache.commons.io.IOUtils.closeQuietly;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -18,7 +20,27 @@ public class XMLWriterBenchmark  {
 	public static class XMLBenchmark extends Benchmarkable {
 		
 		Document doc;
-		Appendable out;
+		Appendable out = new Appendable() {
+			
+			@Override
+			public Appendable append(CharSequence csq, int start, int end)
+					throws IOException {
+				return this;
+			}
+			
+			@Override
+			public Appendable append(char c) throws IOException {
+				// TODO Auto-generated method stub
+				return this;
+			}
+			
+			@Override
+			public Appendable append(CharSequence csq) throws IOException {
+				// TODO Auto-generated method stub
+				return this;
+			}
+		};
+		
 		private String name;
 		
 		public XMLBenchmark(String name) {
@@ -28,27 +50,6 @@ public class XMLWriterBenchmark  {
 		@Override
 		public void setup() throws IOException {
 			doc = parseDocument(readInputStream(getInputStream(name)));
-			out = new Appendable() {
-				
-				@Override
-				public Appendable append(CharSequence csq, int start, int end)
-						throws IOException {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				
-				@Override
-				public Appendable append(char c) throws IOException {
-					// TODO Auto-generated method stub
-					return null;
-				}
-				
-				@Override
-				public Appendable append(CharSequence csq) throws IOException {
-					// TODO Auto-generated method stub
-					return null;
-				}
-			};
 		}
 		
 		private static InputStream getInputStream(String string) {
@@ -59,7 +60,7 @@ public class XMLWriterBenchmark  {
 			try {
 				return IOUtils.toString(stream);
 			} finally {
-				IOUtils.closeQuietly(stream);
+				closeQuietly(stream);
 			}
 		}
 		
@@ -84,7 +85,7 @@ public class XMLWriterBenchmark  {
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of(name, new XMLBenchmark(name));
 		}
-		BenchmarkResult results = benchmark.setRepetitions(100).run();
+		BenchmarkResult results = benchmark.setRepetitions(500).setIterations(25).run();
 		System.out.println(results.toString());
 	}
 	

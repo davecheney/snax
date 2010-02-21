@@ -57,7 +57,7 @@ public class XMLParserBenchmark  {
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of(name, new XMLBenchmark(name));
 		}
-		BenchmarkResult results = benchmark.setRepetitions(100).run();
+		BenchmarkResult results = benchmark.setRepetitions(500).setIterations(25).run();
 		System.out.println(results.toString());
 	}
 
