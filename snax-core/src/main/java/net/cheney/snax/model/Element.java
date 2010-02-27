@@ -57,12 +57,12 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Node... content) {
-		super(FastArrayList.newInstance(content));
+		super(content);
 		this.qname = qname;
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
-		super(FastArrayList.newInstance(content));
+		super(content);
 		this.qname = qname;
 	}
 

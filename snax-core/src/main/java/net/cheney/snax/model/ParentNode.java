@@ -13,10 +13,14 @@ public abstract class ParentNode extends Node {
 
 	private final FastArrayList content;
 
-	ParentNode(@Nonnull FastArrayList content) {
-		this.content = content;
+	ParentNode(@Nonnull Node[] content) {
+		this.content = FastArrayList.newInstance(content);
 	}
 	
+	ParentNode(Iterable<? extends Node> content) {
+		this.content = FastArrayList.newInstance(content);
+	}
+
 	private static final Predicate<Node> ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
 	
 	public final Iterable<? extends Node> children() {

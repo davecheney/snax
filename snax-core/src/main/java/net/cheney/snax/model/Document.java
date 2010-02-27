@@ -21,11 +21,11 @@ public final class Document extends ParentNode {
 	private static final Predicate<Node> CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
 	
 	public Document(@Nonnull Node... content) {
-		super(FastArrayList.newInstance(content));
+		super(content);
 	}
 	
 	public Document(@Nonnull List<? extends Node> content) {
-		super(FastArrayList.newInstance(content));
+		super(content);
 	}
 
 	@Override
