@@ -1,10 +1,6 @@
 package net.cheney.snax.model;
 
-import static java.util.Arrays.asList;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,19 +57,13 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Node... content) {
-		super(asList(content));
+		super(FastArrayList.newInstance(content));
 		this.qname = qname;
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
-		super(newArrayList(content));
+		super(FastArrayList.newInstance(content));
 		this.qname = qname;
-	}
-
-	private static List<Node> newArrayList(Iterable<? extends Node> content) {
-		ArrayList<Node> l = new ArrayList<Node>();
-		for(Node n : content) l.add(n);
-		return l;
 	}
 
 	@Override

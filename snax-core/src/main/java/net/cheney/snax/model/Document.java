@@ -1,10 +1,6 @@
 package net.cheney.snax.model;
 
-import static java.util.Arrays.asList;
-import static java.util.Arrays.copyOf;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -25,11 +21,11 @@ public final class Document extends ParentNode {
 	private static final Predicate<Node> CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
 	
 	public Document(@Nonnull Node... content) {
-		super(asList(copyOf(content, content.length)));
+		super(FastArrayList.newInstance(content));
 	}
 	
 	public Document(@Nonnull List<? extends Node> content) {
-		super(new ArrayList<Node>(content));
+		super(FastArrayList.newInstance(content));
 	}
 
 	@Override

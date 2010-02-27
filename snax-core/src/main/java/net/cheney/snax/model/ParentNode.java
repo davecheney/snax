@@ -1,9 +1,6 @@
 package net.cheney.snax.model;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
-
 
 public abstract class ParentNode extends Node {
 
@@ -14,9 +11,9 @@ public abstract class ParentNode extends Node {
 		}
 	}
 
-	private final List<Node> content;
+	private final FastArrayList content;
 
-	ParentNode(@Nonnull List<Node> content) {
+	ParentNode(@Nonnull FastArrayList content) {
 		this.content = content;
 	}
 	
