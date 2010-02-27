@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>net.cheney</groupId>
 		<artifactId>cheney-base-pom</artifactId>
-		<version>3-SNAPSHOT</version>
+		<version>3</version>
 	</parent>
 
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax</artifactId>
 	<name>snax</name>
 	<description>Simple Nonblocking API for XML</description>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<scm>
