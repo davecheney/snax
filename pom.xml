@@ -11,7 +11,7 @@
 	<artifactId>snax</artifactId>
 	<name>snax</name>
 	<description>Simple Nonblocking API for XML</description>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.4</version>
 	<packaging>pom</packaging>
 
 	<scm>
