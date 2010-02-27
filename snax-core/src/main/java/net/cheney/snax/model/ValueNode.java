@@ -8,8 +8,8 @@ abstract class ValueNode extends Node {
 
 	private final String value;
 
-	ValueNode(@Nonnull String value) {
-		this.value = value;
+	ValueNode(@Nonnull CharSequence value) {
+		this.value = value.toString();
 	}
 	
 	public final String value() {

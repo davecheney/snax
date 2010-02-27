@@ -32,23 +32,22 @@ final class ElementBuilder extends NodeBuilder {
 	public void doAttributeValue(@Nonnull CharSequence seq) {
 		if(attrName.startsWith("xmlns")) {
 			if(attrName.startsWith("xmlns:")) {
-				declareNamespace(attrName.substring(6), seq.toString());
+				declareNamespace(attrName.substring(6), seq);
 			} else {
-				declareNamespace(Namespace.BLANK_PREFIX, seq.toString());
+				declareNamespace(Namespace.BLANK_PREFIX, seq);
 			}
 		} else {
-			addContent(new Attribute(attrName, seq.toString()));
+			addContent(new Attribute(attrName, seq));
 		}
 	}
 
-	private void declareNamespace(@Nonnull String prefix, @Nonnull String uri) {
+	private void declareNamespace(@Nonnull String prefix, @Nonnull CharSequence seq) {
 //		Namespace namespace = Namespace.valueOf(prefix, uri);
-		declaredNamespaces.put(prefix, Namespace.valueOf(prefix, uri));
+		declaredNamespaces.put(prefix, Namespace.valueOf(prefix, seq.toString()));
 	}
 
 	@Override
 	public NodeBuilder doElementEnd() {
-//		Element element = buildElement();
 		parent.addContent(buildElement());
 		return parent;
 	}

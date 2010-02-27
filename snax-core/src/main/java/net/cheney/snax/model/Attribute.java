@@ -12,7 +12,7 @@ public final class Attribute extends ValueNode implements Namespaced {
 
 	private final QName qname;
 
-	public Attribute(@Nonnull String localPart, @Nonnull String value) {
+	public Attribute(@Nonnull String localPart, @Nonnull CharSequence value) {
 		this(QName.valueOf(localPart), value);
 	}
 	
@@ -20,7 +20,7 @@ public final class Attribute extends ValueNode implements Namespaced {
 		this(QName.valueOf(namespace, localPart), value);
 	}
 	
-	public Attribute(@Nonnull QName qname, @Nonnull String value) {
+	public Attribute(@Nonnull QName qname, @Nonnull CharSequence value) {
 		super(value);
 		this.qname = qname;
 	}
