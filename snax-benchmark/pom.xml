@@ -8,12 +8,13 @@
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax-benchmark</artifactId>
 	<name>snax-benchmark</name>
+	<version>0.4.1-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.cheney.snax</groupId>
 			<artifactId>snax-core</artifactId>
-			<version>${project.version}</version>
+			<version>0.4.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -26,7 +27,6 @@
 		<dependency>
 			<groupId>net.cheney.benchmark</groupId>
 			<artifactId>benchmark-core</artifactId>
-			<version>0.1</version>
 		</dependency>
 	</dependencies>
 	

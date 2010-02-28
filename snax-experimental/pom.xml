@@ -8,13 +8,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax-experimental</artifactId>
+	<version>0.4.1-SNAPSHOT</version>
 	<name>snax-experimental</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.cheney.snax</groupId>
 			<artifactId>snax-core</artifactId>
-			<version>${project.version}</version>
+			<version>0.4.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
