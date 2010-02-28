@@ -1,7 +1,6 @@
 package net.cheney.snax.model;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -24,7 +23,7 @@ public final class Document extends ParentNode {
 		super(content);
 	}
 	
-	public Document(@Nonnull List<? extends Node> content) {
+	public Document(@Nonnull Iterable<? extends Node> content) {
 		super(content);
 	}
 
