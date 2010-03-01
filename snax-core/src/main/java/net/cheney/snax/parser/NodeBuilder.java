@@ -1,7 +1,5 @@
 package net.cheney.snax.parser;
 
-import java.util.ArrayList;
-
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Comment;
@@ -11,7 +9,7 @@ import net.cheney.snax.model.ProcessingInstruction;
 
 abstract class NodeBuilder  {
 	
-	private final ArrayList<Node> contents = new ArrayList<Node>();
+	private final FastArrayList contents = new FastArrayList(new Node[8], 0);
 	
 	public Iterable<Node> contents() {
 		return contents;
