@@ -108,7 +108,8 @@ public class SNAXvsXercesBenchmark  {
 	public static void main(String[] args) {
 		Benchmark.Builder benchmark = Benchmark.newBenchmark("SNAXvsXercesBenchmark");
 		for(String name : Arrays.asList(args)) {
-			benchmark = benchmark.of("SNAX ("+name+")", new XercesBenchmark(name)).and("Xerces ("+name+")", new XercesBenchmark(name));
+			benchmark = benchmark.of("SNAX ("+name+")", new SNAXBenchmark(name));
+			benchmark = benchmark.of("Xerces ("+name+")", new XercesBenchmark(name));
 		}
 		BenchmarkResult results = benchmark.setRepetitions(200).setIterations(20).run();
 		System.out.println(results.toString());
