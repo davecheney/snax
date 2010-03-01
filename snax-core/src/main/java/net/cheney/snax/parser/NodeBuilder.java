@@ -9,7 +9,7 @@ import net.cheney.snax.model.ProcessingInstruction;
 
 abstract class NodeBuilder  {
 	
-	private final NodeList contents = new NodeList(new Node[8], 0);
+	private final NodeList contents = new NodeList(new Node[8]);
 	
 	public Iterable<Node> contents() {
 		return contents;

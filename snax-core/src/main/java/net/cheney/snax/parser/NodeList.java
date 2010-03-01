@@ -5,29 +5,32 @@ import net.cheney.snax.model.Node;
 final class NodeList implements java.lang.Iterable<Node> {
 
 	private Node[] elements;
-	private int length;
+	private int length = 0;
 
-	NodeList(Node[] elements, int length) {
+	NodeList(Node[] elements) {
 		this.elements = elements;
-		this.length = length;
 	}
 
 	@Override
-	public java.util.Iterator<Node> iterator() {
+	public Iterator iterator() {
 		return new Iterator();
 	}
 
-	private static Node[] doubleCapacity(Node[] source) {
-		Node[] target = new Node[source.length * 2];
-		System.arraycopy(source, 0, target, 0, source.length);
-		return target;
+	private void doubleCapacity() {
+		Node[] target = new Node[elements.length * 2];
+		System.arraycopy(elements, 0, target, 0, elements.length);
+		elements = target;
 	}
 
 	public void add(Node content) {
-		if(length == elements.length) {
-			elements = doubleCapacity(elements);
-		}
+		ensureCapacity();
 		elements[length++] = content;
+	}
+
+	private void ensureCapacity() {
+		if(length == elements.length) {
+			doubleCapacity();
+		}
 	}
 
 	public final class Iterator implements java.util.Iterator<Node> {

@@ -1,6 +1,5 @@
 package net.cheney.snax.model;
 
-import java.util.Iterator;
 import java.util.List;
 
 final class NodeList implements Iterable<Node> {
@@ -20,15 +19,6 @@ final class NodeList implements Iterable<Node> {
 	@Override
 	public Iterator iterator() {
 		return new Iterator();
-	}
-
-	public static NodeList newInstance(List<? extends Node> content) {
-		Node[] elements = new Node[content.size()];
-		int offset = 0;
-		for (Node n : content) {
-			elements[offset++] = n;
-		}
-		return new NodeList(elements);
 	}
 
 	public static NodeList newInstance(Node[] content) {

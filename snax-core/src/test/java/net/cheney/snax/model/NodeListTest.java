@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 
-public class FastArrayListTest {
+public class NodeListTest {
 	
 	@Test public void testCreationFromIterable() {
 		List<? extends Node> n = Arrays.asList(new Element("foo"), new Element("bar"), new Element("baz"));
