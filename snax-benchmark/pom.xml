@@ -29,6 +29,12 @@
 			<groupId>net.cheney.benchmark</groupId>
 			<artifactId>benchmark-core</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
