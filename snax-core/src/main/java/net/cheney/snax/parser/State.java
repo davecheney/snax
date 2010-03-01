@@ -54,10 +54,40 @@ enum State {
 			if(c == '>') {
 				parser.incrementOffsetAndResetLength();
 				return CHARACTERS;
+			} else 	if (c == '[') {
+				parser.incrementOffsetAndResetLength();
+				return DECLARATION_CDATA;
 			} else if(isChar(c)) {
 				return this;
 			} else {
 				throw new IllegalParseStateException(c, CHARACTERS);
+			}
+		}
+	},
+	
+	DECLARATION_CDATA {
+		@Override
+		State parse(char c, XMLParser parser) {
+			if (c == ']') {
+				return DECLARATION_END;
+			} else {
+				return this;
+			}
+		}
+	},
+	
+	DECLARATION_END {
+		@Override
+		State parse(char c, XMLParser parser) {
+			if (c == '>') {
+//				parser.doCData();
+				parser.incrementOffsetAndResetLength();
+				return CHARACTERS;
+			} else if (isWhitespace(c)) {
+				parser.incrementOffsetAndResetLength();
+				return this;
+			} else {
+				throw new IllegalParseStateException(c, DECLARATION_END);
 			}
 		}
 	},

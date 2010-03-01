@@ -72,7 +72,8 @@ public class XMLTest {
 			{"xmltest.xml"},
 			{"oasis.xml"},
 			{"ibm_oasis_not-wf.xml"},
-			{"errata4e.xml"}
+			{"errata4e.xml"},
+			{"xmlconf.xml"}
 		});
 	}
 }

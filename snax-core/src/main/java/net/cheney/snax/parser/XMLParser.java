@@ -97,7 +97,7 @@ public final class XMLParser {
 		}
 		this.state = currentState;
 	}
-
+	
 	public void doCData() {
 		CharSequence cdata = subsequence();
 		incrementOffsetAndResetLength();

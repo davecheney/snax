@@ -9,6 +9,7 @@ import net.cheney.snax.model.Document;
 import net.cheney.snax.parser.XMLBuilder;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -16,15 +17,17 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class XMLValidationTest {
 
-	 @Parameters
-	 public static Collection xmlconf() throws IOException {
-		 Document xmlconf = loadXML("xmlconf.xml");
-		 return Arrays.asList(new Object[][] {
-	   {"22101", true },
-	   {"221x1", false },
-	   {"22101-5150", true },
-	   {"221015150", false }});
-	 }
+	@Parameters
+	public static Collection xmlconf() throws IOException {
+		Document xmlconf = loadXML("xmlconf.xml");
+		return Arrays.asList(new Object[][] { { "22101", true },
+				{ "221x1", false }, { "22101-5150", true },
+				{ "221015150", false } });
+	}
+
+	public XMLValidationTest(String filename) {
+		// TODO Auto-generated constructor stub
+	}
 
 	private static Document loadXML(String source) throws IOException {
 		return new XMLBuilder().build(load(source));
@@ -40,9 +43,11 @@ public class XMLValidationTest {
 	}
 
 	private static InputStream streamFromSource(String source) {
-		String s = XMLValidationTest.class.getPackage().getName().replace('.', '/').replace('-', '_') + "/" + source;
+		String s = XMLValidationTest.class.getPackage().getName().replace('.',
+				'/').replace('-', '_')
+				+ "/" + source;
 		System.out.println(String.format("Loading tests from [%s]", s));
 		return XMLValidationTest.class.getClassLoader().getResourceAsStream(s);
 	}
-	
+
 }
