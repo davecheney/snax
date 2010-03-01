@@ -4,8 +4,8 @@ import java.util.List;
 
 final class NodeList implements Iterable<Node> {
 
-	private final Node[] elements;
-	private final int length;
+	final Node[] elements;
+	final int length;
 
 	private NodeList(Node[] elements, int length) {
 		this.elements = elements;
