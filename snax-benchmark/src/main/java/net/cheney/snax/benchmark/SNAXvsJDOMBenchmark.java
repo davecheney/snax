@@ -15,7 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-public class SNAXvsJDOMBenchmark  {
+public final class SNAXvsJDOMBenchmark  {
 	
 	public abstract static class BaseBenchmark extends Benchmarkable {
 		
@@ -42,9 +42,20 @@ public class SNAXvsJDOMBenchmark  {
 				IOUtils.closeQuietly(stream);
 			}
 		}
+		
+		@Override
+		public void teardown() {
+			doc = null;
+		}
+		
+		protected void assertThat(boolean bool) {
+			if(!bool) {
+				throw new AssertionError();
+			}
+		}
 	}
 	
-	public static class SNAXBenchmark extends BaseBenchmark {
+	public final static class SNAXBenchmark extends BaseBenchmark {
 		
 		public SNAXBenchmark(String name) {
 			super(name);
@@ -54,7 +65,7 @@ public class SNAXvsJDOMBenchmark  {
 		@Override
 		public void benchmark() {
 			Document d = parseDocument(doc);
-			assert d.rootElement() != null;
+			assertThat(!d.rootElement().qname().localpart().isEmpty());
 		}
 		
 		private Document parseDocument(String string) {
@@ -63,7 +74,7 @@ public class SNAXvsJDOMBenchmark  {
 		
 	}
 	
-	public static class JDOMBenchmark extends BaseBenchmark {
+	public final static class JDOMBenchmark extends BaseBenchmark {
 		
 		public JDOMBenchmark(String name) {
 			super(name);
@@ -96,7 +107,7 @@ public class SNAXvsJDOMBenchmark  {
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of("SNAX ("+name+")", new JDOMBenchmark(name)).and("JDOM ("+name+")", new JDOMBenchmark(name));
 		}
-		BenchmarkResult results = benchmark.setRepetitions(200).setIterations(20).run();
+		BenchmarkResult results = benchmark.setRepetitions(100).setIterations(20).run();
 		System.out.println(results.toString());
 	}
 

@@ -12,9 +12,9 @@ import net.cheney.snax.parser.XMLBuilder;
 
 import org.apache.commons.io.IOUtils;
 
-public class XMLParserBenchmark  {
+public final class XMLParserBenchmark  {
 	
-	public static class XMLBenchmark extends Benchmarkable {
+	public final static class XMLBenchmark extends Benchmarkable {
 		
 		String doc;
 		private String name;
@@ -43,11 +43,22 @@ public class XMLParserBenchmark  {
 		@Override
 		public void benchmark() {
 			Document d = parseDocument(doc);
-			assert d.rootElement() != null;
+			assertThat(!d.rootElement().qname().localpart().isEmpty());
 		}
 		
 		private Document parseDocument(String string) {
 			return new XMLBuilder().parse(string);
+		}
+		
+		private void assertThat(boolean bool) {
+			if(!bool) {
+				throw new AssertionError();
+			}
+		}
+		
+		@Override
+		public void teardown() {
+			doc = null;
 		}
 		
 	}
