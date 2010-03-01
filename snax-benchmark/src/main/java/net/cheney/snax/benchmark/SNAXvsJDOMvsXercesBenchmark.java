@@ -151,7 +151,7 @@ public final class SNAXvsJDOMvsXercesBenchmark  {
 	}
 	
 	public static void main(String[] args) {
-		Benchmark.Builder benchmark = Benchmark.newBenchmark("SNAXvsJDOMBenchmark");
+		Benchmark.Builder benchmark = Benchmark.newBenchmark("SNAXvsJDOMvsXercesBenchmark");
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of("SNAX ("+name+")", new SNAXBenchmark(name));
 			benchmark = benchmark.of("JDOM ("+name+")", new JDOMBenchmark(name));

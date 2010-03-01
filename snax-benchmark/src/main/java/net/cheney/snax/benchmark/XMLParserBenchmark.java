@@ -12,7 +12,7 @@ import net.cheney.snax.parser.XMLBuilder;
 
 import org.apache.commons.io.IOUtils;
 
-public final class XMLParserBenchmark  {
+public class XMLParserBenchmark  {
 	
 	public final static class XMLBenchmark extends Benchmarkable {
 		
