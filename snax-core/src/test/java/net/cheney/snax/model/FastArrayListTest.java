@@ -14,7 +14,7 @@ public class FastArrayListTest {
 	
 	@Test public void testCreationFromIterable() {
 		List<? extends Node> n = Arrays.asList(new Element("foo"), new Element("bar"), new Element("baz"));
-		FastArrayList l = FastArrayList.newInstance(n);
+		NodeList l = NodeList.newInstance(n);
 		int count = 0;
 		Iterator<Node> i = l.iterator();
 		while(i.hasNext()) {
@@ -25,7 +25,7 @@ public class FastArrayListTest {
 	}
 
 	@Test public void testIterator() {
-		FastArrayList l = FastArrayList.newInstance(new Node[] { new Element("foo"), new Element("bar"), new Element("baz") });
+		NodeList l = NodeList.newInstance(new Node[] { new Element("foo"), new Element("bar"), new Element("baz") });
 		int count = 0;
 		Iterator<Node> i = l.iterator();
 		while(i.hasNext()) {
@@ -36,7 +36,7 @@ public class FastArrayListTest {
 	}
 	
 	@Test public void testEmptyIterator() {
-		FastArrayList l = FastArrayList.newInstance(new Node[] {  });
+		NodeList l = NodeList.newInstance(new Node[] {  });
 		int count = 0;
 		Iterator<Node> i = l.iterator();
 		while(i.hasNext()) {

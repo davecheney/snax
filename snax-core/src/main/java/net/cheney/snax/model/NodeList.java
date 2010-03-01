@@ -3,60 +3,41 @@ package net.cheney.snax.model;
 import java.util.Iterator;
 import java.util.List;
 
-final class FastArrayList implements Iterable<Node> {
+final class NodeList implements Iterable<Node> {
 
 	private final Node[] elements;
 	private final int length;
 
-	private FastArrayList(Node[] elements, int length) {
+	private NodeList(Node[] elements, int length) {
 		this.elements = elements;
 		this.length = length;
 	}
 
-	private FastArrayList(Node[] elements) {
+	private NodeList(Node[] elements) {
 		this(elements, elements.length);
 	}
 
 	@Override
-	public Iterator<Node> iterator() {
-		return new Iterator<Node>() {
-
-			int offset = 0;
-
-			@Override
-			public boolean hasNext() {
-				return offset < length;
-			}
-
-			@Override
-			public Node next() {
-				return elements[offset++];
-			}
-
-			@Override
-			public void remove() {
-				// yangi
-			}
-
-		};
+	public Iterator iterator() {
+		return new Iterator();
 	}
 
-	public static FastArrayList newInstance(List<? extends Node> content) {
+	public static NodeList newInstance(List<? extends Node> content) {
 		Node[] elements = new Node[content.size()];
 		int offset = 0;
 		for (Node n : content) {
 			elements[offset++] = n;
 		}
-		return new FastArrayList(elements);
+		return new NodeList(elements);
 	}
 
-	public static FastArrayList newInstance(Node[] content) {
+	public static NodeList newInstance(Node[] content) {
 		Node[] elements = new Node[content.length];
 		System.arraycopy(content, 0, elements, 0, content.length);
-		return new FastArrayList(elements);
+		return new NodeList(elements);
 	}
 
-	public static FastArrayList newInstance(Iterable<? extends Node> content) {
+	public static NodeList newInstance(Iterable<? extends Node> content) {
 		int size = 8, offset = 0;
 		Node[] elements = new Node[size];
 		for (Node n : content) {
@@ -66,7 +47,7 @@ final class FastArrayList implements Iterable<Node> {
 			}
 			elements[offset++] = n;
 		}
-		return new FastArrayList(elements, offset);
+		return new NodeList(elements, offset);
 	}
 
 	private static Node[] doubleCapacity(Node[] elements) {
@@ -106,8 +87,8 @@ final class FastArrayList implements Iterable<Node> {
 		if (!(o instanceof Iterable))
 			return false;
 
-		Iterator<Node> e1 = iterator();
-		Iterator e2 = ((Iterable)o).iterator();
+		Iterator e1 = iterator();
+		java.util.Iterator<Node> e2 = ((Iterable<Node>) o).iterator();
 		while (e1.hasNext() && e2.hasNext()) {
 			Node o1 = e1.next();
 			Object o2 = e2.next();
@@ -128,12 +109,31 @@ final class FastArrayList implements Iterable<Node> {
 	 */
 	public int hashCode() {
 		int hashCode = 1;
-		Iterator<Node> i = iterator();
+		Iterator i = iterator();
 		while (i.hasNext()) {
 			Node obj = i.next();
 			hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
 		}
 		return hashCode;
+	}
+
+	public final class Iterator implements java.util.Iterator<Node> {
+		private int offset = 0;
+
+		@Override
+		public boolean hasNext() {
+			return offset < length;
+		}
+
+		@Override
+		public Node next() {
+			return elements[offset++];
+		}
+
+		@Override
+		public void remove() {
+			// yangi
+		}
 	}
 
 }
