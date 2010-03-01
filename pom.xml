@@ -20,12 +20,10 @@
 		<developerConnection>scm:git:git@github.com:davecheney/snax.git</developerConnection>
 		<url>http://github.com/davecheney/snax</url>
 	</scm>
-	
+
 	<modules>
 		<module>snax-core</module>
-		<module>snax-benchmark</module>
 		<module>snax-experimental</module>
-		<module>snax-validation</module>
 	</modules>
 
 	<ciManagement>
@@ -52,4 +50,19 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<profiles>
+		<profile>
+			<id>benchmark</id>
+			<modules>
+				<module>snax-benchmark</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>validation</id>
+			<modules>
+				<module>snax-validation</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
