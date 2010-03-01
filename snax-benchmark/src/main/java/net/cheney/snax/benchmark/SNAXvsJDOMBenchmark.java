@@ -84,7 +84,7 @@ public final class SNAXvsJDOMBenchmark  {
 		@Override
 		public void benchmark() {
 			org.jdom.Document d = parseDocument(doc);
-			assert d.getRootElement() != null;
+			assertThat(!d.getRootElement().getName().isEmpty());
 		}
 		
 		private org.jdom.Document parseDocument(String string) {
@@ -105,7 +105,8 @@ public final class SNAXvsJDOMBenchmark  {
 	public static void main(String[] args) {
 		Benchmark.Builder benchmark = Benchmark.newBenchmark("SNAXvsJDOMBenchmark");
 		for(String name : Arrays.asList(args)) {
-			benchmark = benchmark.of("SNAX ("+name+")", new JDOMBenchmark(name)).and("JDOM ("+name+")", new JDOMBenchmark(name));
+			benchmark = benchmark.of("SNAX ("+name+")", new SNAXBenchmark(name));
+			benchmark = benchmark.of("JDOM ("+name+")", new JDOMBenchmark(name));
 		}
 		BenchmarkResult results = benchmark.setRepetitions(100).setIterations(20).run();
 		System.out.println(results.toString());
