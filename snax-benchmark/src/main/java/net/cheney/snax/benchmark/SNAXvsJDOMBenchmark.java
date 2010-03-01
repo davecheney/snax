@@ -17,15 +17,15 @@ import org.jdom.input.SAXBuilder;
 
 public class SNAXvsJDOMBenchmark  {
 	
-	public static class SNAXBenchmark extends Benchmarkable {
+	public abstract static class BaseBenchmark extends Benchmarkable {
 		
-		String doc;
+		protected String doc;
 		private String name;
 		
-		public SNAXBenchmark(String name) {
+		public BaseBenchmark(String name) {
 			this.name = name;
 		}
-
+		
 		@Override
 		public void setup() throws IOException {
 			doc = readInputStream(getInputStream(name));
@@ -42,7 +42,15 @@ public class SNAXvsJDOMBenchmark  {
 				IOUtils.closeQuietly(stream);
 			}
 		}
+	}
+	
+	public static class SNAXBenchmark extends BaseBenchmark {
 		
+		public SNAXBenchmark(String name) {
+			super(name);
+			// TODO Auto-generated constructor stub
+		}
+
 		@Override
 		public void benchmark() {
 			Document d = parseDocument(doc);
@@ -55,32 +63,13 @@ public class SNAXvsJDOMBenchmark  {
 		
 	}
 	
-	public static class JDOMBenchmark extends Benchmarkable {
-		
-		String doc;
-		private String name;
+	public static class JDOMBenchmark extends BaseBenchmark {
 		
 		public JDOMBenchmark(String name) {
-			this.name = name;
+			super(name);
+			// TODO Auto-generated constructor stub
 		}
 
-		@Override
-		public void setup() throws IOException {
-			doc = readInputStream(getInputStream(name));
-		}
-		
-		private static InputStream getInputStream(String string) {
-			return SNAXvsJDOMBenchmark.class.getClassLoader().getResourceAsStream(string);
-		}
-
-		private static String readInputStream(InputStream stream) throws IOException {
-			try {
-				return IOUtils.toString(stream);
-			} finally {
-				IOUtils.closeQuietly(stream);
-			}
-		}
-		
 		@Override
 		public void benchmark() {
 			org.jdom.Document d = parseDocument(doc);
@@ -107,7 +96,7 @@ public class SNAXvsJDOMBenchmark  {
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of("SNAX ("+name+")", new JDOMBenchmark(name)).and("JDOM ("+name+")", new JDOMBenchmark(name));
 		}
-		BenchmarkResult results = benchmark.setRepetitions(200).setIterations(50).run();
+		BenchmarkResult results = benchmark.setRepetitions(200).setIterations(20).run();
 		System.out.println(results.toString());
 	}
 
