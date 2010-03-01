@@ -25,6 +25,7 @@
 		<module>snax-core</module>
 		<module>snax-benchmark</module>
 		<module>snax-experimental</module>
+		<module>snax-validation</module>
 	</modules>
 
 	<ciManagement>
