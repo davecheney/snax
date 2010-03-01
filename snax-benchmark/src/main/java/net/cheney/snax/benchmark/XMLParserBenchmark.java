@@ -53,7 +53,7 @@ public class XMLParserBenchmark  {
 	}
 	
 	public static void main(String[] args) {
-		Benchmark.Builder benchmark = Benchmark.newBenchmark("XMLWriterBenchmark");
+		Benchmark.Builder benchmark = Benchmark.newBenchmark("XMLParserBenchmark");
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of(name, new XMLBenchmark(name));
 		}
