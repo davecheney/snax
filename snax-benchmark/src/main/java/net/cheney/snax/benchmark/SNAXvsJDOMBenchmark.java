@@ -108,7 +108,7 @@ public final class SNAXvsJDOMBenchmark  {
 			benchmark = benchmark.of("SNAX ("+name+")", new SNAXBenchmark(name));
 			benchmark = benchmark.of("JDOM ("+name+")", new JDOMBenchmark(name));
 		}
-		BenchmarkResult results = benchmark.setRepetitions(100).setIterations(20).run();
+		BenchmarkResult results = benchmark.setRepetitions(250).setIterations(50).run();
 		System.out.println(results.toString());
 	}
 
