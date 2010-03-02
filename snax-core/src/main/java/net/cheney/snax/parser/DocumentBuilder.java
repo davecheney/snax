@@ -6,7 +6,7 @@ import net.cheney.snax.model.Namespace;
 
 final class DocumentBuilder extends NodeBuilder {
 	
-	private final NamespaceMap declaredNamespaces = new NamespaceMap(1);
+	private final NamespaceMap declaredNamespaces = new NamespaceMap(3);
 	
 	DocumentBuilder() {
 		declaredNamespaces.put(Namespace.NO_NAMESPACE.prefix(), Namespace.NO_NAMESPACE);

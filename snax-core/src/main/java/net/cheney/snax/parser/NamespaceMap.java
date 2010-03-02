@@ -1,8 +1,5 @@
 package net.cheney.snax.parser;
 
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.cheney.snax.model.Namespace;
 
 final class NamespaceMap {
@@ -75,12 +72,6 @@ final class NamespaceMap {
 		values = newValues;
 		size = newSize;
 	}
-
-//	public void putAll(Map<? extends K, ? extends V> m) {
-//		for(Entry<? extends K, ? extends V> entry : m.entrySet()) {
-//			put(entry.getKey(), entry.getValue());
-//		}
-//	}
 
 	public int size() {
 		return limit;
