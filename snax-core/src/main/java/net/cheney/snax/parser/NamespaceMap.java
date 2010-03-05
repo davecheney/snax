@@ -1,16 +1,16 @@
 package net.cheney.snax.parser;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import net.cheney.snax.model.Namespace;
 
-final class ArrayMap<K, V> {
+final class NamespaceMap {
 
-	private Object[] keys, values;
+	private String[] keys;
+	private Namespace[] values;
 	private int limit = 0, size;
 	
-	public ArrayMap(int initialSize) {
-		keys = new Object[initialSize];
-		values = new Object[initialSize];
+	public NamespaceMap(int initialSize) {
+		keys = new String[initialSize];
+		values = new Namespace[initialSize];
 		size = initialSize;
 	}
 
@@ -18,7 +18,7 @@ final class ArrayMap<K, V> {
 		limit = 0;
 	}
 
-	public boolean containsKey(K key) {
+	public boolean containsKey(String key) {
 		for(int i = 0 ; i < limit ; ++i) {
 			if(key.equals(keys[i])) {
 				return true;
@@ -27,7 +27,7 @@ final class ArrayMap<K, V> {
 		return false;
 	}
 
-	public boolean containsValue(V value) {
+	public boolean containsValue(Namespace value) {
 		for(int i = 0 ; i < limit ; ++i) {
 			if(value.equals(values[i])) {
 				return true;
@@ -37,11 +37,10 @@ final class ArrayMap<K, V> {
 		
 	}
 
-	@SuppressWarnings("unchecked")
-	public V get(K key) {
+	public Namespace get(String key) {
 		for(int i = 0 ; i < limit ; ++i) {
 			if(key.equals(keys[i])) {
-				return (V) values[i];
+				return values[i];
 			}
 		}
 		return null;
@@ -51,7 +50,7 @@ final class ArrayMap<K, V> {
 		return limit == 0;
 	}
 
-	public V put(K key, V value) {
+	public Namespace put(String key, Namespace value) {
 		ensureCapacity();
 		keys[limit] = key;
 		values[limit++] = value;
@@ -65,19 +64,13 @@ final class ArrayMap<K, V> {
 	}
 
 	private void doubleCapacity(int newSize) {
-		Object[] newKeys = new Object[newSize];
-		Object[] newValues = new Object[newSize];
+		String[] newKeys = new String[newSize];
+		Namespace[] newValues = new Namespace[newSize];
 		System.arraycopy(keys, 0, newKeys, 0, size);
 		System.arraycopy(values, 0, newValues, 0, size);
 		keys = newKeys;
 		values = newValues;
 		size = newSize;
-	}
-
-	public void putAll(Map<? extends K, ? extends V> m) {
-		for(Entry<? extends K, ? extends V> entry : m.entrySet()) {
-			put(entry.getKey(), entry.getValue());
-		}
 	}
 
 	public int size() {
