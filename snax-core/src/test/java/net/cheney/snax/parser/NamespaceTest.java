@@ -24,6 +24,8 @@ public class NamespaceTest {
 	public void testParseInvalidNamespace() {
 		String xml = "<D:propfind xmlns:D='DAV:'><D:prop><bar:foo xmlns:bar=''/></D:prop></D:propfind>";
 		Document doc = new XMLBuilder().parse(xml);
+		Element propfind = new Element(QName.valueOf(Namespace.valueOf("D", "DAV:"), "propfind"));
+		Assert.assertEquals(doc.rootElement(), propfind);
 	}
 	
 //	@Test 
