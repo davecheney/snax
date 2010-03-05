@@ -1,6 +1,6 @@
 package net.cheney.snax.model;
 
-import java.util.List;
+import com.google.common.collect.Iterables;
 
 final class NodeList implements Iterable<Node> {
 
@@ -46,65 +46,17 @@ final class NodeList implements Iterable<Node> {
 		return n;
 	}
 
-	// Comparison and hashing
-
-	/**
-	 * Compares the specified object with this list for equality. Returns
-	 * {@code true} if and only if the specified object is also a list, both
-	 * lists have the same size, and all corresponding pairs of elements in the
-	 * two lists are <i>equal</i>. (Two elements {@code e1} and {@code e2} are
-	 * <i>equal</i> if {@code (e1==null ? e2==null : e1.equals(e2))}.) In other
-	 * words, two lists are defined to be equal if they contain the same
-	 * elements in the same order.
-	 * <p>
-	 * 
-	 * This implementation first checks if the specified object is this list. If
-	 * so, it returns {@code true}; if not, it checks if the specified object is
-	 * a list. If not, it returns {@code false}; if so, it iterates over both
-	 * lists, comparing corresponding pairs of elements. If any comparison
-	 * returns {@code false}, this method returns {@code false}. If either
-	 * iterator runs out of elements before the other it returns {@code false}
-	 * (as the lists are of unequal length); otherwise it returns {@code true}
-	 * when the iterations complete.
-	 * 
-	 * @param o
-	 *            the object to be compared for equality with this list
-	 * @return {@code true} if the specified object is equal to this list
-	 */
-	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-		if (!(o instanceof Iterable))
-			return false;
-
-		Iterator e1 = iterator();
-		java.util.Iterator<Node> e2 = ((Iterable<Node>) o).iterator();
-		while (e1.hasNext() && e2.hasNext()) {
-			Node o1 = e1.next();
-			Object o2 = e2.next();
-			if (!(o1 == null ? o2 == null : o1.equals(o2)))
-				return false;
-		}
-		return !(e1.hasNext() || e2.hasNext());
+	@Override
+	public boolean equals(Object obj) {
+		return Iterables.elementsEqual(this, (Iterable<?>) obj);
 	}
-
-	/**
-	 * Returns the hash code value for this list.
-	 * 
-	 * <p>
-	 * This implementation uses exactly the code that is used to define the list
-	 * hash function in the documentation for the {@link List#hashCode} method.
-	 * 
-	 * @return the hash code value for this list
-	 */
+	
 	public int hashCode() {
-		int hashCode = 1;
-		Iterator i = iterator();
-		while (i.hasNext()) {
-			Node obj = i.next();
-			hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
+		int h = 1;
+		for(Node n : elements) {
+			h = 31 * h + n.hashCode();
 		}
-		return hashCode;
+		return h;
 	}
 
 	public final class Iterator implements java.util.Iterator<Node> {
