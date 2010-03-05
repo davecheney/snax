@@ -46,11 +46,11 @@ public class Element extends ParentNode implements Namespaced {
 
 	private final QName qname;
 
-	private static final Predicate<Node> TEXT_TYPE_PREDICATE = new TextTypePredicate();
+	private static final TextTypePredicate TEXT_TYPE_PREDICATE = new TextTypePredicate();
 
-	private static final Predicate<Node> ATTRIBUTE_TYPE_PREDICATE = new AttributeTypePredicate();
+	private static final AttributeTypePredicate ATTRIBUTE_TYPE_PREDICATE = new AttributeTypePredicate();
 
-	private static final Predicate<Node> CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
+	private static final ChildElementPredicate CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
 
 	public Element(@Nonnull String localpart, @Nonnull Node... content) {
 		this(QName.valueOf(localpart), content);
@@ -90,7 +90,7 @@ public class Element extends ParentNode implements Namespaced {
 		return (Iterable<Attribute>) children(withAttributePredicate());
 	}
 
-	private Predicate<Node> withAttributePredicate() {
+	private AttributeTypePredicate withAttributePredicate() {
 		return ATTRIBUTE_TYPE_PREDICATE;
 	}
 
@@ -125,7 +125,7 @@ public class Element extends ParentNode implements Namespaced {
 		return (Iterable<Text>) children(withTextPredicate());
 	}
 
-	private Predicate<Node> withTextPredicate() {
+	private TextTypePredicate withTextPredicate() {
 		return TEXT_TYPE_PREDICATE;
 	}
 
@@ -159,7 +159,7 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	@Override
-	protected final Predicate<Node> childElementPredicate() {
+	protected final ChildElementPredicate childElementPredicate() {
 		return CHILD_ELEMENT_PREDICATE;
 	}
 

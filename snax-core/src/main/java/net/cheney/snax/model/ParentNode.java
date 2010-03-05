@@ -21,7 +21,7 @@ public abstract class ParentNode extends Node {
 		this.content = NodeList.newInstance(content);
 	}
 
-	private static final Predicate<Node> ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
+	private static final ElementTypePredicate ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
 	
 	public final Iterable<? extends Node> children() {
 		return childElementPredicate().filter(content);
