@@ -9,7 +9,7 @@ import net.cheney.snax.model.ProcessingInstruction;
 
 abstract class NodeBuilder  {
 	
-	private final NodeList contents = new NodeList(new Node[8]);
+	private final NodeList contents = new NodeList(8);
 	
 	public Iterable<Node> contents() {
 		return contents;
@@ -46,8 +46,8 @@ abstract class NodeBuilder  {
 		private Node[] elements;
 		private int length = 0;
 
-		NodeList(Node[] elements) {
-			this.elements = elements;
+		NodeList(int size) {
+			this.elements = new Node[size];
 		}
 
 		@Override
