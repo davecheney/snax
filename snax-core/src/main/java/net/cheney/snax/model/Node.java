@@ -14,22 +14,19 @@ public abstract class Node {
 			public boolean isParentNode() { return true; }
 		},
 		TEXT {
-			public boolean isParentNode() { return false; }
 		},
 		ATTRIBUTE {
-			public boolean isParentNode() { return false; }
 		},
 		PROCESSING_INSTRUCTION {
-			public boolean isParentNode() { return false; }
 		},
 		COMMENT {
-			public boolean isParentNode() { return false; }
 		},
 		NAMESPACE {
-			public boolean isParentNode() { return false; }
 		};
 
-		public abstract boolean isParentNode();
+		public boolean isParentNode() { return false; }
+
+		public boolean isElement() { return false; }
 	}
 	
 	public interface Visitor {
