@@ -151,14 +151,16 @@ public final class SNAXvsJDOMvsXercesBenchmark  {
 	}
 	
 	public static void main(String[] args) {
-		Benchmark.Builder benchmark = Benchmark.newBenchmark("SNAXvsJDOMvsXercesBenchmark");
-		for(String name : Arrays.asList(args)) {
-			benchmark = benchmark.of("SNAX ("+name+")", new SNAXBenchmark(name));
-			benchmark = benchmark.of("JDOM ("+name+")", new JDOMBenchmark(name));
-			benchmark = benchmark.of("Xerces ("+name+")", new XercesBenchmark(name));
+		while(true) {
+			Benchmark.Builder benchmark = Benchmark.newBenchmark("SNAXvsJDOMvsXercesBenchmark");
+			for(String name : Arrays.asList(args)) {
+				benchmark = benchmark.of("SNAX ("+name+")", new SNAXBenchmark(name));
+				benchmark = benchmark.of("JDOM ("+name+")", new JDOMBenchmark(name));
+				benchmark = benchmark.of("Xerces ("+name+")", new XercesBenchmark(name));
+			}
+			BenchmarkResult results = benchmark.setRepetitions(250).setIterations(50).run();
+			System.out.println(results.toString());
 		}
-		BenchmarkResult results = benchmark.setRepetitions(250).setIterations(50).run();
-		System.out.println(results.toString());
 	}
 
 }
