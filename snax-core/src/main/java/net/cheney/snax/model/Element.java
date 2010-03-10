@@ -56,6 +56,11 @@ public class Element extends ParentNode implements Namespaced {
 		this(QName.valueOf(localpart), content);
 	}
 
+	public Element(@Nonnull QName qname, @Nonnull Node content) {
+		super(content);
+		this.qname = qname;
+	}
+	
 	public Element(@Nonnull QName qname, @Nonnull Node... content) {
 		super(content);
 		this.qname = qname;

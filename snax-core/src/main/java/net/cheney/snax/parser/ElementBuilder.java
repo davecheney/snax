@@ -89,5 +89,7 @@ final class ElementBuilder extends NodeBuilder {
 		Namespace ns = declaredNamespaces.get(prefix);
 		return ns == null ? parent.declaredNamespaceForPrefix(prefix) : ns;
 	}
+	
+	
 
 }
