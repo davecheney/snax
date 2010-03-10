@@ -78,8 +78,4 @@ final class NodeList implements Iterable<Node> {
 		}
 	}
 
-	public static NodeList newInstance(Node content) {
-		return new NodeList(new Node[] { content });
-	}
-
 }

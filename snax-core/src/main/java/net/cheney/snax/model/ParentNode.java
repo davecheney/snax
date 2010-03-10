@@ -13,10 +13,6 @@ public abstract class ParentNode extends Node {
 
 	private final NodeList content;
 
-	ParentNode(@Nonnull Node content) {
-		this.content = NodeList.newInstance(content);
-	}
-	
 	ParentNode(@Nonnull Node[] content) {
 		this.content = NodeList.newInstance(content);
 	}
