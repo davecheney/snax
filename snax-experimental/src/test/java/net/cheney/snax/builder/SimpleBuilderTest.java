@@ -29,4 +29,12 @@ public class SimpleBuilderTest {
 	       .child("model", model)
 	       .end();
 	}
+	
+	@Test public void testNamespaces() {
+		DocumentBuilder b = Builder.newDocument();
+		b.start("car").attr("year", 2008)
+		   .defaultNamespace("http://www.ociweb.com/cars", "car.xsd")
+		   .namespace("m", "http://www.ociweb.com/model", "model.xsd")
+		   .child("m", "model", "Prius").close();
+	}
 }

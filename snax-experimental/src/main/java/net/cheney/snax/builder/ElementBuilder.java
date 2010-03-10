@@ -1,5 +1,7 @@
 package net.cheney.snax.builder;
 
+import static net.cheney.snax.model.Namespace.BLANK_PREFIX;
+
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Attribute;
@@ -12,11 +14,11 @@ public class ElementBuilder extends Builder implements StartTag, PrologOrElement
 
 	private Namespace defaultNamespace = Namespace.NO_NAMESPACE;
 	private Builder parent;
-	private final QName name;
+	private String localPart;
 	
 	ElementBuilder(@Nonnull Builder parent, String localPart) {
 		this.parent = parent;
-		this.name = QName.valueOf(defaultNamespace, localPart);
+		this.localPart = localPart;
 	}
 	
 	@Override
@@ -24,11 +26,21 @@ public class ElementBuilder extends Builder implements StartTag, PrologOrElement
 		this.defaultNamespace = namespace;
 		return this;
 	}
+	
+	@Override
+	public StartTag defaultNamespace(String uri, String value) {
+		this.defaultNamespace = Namespace.valueOf(BLANK_PREFIX, uri);
+		return this;
+	}
 
 	@Override
 	public StartTag attr(String name, String value) {
 		addContent(new Attribute(name, value));
 		return this;
+	}
+	
+	public StartTag attr(String name, Number num) {
+		return attr(name, num.toString());
 	}
 
 	@Override
@@ -44,13 +56,20 @@ public class ElementBuilder extends Builder implements StartTag, PrologOrElement
 	}
 
 	private net.cheney.snax.model.Element buildElement() {
-		return new net.cheney.snax.model.Element(name, contents());
+		return new net.cheney.snax.model.Element(QName.valueOf(defaultNamespace, localPart), contents());
 	}
 	
 	@Override
 	public Element child(String name) {
 		return new ElementBuilder(this, name);
 	}
+	
+	@Override
+	public Element child(String prefix, String name, String text) {
+		// TODO this is a hack, it does not pass the namespace prefix into the child ...
+		return child(name).text(text);
+	}
+
 
 	@Override
 	public PrologOrElement comment(String comment) {
@@ -61,6 +80,12 @@ public class ElementBuilder extends Builder implements StartTag, PrologOrElement
 	@Override
 	public void close() {
 		end().close();
+	}
+
+	@Override
+	public StartTag namespace(String prefix, String uri, String value) {
+		addContent(new Attribute(Namespace.XMLNS_NAMESPACE, prefix, uri));
+		return this;
 	}
 
 }

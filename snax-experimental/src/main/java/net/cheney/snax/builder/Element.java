@@ -5,6 +5,8 @@ public interface Element extends Common {
 	Element child(String name);
 	
 	Element child(String name, String text);
+	
+	Element child(String prefix, String name, String text);
 
 	Element end();
 

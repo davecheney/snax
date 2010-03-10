@@ -40,4 +40,10 @@ public class DocumentBuilder extends Builder implements PrologOrElement {
 		return null;
 	}
 
+	@Override
+	public Element child(String prefix, String name, String text) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
