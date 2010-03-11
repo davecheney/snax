@@ -8,6 +8,7 @@ public abstract class Node {
 
 	public enum Type {
 		ELEMENT {
+			public boolean isElement() { return true; }
 			public boolean isParentNode() { return true; } 
 		},
 		DOCUMENT {
