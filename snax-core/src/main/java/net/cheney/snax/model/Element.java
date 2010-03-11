@@ -3,7 +3,6 @@ package net.cheney.snax.model;
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 @Immutable
@@ -86,8 +85,8 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	@SuppressWarnings("unchecked")
-	public final Iterable<Attribute> attributes() {
-		return (Iterable<Attribute>) children(withAttributePredicate());
+	public final Predicate<Attribute>.Filter<Attribute> attributes() {
+		return (Predicate<Attribute>.Filter<Attribute>) children(withAttributePredicate());
 	}
 
 	private AttributeTypePredicate withAttributePredicate() {
@@ -107,11 +106,6 @@ public class Element extends ParentNode implements Namespaced {
 	@Override
 	public final String prefix() {
 		return namespace().prefix();
-	}
-
-	@Nullable
-	public final Element getFirstChild(@Nonnull QName name) {
-		return new QNamePredicate<Namespaced>(name).first(getChildren(name));
 	}
 
 	@Override
@@ -146,11 +140,11 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public final String getAttribute(@Nonnull QName qname) {
-		Attribute a = new QNamePredicate<Attribute>(qname).first(attributes());
+		Attribute a = attributes().first();
 		return a == null ? null : a.value(); 
 	}
 
-	public final Iterable<Element> getChildren(@Nonnull QName qname) {
+	public final Predicate<Element>.Filter<Element> getChildren(@Nonnull QName qname) {
 		return new QNamePredicate<Element>(qname).filter(childElements());
 	}
 

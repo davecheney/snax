@@ -12,31 +12,8 @@ abstract class Predicate<T> {
 
 	protected abstract boolean apply(T t);
 
-	public final Iterable<T> filter(@Nonnull final Iterable<T> iterable) {
-		
-		class PredicateIterable<V> implements Iterable<T> {
-		
-			@Override
-			public Iterator<T> iterator() {
-				return new AbstractIterator<T>() {
-
-					private final Iterator<T> unfiltered = iterable.iterator();
-					
-					@Override
-					protected T computeNext() {
-				        while (unfiltered.hasNext()) {
-				            T element = unfiltered.next();
-				            if (apply(element)) {
-				              return element;
-				            }
-				          }
-				          return endOfData();
-					}
-				};
-			}
-		}
-
-		return new PredicateIterable<T>();
+	public final Filter<T> filter(@Nonnull final Iterable<T> iterable) {
+		return new Filter<T>(iterable);
 	}
 
 	public final boolean any(@Nonnull Iterable<T> iterable) {
@@ -64,5 +41,37 @@ abstract class Predicate<T> {
 			}
 		}
 		return null;
+	}
+	
+	public final class Filter<V> implements Iterable<T> {
+		
+		final Iterable<T> iterable;
+
+		public Filter(Iterable<T> iterable) {
+			this.iterable = iterable;
+		}
+
+		@Override
+		public Iterator<T> iterator() {
+			return new AbstractIterator<T>() {
+
+				private final Iterator<T> unfiltered = iterable.iterator();
+				
+				@Override
+				protected T computeNext() {
+			        while (unfiltered.hasNext()) {
+			            T element = unfiltered.next();
+			            if (apply(element)) {
+			              return element;
+			            }
+			          }
+			          return endOfData();
+				}
+			};
+		}
+		
+		public T first() {
+			return iterator().next();
+		}
 	}
 }

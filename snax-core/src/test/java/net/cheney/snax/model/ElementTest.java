@@ -25,7 +25,7 @@ public class ElementTest extends ParentNodeTest {
 		Element child = new Element(QName.valueOf("child"));
 		Element parent = new Element(QName.valueOf("parent"), child);
 		
-		Assert.assertEquals(child, parent.children().iterator().next());
+		Assert.assertEquals(child, parent.children().first());
 	}
 	
 	@Test

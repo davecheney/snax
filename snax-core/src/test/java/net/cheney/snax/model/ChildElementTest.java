@@ -65,7 +65,7 @@ public class ChildElementTest {
 	@Test
 	public void getFirstChildElement() {
 		Element expected = new Element("child");
-		Element actual = parent.getFirstChild(QName.valueOf("child"));
+		Element actual = parent.getChildren(QName.valueOf("child")).first();
 		Assert.assertEquals(expected, actual);
 	}
 }

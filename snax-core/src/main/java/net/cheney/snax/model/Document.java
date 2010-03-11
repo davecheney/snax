@@ -39,7 +39,7 @@ public final class Document extends ParentNode {
 	
 	@Nonnull
 	public Element rootElement() {
-		return elementTypePredicate().first(childElements());
+		return childElements().first();
 	}
 	
 	@Override

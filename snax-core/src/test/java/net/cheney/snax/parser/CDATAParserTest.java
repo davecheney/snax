@@ -20,7 +20,7 @@ public class CDATAParserTest {
 	@Test public void testCDATAParse() {
 		String text = "<element><![CDATA[this is the data]]></element>";
 		Element element = new XMLBuilder().parse(text).rootElement();
-		Text child = (Text) element.children().iterator().next();
+		Text child = (Text) element.children().first();
 		assertEquals(child.value(), "this is the data");
 	}
 	

@@ -23,15 +23,15 @@ public abstract class ParentNode extends Node {
 
 	private static final ElementTypePredicate ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
 	
-	public final Iterable<? extends Node> children() {
+	public final Predicate<? extends Node>.Filter<? extends Node> children() {
 		return childElementPredicate().filter(content);
 	}
 	
 	protected abstract Predicate<Node> childElementPredicate();
 
 	@SuppressWarnings("unchecked")
-	public final Iterable<Element> childElements() {
-		return (Iterable<Element>) children(elementTypePredicate());
+	public final Predicate<Element>.Filter<Element> childElements() {
+		return (Predicate<Element>.Filter<Element>) children(elementTypePredicate());
 	}
 
 	protected final Predicate<Node> elementTypePredicate() {
@@ -55,7 +55,7 @@ public abstract class ParentNode extends Node {
 		return predicate.any(content);
 	}
 	
-	final Iterable<? extends Node> children(@Nonnull Predicate<Node> predicate) {
+	final Predicate<? extends Node>.Filter<? extends Node> children(@Nonnull Predicate<Node> predicate) {
 		return predicate.filter(content);
 	}
 
