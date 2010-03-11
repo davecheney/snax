@@ -16,20 +16,6 @@ abstract class Predicate<T> {
 		return new Filter<T>(iterable, this);
 	}
 
-	public final <V extends T> V first(@Nonnull Iterable<V> iterable) {
-		return first(iterable.iterator());
-	}
-
-	private <V extends T> V first(@Nonnull Iterator<V> i) {
-		while (i.hasNext()) {
-			V element = i.next();
-			if (apply(element)) {
-				return element;
-			}
-		}
-		return null;
-	}
-	
 	public static final class Filter<V> implements Iterable<V> {
 		
 		final Iterable<V> iterable;
