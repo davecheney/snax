@@ -1,5 +1,7 @@
 package net.cheney.snax.parser;
 
+import static net.cheney.snax.model.Namespace.BLANK_PREFIX;
+
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Attribute;
@@ -53,16 +55,20 @@ final class ElementBuilder extends NodeBuilder {
 	}
 	
 	private Element buildElement() {
-//		Inling these next 4 lines reduces the number of bytecodes from 36 to 26
-//		String prefix = fetchPrefixFromName();
-//		Namespace namespace = declaredNamespaceForPrefix(prefix);
-//		String localpart = fetchLocalPartFromName();
-//		QName qname = QName.valueOf(namespace, localpart);
 		return new Element(qname(), contents());
 	}
 
 	private QName qname() {
-		return QName.valueOf(declaredNamespaceForPrefix(fetchPrefixFromName()), fetchLocalPartFromName());
+		final int index = elementName.indexOf(':');
+		if(index > -1) {
+			final String prefix = elementName.substring(0, index);
+			final String localPart = elementName.substring(index + 1);
+			return QName.valueOf(declaredNamespaceForPrefix(prefix), localPart);
+		} else {
+			// TODO, should call declaredNamespace to get the default namespace
+			return QName.valueOf(declaredNamespaceForPrefix(BLANK_PREFIX), elementName);
+		}
+//		return QName.valueOf(declaredNamespaceForPrefix(fetchPrefixFromName()), fetchLocalPartFromName());
 	}
 
 	private String fetchLocalPartFromName() {
