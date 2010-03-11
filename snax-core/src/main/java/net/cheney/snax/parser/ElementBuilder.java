@@ -58,7 +58,11 @@ final class ElementBuilder extends NodeBuilder {
 //		Namespace namespace = declaredNamespaceForPrefix(prefix);
 //		String localpart = fetchLocalPartFromName();
 //		QName qname = QName.valueOf(namespace, localpart);
-		return new Element(QName.valueOf(declaredNamespaceForPrefix(fetchPrefixFromName()), fetchLocalPartFromName()), contents());
+		return new Element(qname(), contents());
+	}
+
+	private QName qname() {
+		return QName.valueOf(declaredNamespaceForPrefix(fetchPrefixFromName()), fetchLocalPartFromName());
 	}
 
 	private String fetchLocalPartFromName() {
