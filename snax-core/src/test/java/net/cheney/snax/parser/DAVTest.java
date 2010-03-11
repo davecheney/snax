@@ -1,5 +1,6 @@
 package net.cheney.snax.parser;
 
+import static org.junit.Assert.assertEquals;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.model.Element;
 import net.cheney.snax.model.Namespace;
@@ -26,6 +27,6 @@ public class DAVTest {
 						new Element(QName.valueOf(DAV, "checked-out"))
 				)
 		);
-		Assert.assertEquals(doc.rootElement(), propfind);
+		assertEquals(propfind, doc.rootElement());
 	}
 }
