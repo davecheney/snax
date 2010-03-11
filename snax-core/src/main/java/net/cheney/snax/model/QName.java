@@ -18,8 +18,6 @@ public final class QName {
 	}
 	
 	private QName(@Nonnull Namespace namespace, @Nonnull String localPart) {
-		assert namespace != null;
-		assert localPart != null;
 		this.namespace = namespace;
 		this.localpart = localPart;
 	}

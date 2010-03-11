@@ -29,7 +29,7 @@ public abstract class ParentNode extends Node {
 		return childElementPredicate().filter(content);
 	}
 	
-	protected abstract Predicate<Node> childElementPredicate();
+	abstract Predicate<Node> childElementPredicate();
 
 	@SuppressWarnings("unchecked")
 	public final Filter<Element> childElements() {

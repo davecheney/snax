@@ -1,7 +1,12 @@
 package net.cheney.snax.model;
 
-import com.google.common.collect.Iterables;
+import static com.google.common.collect.Iterables.elementsEqual;
+import static java.lang.System.arraycopy;
 
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
+
+@Immutable
 final class NodeList implements Iterable<Node> {
 
 	final Node[] elements;
@@ -23,7 +28,7 @@ final class NodeList implements Iterable<Node> {
 
 	public static NodeList newInstance(Node[] content) {
 		Node[] elements = new Node[content.length];
-		System.arraycopy(content, 0, elements, 0, content.length);
+		arraycopy(content, 0, elements, 0, content.length);
 		return new NodeList(elements);
 	}
 
@@ -40,15 +45,15 @@ final class NodeList implements Iterable<Node> {
 		return new NodeList(elements, offset);
 	}
 
-	private static Node[] doubleCapacity(Node[] elements) {
-		Node[] n = new Node[elements.length * 2];
-		System.arraycopy(elements, 0, n, 0, elements.length);
+	private static Node[] doubleCapacity(@Nonnull final Node[] elements) {
+		final Node[] n = new Node[elements.length << 1];
+		arraycopy(elements, 0, n, 0, elements.length);
 		return n;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return Iterables.elementsEqual(this, (Iterable<?>) obj);
+		return elementsEqual(this, (Iterable<?>) obj);
 	}
 	
 	public int hashCode() {
