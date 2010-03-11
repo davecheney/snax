@@ -151,7 +151,7 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	public final boolean hasChildren() {
-		return hasChildren(childElementPredicate());
+		return children().any();
 	}
 
 	@Override

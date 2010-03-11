@@ -16,19 +16,6 @@ abstract class Predicate<T> {
 		return new Filter<T>(iterable, this);
 	}
 
-	public final boolean any(@Nonnull Iterable<T> iterable) {
-		return any(iterable.iterator());
-	}
-
-	private boolean any(@Nonnull Iterator<T> i) {
-		while (i.hasNext()) {
-			if (apply(i.next())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public final <V extends T> V first(@Nonnull Iterable<V> iterable) {
 		return first(iterable.iterator());
 	}
@@ -74,6 +61,10 @@ abstract class Predicate<T> {
 		
 		public V first() {
 			return iterator().next();
+		}
+
+		public boolean any() {
+			return iterator().hasNext();
 		}
 	}
 }

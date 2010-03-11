@@ -9,7 +9,7 @@ public abstract class ParentNode extends Node {
 	private static final class ElementTypePredicate extends Predicate<Node> {
 		@Override
 		protected boolean apply(Node t) {
-			return t.type() == Type.ELEMENT;
+			return t.type().isElement();
 		}
 	}
 
@@ -53,10 +53,11 @@ public abstract class ParentNode extends Node {
 		return this.content.hashCode();
 	}
 	
-	final boolean hasChildren(@Nonnull Predicate<Node> predicate) {
-		return predicate.any(content);
-	}
-	
+	/**
+	 * Filter the list of child elements using the given predicate
+	 * @param predicate 
+	 * @return A Filtered Iterable of child elements that match the predicate
+	 */
 	final Filter<? extends Node> children(@Nonnull Predicate<Node> predicate) {
 		return predicate.filter(content);
 	}
