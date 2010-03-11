@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import net.cheney.snax.model.Predicate.Filter;
+
 @Immutable
 public class Element extends ParentNode implements Namespaced {
 
@@ -85,8 +87,8 @@ public class Element extends ParentNode implements Namespaced {
 	}
 
 	@SuppressWarnings("unchecked")
-	public final Predicate<Attribute>.Filter<Attribute> attributes() {
-		return (Predicate<Attribute>.Filter<Attribute>) children(withAttributePredicate());
+	public final Filter<Attribute> attributes() {
+		return (Filter<Attribute>) children(withAttributePredicate());
 	}
 
 	private AttributeTypePredicate withAttributePredicate() {
@@ -144,7 +146,7 @@ public class Element extends ParentNode implements Namespaced {
 		return a == null ? null : a.value(); 
 	}
 
-	public final Predicate<Element>.Filter<Element> getChildren(@Nonnull QName qname) {
+	public final Filter<Element> getChildren(@Nonnull QName qname) {
 		return new QNamePredicate<Element>(qname).filter(childElements());
 	}
 

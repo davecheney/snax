@@ -2,6 +2,8 @@ package net.cheney.snax.model;
 
 import javax.annotation.Nonnull;
 
+import net.cheney.snax.model.Predicate.Filter;
+
 public abstract class ParentNode extends Node {
 
 	private static final class ElementTypePredicate extends Predicate<Node> {
@@ -23,15 +25,15 @@ public abstract class ParentNode extends Node {
 
 	private static final ElementTypePredicate ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
 	
-	public final Predicate<? extends Node>.Filter<? extends Node> children() {
+	public final Filter<? extends Node> children() {
 		return childElementPredicate().filter(content);
 	}
 	
 	protected abstract Predicate<Node> childElementPredicate();
 
 	@SuppressWarnings("unchecked")
-	public final Predicate<Element>.Filter<Element> childElements() {
-		return (Predicate<Element>.Filter<Element>) children(elementTypePredicate());
+	public final Filter<Element> childElements() {
+		return (Filter<Element>) children(elementTypePredicate());
 	}
 
 	protected final Predicate<Node> elementTypePredicate() {
@@ -55,7 +57,7 @@ public abstract class ParentNode extends Node {
 		return predicate.any(content);
 	}
 	
-	final Predicate<? extends Node>.Filter<? extends Node> children(@Nonnull Predicate<Node> predicate) {
+	final Filter<? extends Node> children(@Nonnull Predicate<Node> predicate) {
 		return predicate.filter(content);
 	}
 
