@@ -23,7 +23,6 @@
 
 	<modules>
 		<module>snax-core</module>
-		<module>snax-experimental</module>
 	</modules>
 
 	<ciManagement>
@@ -62,6 +61,12 @@
 			<id>validation</id>
 			<modules>
 				<module>snax-validation</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>experimental</id>
+			<modules>
+				<module>snax-experimental</module>
 			</modules>
 		</profile>
 	</profiles>
