@@ -68,25 +68,6 @@ final class ElementBuilder extends NodeBuilder {
 			// TODO, should call declaredNamespace to get the default namespace
 			return QName.valueOf(declaredNamespaceForPrefix(BLANK_PREFIX), elementName);
 		}
-//		return QName.valueOf(declaredNamespaceForPrefix(fetchPrefixFromName()), fetchLocalPartFromName());
-	}
-
-	private String fetchLocalPartFromName() {
-		int index = elementName.indexOf(':');
-		if(index > -1) {
-			return elementName.substring(++index);
-		} else {
-			return elementName;
-		}
-	}
-
-	private String fetchPrefixFromName() {
-		int index = elementName.indexOf(':');
-		if(index > -1) {
-			return elementName.substring(0, index);
-		} else {
-			return Namespace.BLANK_PREFIX;
-		}
 	}
 
 	@Override
