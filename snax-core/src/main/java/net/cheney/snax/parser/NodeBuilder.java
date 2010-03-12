@@ -9,7 +9,7 @@ import net.cheney.snax.model.ProcessingInstruction;
 
 abstract class NodeBuilder  {
 	
-	private final NodeList contents = new NodeList(8);
+	private final MutableNodeList contents = new MutableNodeList(8);
 	
 	public Iterable<Node> contents() {
 		return contents;
@@ -41,12 +41,12 @@ abstract class NodeBuilder  {
 	
 	protected abstract Namespace declaredNamespaceForPrefix(String prefix);
 	
-	private static final class NodeList implements java.lang.Iterable<Node> {
+	private static final class MutableNodeList implements java.lang.Iterable<Node> {
 
 		private Node[] elements;
 		private int length = 0;
 
-		NodeList(int size) {
+		MutableNodeList(int size) {
 			this.elements = new Node[size];
 		}
 
@@ -90,7 +90,6 @@ abstract class NodeBuilder  {
 			public void remove() {
 				// yangi
 			}
-
 		}
 	}
 	
