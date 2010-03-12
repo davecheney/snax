@@ -1,4 +1,4 @@
-package net.cheney.snax.builder;
+package net.cheney.snax.util;
 
 import net.cheney.snax.model.Node;
 

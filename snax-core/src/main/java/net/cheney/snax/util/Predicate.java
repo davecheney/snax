@@ -1,4 +1,4 @@
-package net.cheney.snax.model;
+package net.cheney.snax.util;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -6,9 +6,9 @@ import javax.annotation.concurrent.Immutable;
 import com.google.common.collect.AbstractIterator;
 
 @Immutable
-abstract class Predicate<T> {
+public abstract class Predicate<T> {
 
-	abstract boolean apply(T t);
+	protected abstract boolean apply(T t);
 
 	public final Filter<T> filter(@Nonnull final Iterable<T> iterable) {
 		return new Filter<T>(iterable, this);

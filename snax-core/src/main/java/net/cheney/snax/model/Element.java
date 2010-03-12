@@ -5,7 +5,8 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import net.cheney.snax.model.Predicate.Filter;
+import net.cheney.snax.util.Predicate;
+import net.cheney.snax.util.Predicate.Filter;
 
 @Immutable
 public class Element extends ParentNode implements Namespaced {

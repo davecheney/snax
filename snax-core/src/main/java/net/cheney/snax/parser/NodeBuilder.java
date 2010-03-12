@@ -2,11 +2,11 @@ package net.cheney.snax.parser;
 
 import javax.annotation.Nonnull;
 
-import net.cheney.snax.builder.MutableNodeList;
 import net.cheney.snax.model.Comment;
 import net.cheney.snax.model.Namespace;
 import net.cheney.snax.model.Node;
 import net.cheney.snax.model.ProcessingInstruction;
+import net.cheney.snax.util.MutableNodeList;
 
 abstract class NodeBuilder  {
 	

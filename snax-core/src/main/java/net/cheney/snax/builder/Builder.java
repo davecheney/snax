@@ -1,6 +1,7 @@
 package net.cheney.snax.builder;
 
 import net.cheney.snax.model.Node;
+import net.cheney.snax.util.MutableNodeList;
 
 public abstract class Builder implements Element {
 	

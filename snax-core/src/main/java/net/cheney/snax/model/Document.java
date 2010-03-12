@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import net.cheney.snax.util.Predicate;
+
 
 @Immutable
 public final class Document extends ParentNode {

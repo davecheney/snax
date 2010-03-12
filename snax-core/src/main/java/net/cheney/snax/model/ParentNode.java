@@ -2,7 +2,8 @@ package net.cheney.snax.model;
 
 import javax.annotation.Nonnull;
 
-import net.cheney.snax.model.Predicate.Filter;
+import net.cheney.snax.util.Predicate;
+import net.cheney.snax.util.Predicate.Filter;
 
 public abstract class ParentNode extends Node {
 
