@@ -76,9 +76,5 @@ public abstract class Builder implements Element {
 
 		}
 	}
-
-	public static DocumentBuilder newDocument() {
-		return new DocumentBuilder();
-	}
 	
 }
