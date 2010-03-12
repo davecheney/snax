@@ -1,8 +1,9 @@
-package net.cheney.snax.model;
+package net.cheney.snax.util;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+
 
 import org.junit.Test;
 

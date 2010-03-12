@@ -1,6 +1,7 @@
-package net.cheney.snax.model;
+package net.cheney.snax.util;
 
 import junit.framework.Assert;
+
 
 import org.junit.Test;
 

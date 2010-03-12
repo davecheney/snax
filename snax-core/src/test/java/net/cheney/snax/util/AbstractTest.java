@@ -1,4 +1,4 @@
-package net.cheney.snax.model;
+package net.cheney.snax.util;
 
 import java.util.Collection;
 import java.util.List;
