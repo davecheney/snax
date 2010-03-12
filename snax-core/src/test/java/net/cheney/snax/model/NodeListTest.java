@@ -25,7 +25,7 @@ public class NodeListTest {
 	}
 
 	@Test public void testIterator() {
-		NodeList l = NodeList.newInstance(new Node[] { new Element("foo"), new Element("bar"), new Element("baz") });
+		NodeList l = new NodeList(new Node[] { new Element("foo"), new Element("bar"), new Element("baz") });
 		int count = 0;
 		Iterator<Node> i = l.iterator();
 		while(i.hasNext()) {
@@ -36,7 +36,7 @@ public class NodeListTest {
 	}
 	
 	@Test public void testEmptyIterator() {
-		NodeList l = NodeList.newInstance(new Node[] {  });
+		NodeList l = new NodeList(new Node[] {  });
 		int count = 0;
 		Iterator<Node> i = l.iterator();
 		while(i.hasNext()) {

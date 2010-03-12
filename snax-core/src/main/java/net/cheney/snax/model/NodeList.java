@@ -12,7 +12,7 @@ final class NodeList implements Iterable<Node> {
 	final Node[] elements;
 	final int length;
 	
-	public NodeList(Iterable<? extends Node> content) {
+	NodeList(Iterable<? extends Node> content) {
 		int size = 8, offset = 0;
 		Node[] elements = new Node[size];
 		for (Node n : content) {
@@ -26,24 +26,19 @@ final class NodeList implements Iterable<Node> {
 		this.length = offset;
 	}
 
-	private NodeList(Node[] elements, int length) {
-		this.elements = elements;
-		this.length = length;
-	}
-
-	private NodeList(Node[] elements) {
+	NodeList(Node[] elements) {
 		this(elements, elements.length);
+	}
+	
+	private NodeList(@Nonnull final Node[] elements, int length) {
+		this.elements = new Node[length];
+		arraycopy(elements, 0, this.elements, 0, length);
+		this.length = length;
 	}
 
 	@Override
 	public Iterator iterator() {
 		return new Iterator();
-	}
-
-	public static NodeList newInstance(Node[] content) {
-		Node[] elements = new Node[content.length];
-		arraycopy(content, 0, elements, 0, content.length);
-		return new NodeList(elements);
 	}
 
 	private static Node[] doubleCapacity(@Nonnull final Node[] elements) {
