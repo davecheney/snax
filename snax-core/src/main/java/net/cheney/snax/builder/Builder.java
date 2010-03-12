@@ -4,7 +4,7 @@ import net.cheney.snax.model.Node;
 
 public abstract class Builder implements Element {
 	
-	private final NodeList nodes = new NodeList(4);
+	private final MutableNodeList nodes = new MutableNodeList(4);
 
 	protected void addContent(Node node) {
 		nodes.add(node);
@@ -24,12 +24,12 @@ public abstract class Builder implements Element {
 		return nodes;
 	}
 	
-	private final class NodeList implements java.lang.Iterable<Node> {
+	private static final class MutableNodeList implements java.lang.Iterable<Node> {
 
 		private Node[] elements;
 		private int length = 0;
 
-		NodeList(int size) {
+		MutableNodeList(int size) {
 			this.elements = new Node[size];
 		}
 
