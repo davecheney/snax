@@ -11,6 +11,20 @@ final class NodeList implements Iterable<Node> {
 
 	final Node[] elements;
 	final int length;
+	
+	public NodeList(Iterable<? extends Node> content) {
+		int size = 8, offset = 0;
+		Node[] elements = new Node[size];
+		for (Node n : content) {
+			if (offset == size) {
+				elements = doubleCapacity(elements);
+				size = elements.length;
+			}
+			elements[offset++] = n;
+		}
+		this.elements = elements;
+		this.length = offset;
+	}
 
 	private NodeList(Node[] elements, int length) {
 		this.elements = elements;
@@ -30,19 +44,6 @@ final class NodeList implements Iterable<Node> {
 		Node[] elements = new Node[content.length];
 		arraycopy(content, 0, elements, 0, content.length);
 		return new NodeList(elements);
-	}
-
-	public static NodeList newInstance(Iterable<? extends Node> content) {
-		int size = 8, offset = 0;
-		Node[] elements = new Node[size];
-		for (Node n : content) {
-			if (offset == size) {
-				elements = doubleCapacity(elements);
-				size = elements.length;
-			}
-			elements[offset++] = n;
-		}
-		return new NodeList(elements, offset);
 	}
 
 	private static Node[] doubleCapacity(@Nonnull final Node[] elements) {

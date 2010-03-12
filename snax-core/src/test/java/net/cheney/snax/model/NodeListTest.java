@@ -14,7 +14,7 @@ public class NodeListTest {
 	
 	@Test public void testCreationFromIterable() {
 		List<? extends Node> n = Arrays.asList(new Element("foo"), new Element("bar"), new Element("baz"));
-		NodeList l = NodeList.newInstance(n);
+		NodeList l = new NodeList(n);
 		int count = 0;
 		Iterator<Node> i = l.iterator();
 		while(i.hasNext()) {
