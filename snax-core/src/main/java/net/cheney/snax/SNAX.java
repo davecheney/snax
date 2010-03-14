@@ -1,6 +1,7 @@
 package net.cheney.snax;
 
 import net.cheney.snax.builder.DocumentBuilder;
+import net.cheney.snax.builder.Element;
 import net.cheney.snax.builder.FragmentBuilder;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.parser.XMLBuilder;
@@ -19,8 +20,8 @@ public final class SNAX {
 		return new DocumentBuilder();
 	}
 	
-	public static FragmentBuilder newFragment() {
-		return new FragmentBuilder();
+	public static Element newFragment(String name) {
+		return new FragmentBuilder().child(name);
 	}
 	
 	

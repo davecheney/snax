@@ -1,6 +1,7 @@
 package net.cheney.snax.builder;
 
 import net.cheney.snax.model.Comment;
+import net.cheney.snax.model.Document;
 
 public class DocumentBuilder extends Builder implements PrologOrElement {
 
