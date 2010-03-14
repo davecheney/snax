@@ -8,8 +8,8 @@ import java.util.Random;
 
 import junit.framework.Assert;
 
+import net.cheney.snax.SNAX;
 import net.cheney.snax.model.Document;
-import net.cheney.snax.parser.XMLBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -31,34 +31,32 @@ public class XMLTest {
 	}
 	
 	@Test public void testXMLParserWithWholeBody() {
-		Document doc = new XMLBuilder().parse(body);
+		Document doc = SNAX.parse(body);
 		Assert.assertNotNull(doc);
 	}
 	
 	@Test public void testXMLParserWithWholeChunk() {
-		XMLBuilder builder = new XMLBuilder();
+		XMLParser parser = new XMLParser();
 		String remainder = body;
-		Document doc = null;
 		while(!remainder.isEmpty()) {
 			String chunk = StringUtils.substring(remainder, 0, CHUNK_SIZE);
-			doc = builder.parse(chunk);
+			parser.parse(chunk);
 			remainder = StringUtils.substring(remainder, CHUNK_SIZE);
 		}
-		Assert.assertNotNull(doc);
+		Assert.assertNotNull(parser.document());
 	}
 	
 	@Test public void testXMLParserWithRandomChunk() {
-		XMLBuilder builder = new XMLBuilder();
+		XMLParser parser = new XMLParser();
 		Random r = new Random(200910110000L);
 		String remainder = body;
-		Document doc = null;
 		while(!remainder.isEmpty()) {
 			int chunkSize = r.nextInt();
 			String chunk = StringUtils.substring(remainder, 0, chunkSize);
-			doc = builder.parse(chunk);
+			parser.parse(chunk);
 			remainder = StringUtils.substring(remainder, chunkSize);
 		}
-		Assert.assertNotNull(doc);
+		Assert.assertNotNull(parser.document());
 	}
 
 	@Parameters  

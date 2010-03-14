@@ -9,8 +9,8 @@ import java.util.Arrays;
 import net.cheney.benchmark.Benchmark;
 import net.cheney.benchmark.BenchmarkResult;
 import net.cheney.benchmark.Benchmarkable;
+import net.cheney.snax.SNAX;
 import net.cheney.snax.model.Document;
-import net.cheney.snax.parser.XMLBuilder;
 import net.cheney.snax.writer.XMLWriter;
 
 import org.apache.commons.io.IOUtils;
@@ -75,7 +75,7 @@ public class XMLWriterBenchmark  {
 		}
 		
 		private Document parseDocument(String string) {
-			return new XMLBuilder().parse(string);
+			return SNAX.parse(string);
 		}
 		
 	}

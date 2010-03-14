@@ -11,8 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.cheney.benchmark.Benchmark;
 import net.cheney.benchmark.BenchmarkResult;
 import net.cheney.benchmark.Benchmarkable;
+import net.cheney.snax.SNAX;
 import net.cheney.snax.model.Document;
-import net.cheney.snax.parser.XMLBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.xml.sax.SAXException;
@@ -50,7 +50,7 @@ public class SNAXvsXercesBenchmark  {
 		}
 		
 		private Document parseDocument(String string) {
-			return new XMLBuilder().parse(string);
+			return SNAX.parse(string);
 		}
 		
 		@Override
