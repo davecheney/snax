@@ -15,6 +15,7 @@ import net.cheney.snax.model.Namespace;
 import net.cheney.snax.model.Node;
 import net.cheney.snax.model.ProcessingInstruction;
 import net.cheney.snax.model.Text;
+import net.cheney.snax.util.Predicate.Filter;
 
 public final class XMLWriter implements Node.Visitor {
 
@@ -71,16 +72,15 @@ public final class XMLWriter implements Node.Visitor {
 
 		// optimization to avoid calling hasChildren() twice
 		// avoids the construction of extra iterators
-		Iterator<? extends Node> childIterator = element.children().iterator();
-		
-		if (childIterator.hasNext()) {
+		Filter<? extends Node> children = element.children();
+		if(children.any()) {
 			visitAttributes(element.attributes());
 			printer.printStartElementCloseTag();
 			
-			do {
-				childIterator.next().accept(this);
-			} while (childIterator.hasNext());
-			
+			for(Node child : children) {
+				child.accept(this);
+			}
+				
 			printer.printEndElementTag(element);
 		} else {
 			visitAttributes(element.attributes());
@@ -93,8 +93,8 @@ public final class XMLWriter implements Node.Visitor {
 	}
 
 	private void visitAttributes(@Nonnull Iterable<Attribute> attributes) throws IOException {
-		for(Iterator<Attribute> i = attributes.iterator() ; i.hasNext() ; ) {
-			visit(i.next());
+		for(Attribute attribute : attributes) {
+			visit(attribute);
 		}
 	}
 
