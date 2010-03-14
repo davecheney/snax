@@ -59,18 +59,6 @@ public class ElementBuilder extends Builder implements StartTag, PrologOrElement
 	private Node buildElement() {
 		return new net.cheney.snax.model.Element(QName.valueOf(defaultNamespace, localPart), contents());
 	}
-	
-	@Override
-	public Element child(String name) {
-		return new ElementBuilder(this, name);
-	}
-	
-	@Override
-	public Element child(String prefix, String name, String text) {
-		// TODO this is a hack, it does not pass the namespace prefix into the child ...
-		return child(name).text(text);
-	}
-
 
 	@Override
 	public PrologOrElement comment(String comment) {

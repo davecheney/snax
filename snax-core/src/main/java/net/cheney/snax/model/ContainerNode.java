@@ -2,8 +2,6 @@ package net.cheney.snax.model;
 
 import static java.lang.System.arraycopy;
 
-import java.util.Arrays;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
