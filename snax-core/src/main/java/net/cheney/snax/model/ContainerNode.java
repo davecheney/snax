@@ -1,7 +1,8 @@
 package net.cheney.snax.model;
 
-import static com.google.common.collect.Iterables.elementsEqual;
 import static java.lang.System.arraycopy;
+
+import java.util.Arrays;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -127,12 +128,23 @@ abstract class ContainerNode extends Node implements Attributed {
 		}
 
 		@Override
-		public boolean equals(Object obj) {
-			return elementsEqual(this, (Iterable<?>) obj);
+		public boolean equals(Object o) {
+			if(o instanceof NodeList) {
+				NodeList that = (NodeList) o;
+				return (this.length == that.length && equals(this.elements, that.elements));
+			}
+			return false;
 		}
 		
+		private boolean equals(Node[] a, Node[] b) {
+			for(int i = 0 ; i < length ; ++i) {
+				if(!a[i].equals(b[i])) return false;
+			}
+			return true;
+		}
+
 		public int hashCode() {
-			int h = 1;
+			int h = super.hashCode();
 			for(Node n : elements) {
 				h = 31 * h + n.hashCode();
 			}
