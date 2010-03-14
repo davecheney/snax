@@ -3,10 +3,7 @@ package net.cheney.snax.util;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.google.common.collect.AbstractIterator;
-
-@Immutable
-public abstract class Predicate<T> {
+@Immutable public abstract class Predicate<T> {
 
 	protected abstract boolean apply(T t);
 
