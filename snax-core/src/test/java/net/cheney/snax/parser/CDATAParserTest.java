@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 import net.cheney.snax.SNAX;
-import net.cheney.snax.model.ContainerNode;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.model.Element;
 import net.cheney.snax.model.Text;
@@ -21,7 +20,7 @@ public class CDATAParserTest {
 
 	@Test public void testCDATAParse() {
 		String text = "<element><![CDATA[this is the data]]></element>";
-		ContainerNode element = SNAX.parse(text).rootElement();
+		Element element = SNAX.parse(text).rootElement();
 		Text child = (Text) element.children().first();
 		assertEquals(child.value(), "this is the data");
 	}

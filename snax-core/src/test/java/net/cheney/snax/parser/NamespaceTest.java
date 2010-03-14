@@ -1,7 +1,6 @@
 package net.cheney.snax.parser;
 
 import net.cheney.snax.SNAX;
-import net.cheney.snax.model.ContainerNode;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.model.Element;
 import net.cheney.snax.model.Namespace;
@@ -16,7 +15,7 @@ public class NamespaceTest {
 	@Test public void testParseNamespace() {
 		String xml = "<D:propfind xmlns:D=\"DAV:\"/>";
 		Document doc = SNAX.parse(xml);
-		ContainerNode propfind = new Element(QName.valueOf(Namespace.valueOf("D", "DAV:"), "propfind"));
+		Element propfind = new Element(QName.valueOf(Namespace.valueOf("D", "DAV:"), "propfind"));
 		Assert.assertEquals(doc.rootElement(), propfind);
 	}
 	
@@ -25,7 +24,7 @@ public class NamespaceTest {
 	public void testParseInvalidNamespace() {
 		String xml = "<D:propfind xmlns:D='DAV:'><D:prop><bar:foo xmlns:bar=''/></D:prop></D:propfind>";
 		Document doc = SNAX.parse(xml);
-		ContainerNode propfind = new Element(QName.valueOf(Namespace.valueOf("D", "DAV:"), "propfind"));
+		Element propfind = new Element(QName.valueOf(Namespace.valueOf("D", "DAV:"), "propfind"));
 		Assert.assertEquals(doc.rootElement(), propfind);
 	}
 	

@@ -1,7 +1,6 @@
 package net.cheney.snax.parser;
 
 import net.cheney.snax.SNAX;
-import net.cheney.snax.model.ContainerNode;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.model.Element;
 import net.cheney.snax.model.Text;
@@ -19,7 +18,7 @@ public class ElementParserTest {
 	
 	@Test public void singleElementWithCharactersParsingTest() {
 		Document doc = SNAX.parse("<foo>bar</foo>");
-		ContainerNode foo = new Element("foo", new Text("bar"));
+		Element foo = new Element("foo", new Text("bar"));
 		Assert.assertEquals(doc.rootElement(), foo);
 	}
 	
