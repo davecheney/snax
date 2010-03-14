@@ -270,13 +270,13 @@ public final class XMLParser {
 		EQUALS_START {
 			@Override
 			State parse(char c, XMLParser parser) {
-				if (isWhitespace(c)) {
+				if (c == '=') {
+					parser.incrementOffsetAndResetLength();
+					return ATTRIBUTE_VALUE_START;
+				} else if (isWhitespace(c)) {
 					// skip
 					parser.incrementOffsetAndResetLength();
 					return this;
-				} else if (c == '=') {
-					parser.incrementOffsetAndResetLength();
-					return ATTRIBUTE_VALUE_START;
 				} else {
 					throw new IllegalParseStateException(c, EQUALS_START);
 				}
@@ -286,16 +286,16 @@ public final class XMLParser {
 		ATTRIBUTE_VALUE_START {
 			@Override
 			State parse(char c, XMLParser parser) {
-				if (isWhitespace(c)) {
-					// skip
-					parser.incrementOffsetAndResetLength();
-					return this;
-				} else if (c == '\'') {
+				if (c == '\'') {
 					parser.incrementOffsetAndResetLength();
 					return ATTRIBUTE_VALUE_APOS;
 				} else if (c == '"') {
 					parser.incrementOffsetAndResetLength();
 					return ATTRIBUTE_VALUE_QUOT;
+				} else if (isWhitespace(c)) {
+					// skip
+					parser.incrementOffsetAndResetLength();
+					return this;
 				} else {
 					throw new IllegalParseStateException(c, ATTRIBUTE_VALUE_START);
 				}
@@ -420,7 +420,7 @@ public final class XMLParser {
 			}
 		}
 		
-		protected boolean isNameStartChar(char c) {
+		boolean isNameStartChar(char c) {
 			return NAME_START_CHARS[c];
 		}
 		
