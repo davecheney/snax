@@ -12,7 +12,7 @@ public class AttributeTest {
 	
 	@Test public void testElementWithOneAttribute() {
 		Attribute a = new Attribute("foo", "bar");
-		Element e = new Element(QName.valueOf("e"), a);
+		ContainerNode e = new Element(QName.valueOf("e"), a);
 		
 		int attributeCount = 0;
 		

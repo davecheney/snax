@@ -55,7 +55,7 @@ public abstract class Node {
 	/**
 	 * Return a copy of this node without child contents. 
 	 * 
-	 * @return For {@link ValueNode}s this will be the node itself, for {@link ParentNode}s this will be a clone of the Element including its {@link Attribute}s 
+	 * @return For {@link ValueNode}s this will be the node itself, for {@link ContainerNode}s this will be a clone of the Element including its {@link Attribute}s 
 	 */
 	abstract Node detach();
 	

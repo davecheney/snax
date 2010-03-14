@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import net.cheney.snax.model.Attribute;
 import net.cheney.snax.model.Element;
 import net.cheney.snax.model.Namespace;
+import net.cheney.snax.model.Node;
 import net.cheney.snax.model.QName;
 import net.cheney.snax.model.Text;
 
@@ -54,7 +55,7 @@ final class ElementBuilder extends NodeBuilder {
 		return parent;
 	}
 	
-	private Element buildElement() {
+	private Node buildElement() {
 		return new Element(qname(), contents());
 	}
 

@@ -9,7 +9,7 @@ import javax.annotation.concurrent.Immutable;
 import net.cheney.snax.util.Predicate;
 import net.cheney.snax.util.Predicate.Filter;
 
-public abstract class ParentNode extends Node {
+abstract class ContainerNode extends Node implements Attributed {
 
 	private static final class ElementTypePredicate extends Predicate<Node> {
 		@Override
@@ -20,15 +20,16 @@ public abstract class ParentNode extends Node {
 
 	private final NodeList content;
 
-	ParentNode(@Nonnull Node[] content) {
+	ContainerNode(@Nonnull Node[] content) {
 		this.content = new NodeList(content);
 	}
 	
-	ParentNode(Iterable<? extends Node> content) {
+	ContainerNode(Iterable<? extends Node> content) {
 		this.content = new NodeList(content);
 	}
 
 	private static final ElementTypePredicate ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
+	private static final AttributeTypePredicate ATTRIBUTE_TYPE_PREDICATE = new AttributeTypePredicate();
 	
 	public final Filter<? extends Node> children() {
 		return childElementPredicate().filter(content);
@@ -47,8 +48,8 @@ public abstract class ParentNode extends Node {
 
 	@Override
 	public boolean equals(Object that) {
-		if (that instanceof ParentNode) {
-			return this.content.equals(((ParentNode) that).content);
+		if (that instanceof ContainerNode) {
+			return this.content.equals(((ContainerNode) that).content);
 		}
 		return false;
 	} 
@@ -67,6 +68,23 @@ public abstract class ParentNode extends Node {
 		return predicate.filter(content);
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
+	public final Filter<Attribute> attributes() {
+		return (Filter<Attribute>) children(withAttributePredicate());
+	}
+	
+	private AttributeTypePredicate withAttributePredicate() {
+		return ATTRIBUTE_TYPE_PREDICATE;
+	}
+
+	protected static final class AttributeTypePredicate extends Predicate<Node> {
+			@Override
+			protected boolean apply(@Nonnull Node t) {
+				return t.type() == Type.ATTRIBUTE;
+			}
+		}
+
 	@Immutable
 	static final class NodeList implements Iterable<Node> {
 
@@ -122,6 +140,7 @@ public abstract class ParentNode extends Node {
 		}
 
 		public final class Iterator implements java.util.Iterator<Node> {
+			
 			private int offset = 0;
 
 			@Override
@@ -136,7 +155,7 @@ public abstract class ParentNode extends Node {
 
 			@Override
 			public void remove() {
-				// yangi
+				throw new UnsupportedOperationException();
 			}
 		}
 

@@ -9,7 +9,7 @@ import net.cheney.snax.util.Predicate;
 import net.cheney.snax.util.Predicate.Filter;
 
 @Immutable
-public class Element extends ParentNode implements Namespaced {
+public class Element extends ContainerNode implements Namespaced {
 
 	private static final class QNamePredicate<T extends Namespaced> extends Predicate<T> {
 		private final QName qname;
@@ -31,13 +31,6 @@ public class Element extends ParentNode implements Namespaced {
 		}
 	}
 
-	private static final class AttributeTypePredicate extends Predicate<Node> {
-		@Override
-		protected boolean apply(@Nonnull Node t) {
-			return t.type() == Type.ATTRIBUTE;
-		}
-	}
-
 	private static final class ChildElementPredicate extends Predicate<Node> {
 		@Override
 		protected boolean apply(@Nonnull Node node) {
@@ -49,8 +42,6 @@ public class Element extends ParentNode implements Namespaced {
 	private final QName qname;
 
 	private static final TextTypePredicate TEXT_TYPE_PREDICATE = new TextTypePredicate();
-
-	private static final AttributeTypePredicate ATTRIBUTE_TYPE_PREDICATE = new AttributeTypePredicate();
 
 	private static final ChildElementPredicate CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
 
@@ -87,15 +78,6 @@ public class Element extends ParentNode implements Namespaced {
 		return qname.hashCode() ^ super.hashCode();
 	}
 
-	@SuppressWarnings("unchecked")
-	public final Filter<Attribute> attributes() {
-		return (Filter<Attribute>) children(withAttributePredicate());
-	}
-
-	private AttributeTypePredicate withAttributePredicate() {
-		return ATTRIBUTE_TYPE_PREDICATE;
-	}
-
 	@Override
 	public final String localpart() {
 		return this.qname.localpart();
@@ -113,7 +95,7 @@ public class Element extends ParentNode implements Namespaced {
 
 	@Override
 	@Nonnull
-	final Element detach() {
+	final ContainerNode detach() {
 		return new Element(this.qname, attributes());
 	}
 

@@ -7,14 +7,14 @@ import javax.annotation.concurrent.Immutable;
 
 import net.cheney.snax.util.Predicate;
 
-
 @Immutable
-public final class Document extends ParentNode {
+public final class Document extends ContainerNode {
 	
 	private static final class ChildElementPredicate extends Predicate<Node> {
 		@Override
 		protected boolean apply(@Nonnull Node node) {
 			final Type t = node.type();
+			// TODO, http://www.w3.org/TR/xpath-datamodel/#accessors 6.1.1 says should contain TEXT nodes
 			return (t == Type.ELEMENT || t == Type.COMMENT || t == Type.PROCESSING_INSTRUCTION);
 		}
 	}
