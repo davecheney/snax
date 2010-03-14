@@ -118,7 +118,7 @@ public class XMLParserBenchmark  {
 		for(String name : Arrays.asList(args)) {
 			benchmark = benchmark.of("Stable ["+name+"]", new XMLStableBenchmark(name)).and("Experimental ["+name+"]", new XMLExperimentalBenchmark(name));
 		}
-		BenchmarkResult results = benchmark.setRepetitions(500).setIterations(25).setWarmup(10).run();
+		BenchmarkResult results = benchmark.setRepetitions(500).setIterations(25).run();
 		System.out.println(results.toString());
 	}
 	

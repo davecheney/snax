@@ -5,6 +5,7 @@ import net.cheney.snax.SNAX;
 import net.cheney.snax.model.Attribute;
 import net.cheney.snax.model.Document;
 import net.cheney.snax.model.Element;
+import net.cheney.snax.parser.XMLParser.IllegalParseStateException;
 
 import org.junit.Test;
 

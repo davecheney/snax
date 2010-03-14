@@ -45,7 +45,6 @@ final class ElementBuilder extends NodeBuilder {
 	}
 
 	private void declareNamespace(@Nonnull String prefix, @Nonnull CharSequence seq) {
-//		Namespace namespace = Namespace.valueOf(prefix, uri);
 		declaredNamespaces.put(prefix, Namespace.valueOf(prefix, seq.toString()));
 	}
 
