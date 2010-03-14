@@ -38,20 +38,38 @@ public abstract class Predicate<T> {
 			return iterator().hasNext();
 		}
 		
-		public final class Iterator<K> extends AbstractIterator<V> {
+		public final class Iterator<K> implements java.util.Iterator<V> {
 
 			private final java.util.Iterator<V> unfiltered = iterable.iterator();
-			
-			@Override
-			protected V computeNext() {
-		        while (unfiltered.hasNext()) {
-		            V element = unfiltered.next();
-		            if (predicate.apply(element)) {
-		              return element;
-		            }
-		          }
-		          return endOfData();
+
+			private V next = computeNext();
+
+			private V computeNext() {
+				while (unfiltered.hasNext()) {
+					V element = unfiltered.next();
+					if (predicate.apply(element)) {
+						return element;
+					}
+				}
+				return null;
 			}
-		};
+
+			public final boolean hasNext() {
+				return next != null;  
+			}
+
+			public final V next() {
+				try {
+					return next;
+				} finally {
+					next = computeNext();
+				}
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		}
 	}
 }
