@@ -110,6 +110,8 @@ public final class XMLWriter implements Node.Visitor {
 			node.accept(visitor);
 		} catch (IOException e) {
 			// unpossible
+		} catch (NullPointerException e) {
+			// NPE generally indicates invalid XML
 		}
 		return sb.toString();
 	}
