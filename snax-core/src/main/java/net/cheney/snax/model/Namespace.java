@@ -22,7 +22,8 @@ public final class Namespace  {
 	}
 
 	public static Namespace valueOf(@Nonnull String prefix, @Nonnull String uri) {
-		if(uri.isEmpty()) {
+		// Litmus says that xmlns="" is valid
+		if(!prefix.isEmpty() && uri.isEmpty()) {
 			throw new IllegalArgumentException();
 		}
 		return new Namespace(prefix, uri);
