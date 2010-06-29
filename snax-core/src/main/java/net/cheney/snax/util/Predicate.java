@@ -3,12 +3,6 @@ package net.cheney.snax.util;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-
-import net.cheney.snax.model.Element;
-import net.cheney.snax.model.QName;
-
 @Immutable public abstract class Predicate<T> {
 
 	protected abstract boolean apply(T t);
