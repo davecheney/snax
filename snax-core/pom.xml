@@ -3,11 +3,11 @@
 	<parent>
 		<artifactId>snax</artifactId>
 		<groupId>net.cheney.snax</groupId>
-		<version>0.5</version>
+		<version>0.6-SNAPSHOT</version>
 	</parent>
 	<groupId>net.cheney.snax</groupId>
 	<artifactId>snax-core</artifactId>
-	<version>0.5</version>
+	<version>0.6-SNAPSHOT</version>
 	<name>snax-core</name>
 
 	<dependencies>
