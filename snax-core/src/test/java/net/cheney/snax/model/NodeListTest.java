@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import net.cheney.snax.model.ContainerNode.NodeList;
 
 import org.junit.Test;
 

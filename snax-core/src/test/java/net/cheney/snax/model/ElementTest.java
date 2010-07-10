@@ -63,5 +63,5 @@ public class ElementTest extends ParentNodeTest {
 		Assert.assertEquals(element.type(), Node.Type.ELEMENT);
 		
 	}
-
+	
 }

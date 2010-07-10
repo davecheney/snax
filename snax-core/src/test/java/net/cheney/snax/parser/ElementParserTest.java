@@ -8,7 +8,6 @@ import net.cheney.snax.model.Text;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class ElementParserTest {
 
 	@Test public void singleElementParsingTest() {
