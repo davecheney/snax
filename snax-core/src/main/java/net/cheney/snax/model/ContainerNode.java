@@ -16,14 +16,18 @@ abstract class ContainerNode extends Node implements Attributed {
 	}
 
 	private final NodeList content;
-
-	ContainerNode(@Nonnull Node[] content) {
-		this.content = new NodeList(content);
-	}
 	
-	ContainerNode(Iterable<? extends Node> content) {
-		this.content = new NodeList(content);
+	ContainerNode(@Nonnull NodeList content) {
+		this.content = content;
 	}
+
+//	ContainerNode(@Nonnull Node[] content) {
+//		this.content = new NodeList(content);
+//	}
+	
+//	ContainerNode(Iterable<? extends Node> content) {
+//		this.content = new NodeList(content);
+//	}
 
 	private static final ElementTypePredicate ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
 	private static final AttributeTypePredicate ATTRIBUTE_TYPE_PREDICATE = new AttributeTypePredicate();

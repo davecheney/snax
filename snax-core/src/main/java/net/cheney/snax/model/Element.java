@@ -50,12 +50,12 @@ public class Element extends ContainerNode implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Node... content) {
-		super(content);
+		super(new NodeList(content));
 		this.qname = qname;
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
-		super(content);
+		super(new NodeList(content));
 		this.qname = qname;
 	}
 

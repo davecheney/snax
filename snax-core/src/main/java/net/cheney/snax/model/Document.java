@@ -22,11 +22,11 @@ public final class Document extends ContainerNode {
 	private static final Predicate<Node> CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
 	
 	public Document(@Nonnull Node... content) {
-		super(content);
+		super(new NodeList(content));
 	}
 	
 	public Document(@Nonnull Iterable<? extends Node> content) {
-		super(content);
+		super(new NodeList(content));
 	}
 
 	@Override
