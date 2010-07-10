@@ -479,7 +479,7 @@ public final class XMLParser {
 	private NodeBuilder builder;
 
 	public Document document() {
-		return new Document(builder.contents());
+		return ((DocumentBuilder)builder).build();
 	}
 
 	public void doAttributeName() {

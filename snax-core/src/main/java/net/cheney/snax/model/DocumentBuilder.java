@@ -38,4 +38,8 @@ public final class DocumentBuilder extends NodeBuilder {
 		return declaredNamespaces.get(prefix);
 	}
 
+	public Document build() {
+		return new Document(contents());
+	}
+
 }
