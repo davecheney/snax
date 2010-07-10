@@ -5,12 +5,12 @@ import javax.annotation.Nonnull;
 import net.cheney.snax.model.Comment;
 import net.cheney.snax.model.Namespace;
 import net.cheney.snax.model.Node;
+import net.cheney.snax.model.NodeList;
 import net.cheney.snax.model.ProcessingInstruction;
-import net.cheney.snax.util.MutableNodeList;
 
 abstract class NodeBuilder  {
 	
-	private final MutableNodeList contents = new MutableNodeList(8);
+	private final NodeList contents = new NodeList(8);
 	
 	public Iterable<Node> contents() {
 		return contents;
