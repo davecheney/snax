@@ -1,15 +1,9 @@
-package net.cheney.snax.parser;
+package net.cheney.snax.model;
 
 import static net.cheney.snax.model.Namespace.BLANK_PREFIX;
 
 import javax.annotation.Nonnull;
 
-import net.cheney.snax.model.Attribute;
-import net.cheney.snax.model.Element;
-import net.cheney.snax.model.Namespace;
-import net.cheney.snax.model.Node;
-import net.cheney.snax.model.QName;
-import net.cheney.snax.model.Text;
 
 final class ElementBuilder extends NodeBuilder {
 	

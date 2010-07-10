@@ -1,14 +1,13 @@
-package net.cheney.snax.parser;
+package net.cheney.snax.model;
 
 import javax.annotation.Nonnull;
 
-import net.cheney.snax.model.Namespace;
 
-final class DocumentBuilder extends NodeBuilder {
+public final class DocumentBuilder extends NodeBuilder {
 	
 	private final NamespaceMap declaredNamespaces = new NamespaceMap(3);
 	
-	DocumentBuilder() {
+	public DocumentBuilder() {
 		declaredNamespaces.put(Namespace.NO_NAMESPACE.prefix(), Namespace.NO_NAMESPACE);
 		declaredNamespaces.put(Namespace.XML_NAMESPACE.prefix(), Namespace.XML_NAMESPACE);
 		declaredNamespaces.put(Namespace.XMLNS_NAMESPACE.prefix(), Namespace.XMLNS_NAMESPACE);

@@ -1,6 +1,5 @@
-package net.cheney.snax.parser;
+package net.cheney.snax.model;
 
-import net.cheney.snax.model.Namespace;
 
 final class NamespaceMap {
 

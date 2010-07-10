@@ -3,6 +3,8 @@ package net.cheney.snax.parser;
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Document;
+import net.cheney.snax.model.DocumentBuilder;
+import net.cheney.snax.model.NodeBuilder;
 
 import static java.lang.Character.isWhitespace;
 

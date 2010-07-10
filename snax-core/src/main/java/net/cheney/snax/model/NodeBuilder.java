@@ -1,14 +1,9 @@
-package net.cheney.snax.parser;
+package net.cheney.snax.model;
 
 import javax.annotation.Nonnull;
 
-import net.cheney.snax.model.Comment;
-import net.cheney.snax.model.Namespace;
-import net.cheney.snax.model.Node;
-import net.cheney.snax.model.NodeList;
-import net.cheney.snax.model.ProcessingInstruction;
 
-abstract class NodeBuilder  {
+public abstract class NodeBuilder  {
 	
 	private final NodeList contents = new NodeList(8);
 	

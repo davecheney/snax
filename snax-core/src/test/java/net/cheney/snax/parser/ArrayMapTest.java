@@ -4,6 +4,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 import net.cheney.snax.model.Namespace;
+import net.cheney.snax.model.NamespaceMap;
 
 import org.junit.Test;
 
