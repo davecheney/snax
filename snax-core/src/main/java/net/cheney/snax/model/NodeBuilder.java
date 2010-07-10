@@ -7,7 +7,7 @@ public abstract class NodeBuilder  {
 	
 	private final NodeList contents = new NodeList(8);
 	
-	Iterable<Node> contents() {
+	NodeList contents() {
 		return contents;
 	}
 

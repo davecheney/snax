@@ -57,7 +57,7 @@ public class Element extends Container implements Namespaced {
 		this(qname, new NodeList(content));
 	}
 	
-	Element(@Nonnull QName qname, NodeList content) {
+	Element(@Nonnull QName qname, @Nonnull NodeList content) {
 		super(content);
 		this.qname = qname;
 	}
