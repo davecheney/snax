@@ -4,7 +4,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 import net.cheney.snax.model.Namespace;
-import net.cheney.snax.parser.NodeBuilder.NamespaceMap;
 
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ public class ArrayMapTest {
 	@Test public void testInserts() {
 		Namespace foo = Namespace.valueOf("foo"), bar = Namespace.valueOf("bar"), baz = Namespace.valueOf("baz");
 		
-			NamespaceMap a = new NodeBuilder.NamespaceMap(1);
+			NamespaceMap a = new NamespaceMap(1);
 		a.put("foo", foo);
 		a.put("bar", bar);
 		a.put("baz", baz);

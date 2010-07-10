@@ -9,7 +9,7 @@ import net.cheney.snax.util.Predicate;
 import net.cheney.snax.util.Predicate.Filter;
 
 @Immutable
-public class Element extends ContainerNode implements Namespaced {
+public class Element extends Container implements Namespaced {
 
 	private static final class QNamePredicate<T extends Namespaced> extends Predicate<T> {
 		private final QName qname;
@@ -95,7 +95,7 @@ public class Element extends ContainerNode implements Namespaced {
 
 	@Override
 	@Nonnull
-	final ContainerNode detach() {
+	final Container detach() {
 		return new Element(this.qname, attributes());
 	}
 

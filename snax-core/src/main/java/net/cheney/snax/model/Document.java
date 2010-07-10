@@ -8,7 +8,7 @@ import javax.annotation.concurrent.Immutable;
 import net.cheney.snax.util.Predicate;
 
 @Immutable
-public final class Document extends ContainerNode {
+public final class Document extends Container {
 	
 	private static final class ChildElementPredicate extends Predicate<Node> {
 		@Override

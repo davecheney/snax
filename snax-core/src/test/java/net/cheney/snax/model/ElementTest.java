@@ -13,30 +13,30 @@ public class ElementTest extends ParentNodeTest {
 	
 	@Test public void elementTest() {
 		Namespace n = Namespace.valueOf("a", "http://cheney.net/a");
-		ContainerNode e2 = new Element(QName.valueOf(n, "xml"));
+		Container e2 = new Element(QName.valueOf(n, "xml"));
 		
 		QName q = QName.valueOf(n, "xml");
-		ContainerNode e3 = new Element(q);
+		Container e3 = new Element(q);
 		
 		Assert.assertEquals(e2, e3);
 	}
 	
 	@Test public void elementWithOneChildTest() {
-		ContainerNode child = new Element(QName.valueOf("child"));
-		ContainerNode parent = new Element(QName.valueOf("parent"), child);
+		Container child = new Element(QName.valueOf("child"));
+		Container parent = new Element(QName.valueOf("parent"), child);
 		
 		Assert.assertEquals(child, parent.children().first());
 	}
 	
 	@Test
 	public void toStringTest() {
-		ContainerNode foo = new Element(QName.valueOf("foo"));
+		Container foo = new Element(QName.valueOf("foo"));
 		Assert.assertEquals("<foo/>", foo.toString());
 		
-		ContainerNode bar = new Element(QName.valueOf("bar"), new Attribute(QName.valueOf("baz"), "blah"));
+		Container bar = new Element(QName.valueOf("bar"), new Attribute(QName.valueOf("baz"), "blah"));
 		Assert.assertEquals("<bar baz=\"blah\"/>", bar.toString());
 		
-		ContainerNode a = new Element("a", new Element("b"));
+		Container a = new Element("a", new Element("b"));
 		Assert.assertEquals("<a/>", a.toString());
 	}
 	
@@ -48,9 +48,9 @@ public class ElementTest extends ParentNodeTest {
 	@Override
 	public void testDetatch() {
 		Attribute a = new Attribute("foo", "bar");
-		ContainerNode e = new Element("e");
-		ContainerNode f = new Element("f", a);
-		ContainerNode g = new Element("g", a, e);
+		Container e = new Element("e");
+		Container f = new Element("f", a);
+		Container g = new Element("g", a, e);
 		
 		Assert.assertEquals(e, e.detach());
 		Assert.assertEquals(f, f.detach());
@@ -59,7 +59,7 @@ public class ElementTest extends ParentNodeTest {
 
 	@Override
 	public void testType() {
-		ContainerNode element = new Element("foo");
+		Container element = new Element("foo");
 		Assert.assertEquals(element.type(), Node.Type.ELEMENT);
 		
 	}
