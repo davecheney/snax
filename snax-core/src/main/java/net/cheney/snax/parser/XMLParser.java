@@ -3,8 +3,7 @@ package net.cheney.snax.parser;
 import javax.annotation.Nonnull;
 
 import net.cheney.snax.model.Document;
-import net.cheney.snax.model.DocumentBuilder;
-import net.cheney.snax.model.NodeBuilder;
+import net.cheney.snax.model.Node;
 
 import static java.lang.Character.isWhitespace;
 
@@ -476,10 +475,10 @@ public final class XMLParser {
 
 	private CharSequence sequence;
 	
-	private NodeBuilder builder;
+	private Node.Builder builder;
 
 	public Document document() {
-		return ((DocumentBuilder)builder).build();
+		return ((Document.Builder)builder).build();
 	}
 
 	public void doAttributeName() {
@@ -536,7 +535,7 @@ public final class XMLParser {
     }
 	
 	public XMLParser() {
-		this.builder = new DocumentBuilder();
+		this.builder = new Document.Builder();
 	}
 
 	void incrementOffsetAndResetLength() {

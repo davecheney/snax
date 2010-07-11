@@ -1,5 +1,7 @@
 package net.cheney.snax.model;
 
+import static net.cheney.snax.model.Namespace.BLANK_PREFIX;
+
 import java.io.IOException;
 
 import javax.annotation.Nonnull;
@@ -50,14 +52,14 @@ public class Element extends Container implements Namespaced {
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Node... content) {
-		this(qname, new NodeList(content));
+		this(new NodeList(content), qname);
 	}
 
 	public Element(@Nonnull QName qname, @Nonnull Iterable<? extends Node> content) {
-		this(qname, new NodeList(content));
+		this(new NodeList(content), qname);
 	}
 	
-	Element(@Nonnull QName qname, @Nonnull NodeList content) {
+	Element(@Nonnull NodeList content, @Nonnull QName qname) {
 		super(content);
 		this.qname = qname;
 	}
@@ -148,5 +150,77 @@ public class Element extends Container implements Namespaced {
 	@Override
 	public final void accept(@Nonnull Visitor visitor) throws IOException {
 		visitor.visit(this);
+	}
+	
+	public static class Builder extends Node.Builder {
+		
+		private final Node.Builder parent;
+		
+		private final NamespaceMap declaredNamespaces = new NamespaceMap(1);
+		
+		private final String elementName; // unqualified name, possibly containing namespace prefix
+
+		private String attrName;
+
+		Builder(@Nonnull Node.Builder parent, @Nonnull CharSequence seq) {
+			this.parent = parent;
+			this.elementName = seq.toString();
+		}
+		
+		@Override
+		public void doAttributeName(@Nonnull CharSequence seq) {
+			this.attrName = seq.toString();
+		}
+
+		@Override
+		public void doAttributeValue(@Nonnull CharSequence seq) {
+			if(attrName.startsWith("xmlns")) {
+				if(attrName.startsWith("xmlns:")) {
+					declareNamespace(attrName.substring(6), seq);
+				} else {
+					declareNamespace(Namespace.BLANK_PREFIX, seq);
+				}
+			} else {
+				addContent(new Attribute(attrName, seq));
+			}
+		}
+
+		private void declareNamespace(@Nonnull String prefix, @Nonnull CharSequence seq) {
+			declaredNamespaces.put(prefix, Namespace.valueOf(prefix, seq.toString()));
+		}
+
+		@Override
+		public Node.Builder doElementEnd() {
+			parent.addContent(buildElement());
+			return parent;
+		}
+		
+		private Node buildElement() {
+			return new Element(contents(), qname());
+		}
+
+		private QName qname() {
+			final int index = elementName.indexOf(':');
+			if(index > -1) {
+				final String prefix = elementName.substring(0, index);
+				final String localPart = elementName.substring(index + 1);
+				return QName.valueOf(declaredNamespaceForPrefix(prefix), localPart);
+			} else {
+				// TODO, should call declaredNamespace to get the default namespace
+				return QName.valueOf(declaredNamespaceForPrefix(BLANK_PREFIX), elementName);
+			}
+		}
+
+		@Override
+		public void doCharacters(@Nonnull CharSequence seq) {
+			addContent(new Text(seq.toString()));		
+		}
+		
+		@Override
+		protected Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
+			Namespace ns = declaredNamespaces.get(prefix);
+			return ns == null ? parent.declaredNamespaceForPrefix(prefix) : ns;
+		}
+		
 	}
 }
