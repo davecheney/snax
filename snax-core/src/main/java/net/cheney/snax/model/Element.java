@@ -43,6 +43,8 @@ public class Element extends Container implements Namespaced {
 
 	private final QName qname;
 
+	private final NodeList content;
+
 	private static final TextTypePredicate TEXT_TYPE_PREDICATE = new TextTypePredicate();
 
 	private static final ChildElementPredicate CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
@@ -60,8 +62,13 @@ public class Element extends Container implements Namespaced {
 	}
 	
 	Element(@Nonnull NodeList content, @Nonnull QName qname) {
-		super(content);
+		this.content = content;
 		this.qname = qname;
+	}
+	
+	@Override
+	protected NodeList content() {
+		return content;
 	}
 
 	@Override

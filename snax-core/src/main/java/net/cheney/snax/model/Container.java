@@ -14,18 +14,14 @@ abstract class Container extends Node implements Attributed {
 		}
 	}
 
-	private final NodeList content;
-	
-	Container(@Nonnull NodeList content) {
-		this.content = content;
-	}
-
 	private static final ElementTypePredicate ELEMENT_TYPE_PREDICATE = new ElementTypePredicate();
 	private static final AttributeTypePredicate ATTRIBUTE_TYPE_PREDICATE = new AttributeTypePredicate();
 	
 	public final Filter<? extends Node> children() {
-		return childElementPredicate().filter(content);
+		return childElementPredicate().filter(content());
 	}
+	
+	protected abstract NodeList content();
 	
 	abstract Predicate<Node> childElementPredicate();
 
@@ -41,14 +37,14 @@ abstract class Container extends Node implements Attributed {
 	@Override
 	public boolean equals(Object that) {
 		if (that instanceof Container) {
-			return this.content.equals(((Container) that).content);
+			return this.content().equals(((Container) that).content());
 		}
 		return false;
 	} 
 
 	@Override
 	public int hashCode() {
-		return this.content.hashCode();
+		return this.content().hashCode();
 	}
 	
 	/**
@@ -57,7 +53,7 @@ abstract class Container extends Node implements Attributed {
 	 * @return A Filtered Iterable of child elements that match the predicate
 	 */
 	final Filter<? extends Node> children(@Nonnull Predicate<Node> predicate) {
-		return predicate.filter(content);
+		return predicate.filter(content());
 	}
 	
 	@Override

@@ -20,6 +20,7 @@ public final class Document extends Container {
 	}
 
 	private static final Predicate<Node> CHILD_ELEMENT_PREDICATE = new ChildElementPredicate();
+	private final NodeList content;
 	
 	public Document(@Nonnull Node... content) {
 		this(new NodeList(content));
@@ -30,7 +31,12 @@ public final class Document extends Container {
 	}
 	
 	Document(@Nonnull NodeList content) {
-		super(content);
+		this.content = content;
+	}
+	
+	@Override
+	protected NodeList content() {
+		return content;
 	}
 
 	@Override
