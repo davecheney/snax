@@ -66,15 +66,15 @@ public final class Document extends Container {
 	
 	public static class Builder implements Node.Builder {
 		
-		private final NamespaceMap declaredNamespaces = new NamespaceMap(3);
+		private static final NamespaceMap declaredNamespaces = new NamespaceMap(3);
 		private final NodeList contents = new NodeList(2);
 		
-		public Builder() {
+		static {
 			declaredNamespaces.put(Namespace.NO_NAMESPACE.prefix(), Namespace.NO_NAMESPACE);
 			declaredNamespaces.put(Namespace.XML_NAMESPACE.prefix(), Namespace.XML_NAMESPACE);
 			declaredNamespaces.put(Namespace.XMLNS_NAMESPACE.prefix(), Namespace.XMLNS_NAMESPACE);
 		}
-
+		
 		@Override
 		public void doAttributeName(@Nonnull CharSequence seq) {
 			throw new IllegalStateException(String.format("Unable to add attribute name [%s]", seq));
