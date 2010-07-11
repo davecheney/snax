@@ -2,10 +2,14 @@ package net.cheney.snax.model;
 
 import java.io.IOException;
 
-import javax.annotation.Nonnull;
-
 import net.cheney.snax.writer.XMLWriter;
 
+/**
+ * @{link Node} is a class not an interface to limit the number of Node subclasses that can be 
+ * instanciated
+ * @author dave
+ *
+ */
 public abstract class Node {
 
 	public enum Type {
@@ -66,27 +70,6 @@ public abstract class Node {
 	@Override
 	public final String toString() {
 		return XMLWriter.write(detach());
-	}
-	
-	public interface Builder {
-		
-		void doAttributeName(CharSequence seq);
-		
-		void doAttributeValue(CharSequence seq);
-		
-		void doCharacters(CharSequence seq);
-		
-		void doComment(@Nonnull CharSequence seq);
-		
-		Node.Builder doElementEnd();
-		
-		Element.Builder doElementStart(@Nonnull CharSequence seq);
-		
-		void doProcessingInstruction(@Nonnull CharSequence seq);
-
-		void addContent(Node buildElement);
-
-		Namespace declaredNamespaceForPrefix(String prefix);
 	}
 	
 }

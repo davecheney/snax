@@ -71,6 +71,10 @@ public class Element extends Container implements Namespaced {
 		return this.content;
 	}
 	
+	void addContent(@Nonnull Node content) {
+		this.content.add(content);
+	}
+	
 	@Override
 	public final Type type() {
 		return Type.ELEMENT;
@@ -158,22 +162,26 @@ public class Element extends Container implements Namespaced {
 	public final void accept(@Nonnull Visitor visitor) throws IOException {
 		visitor.visit(this);
 	}
+
+	public static Element.Builder builder(Container.Builder parent, CharSequence seq) {
+		return new Element.Builder(parent, seq.toString());
+	}
 	
-	public static class Builder implements Node.Builder {
+	public static class Builder implements Container.Builder {
 		
-		private final Node.Builder parent;
+		private final Container.Builder parent;
 		
 		private final NamespaceMap declaredNamespaces = new NamespaceMap(1);
 		
 		private final NodeList contents = new NodeList(4);
 		
-		private final String elementName; // unqualified name, possibly containing namespace prefix
+		private final String name; // unqualified name, possibly containing namespace prefix
 
 		private String attrName;
 
-		Builder(@Nonnull Node.Builder parent, @Nonnull CharSequence seq) {
+		Builder(@Nonnull Container.Builder parent, @Nonnull String name) {
 			this.parent = parent;
-			this.elementName = seq.toString();
+			this.name = name;
 		}
 		
 		@Override
@@ -199,7 +207,7 @@ public class Element extends Container implements Namespaced {
 		}
 
 		@Override
-		public Node.Builder doElementEnd() {
+		public Container.Builder doElementEnd() {
 			parent.addContent(buildElement());
 			return parent;
 		}
@@ -209,14 +217,14 @@ public class Element extends Container implements Namespaced {
 		}
 
 		private QName qname() {
-			final int index = elementName.indexOf(':');
+			final int index = name.indexOf(':');
 			if(index > -1) {
-				final String prefix = elementName.substring(0, index);
-				final String localPart = elementName.substring(index + 1);
+				final String prefix = name.substring(0, index);
+				final String localPart = name.substring(index + 1);
 				return QName.valueOf(declaredNamespaceForPrefix(prefix), localPart);
 			} else {
 				// TODO, should call declaredNamespace to get the default namespace
-				return QName.valueOf(declaredNamespaceForPrefix(BLANK_PREFIX), elementName);
+				return QName.valueOf(declaredNamespaceForPrefix(BLANK_PREFIX), name);
 			}
 		}
 
@@ -230,7 +238,7 @@ public class Element extends Container implements Namespaced {
 		}
 
 		public Element.Builder doElementStart(@Nonnull CharSequence seq) {
-			return new Element.Builder(this, seq);
+			return Element.builder(this, seq);
 		}
 
 		public void doProcessingInstruction(@Nonnull CharSequence seq) {

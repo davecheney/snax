@@ -8,7 +8,7 @@ import javax.annotation.concurrent.Immutable;
 import net.cheney.snax.util.Predicate;
 
 @Immutable
-public final class Document extends Container {
+public class Document extends Container {
 	
 	private static final class ChildElementPredicate extends Predicate<Node> {
 		@Override
@@ -37,6 +37,11 @@ public final class Document extends Container {
 	@Override
 	protected NodeList content() {
 		return content;
+	}
+	
+	@Override
+	public void addContent(Node content) {
+		this.content.add(content);
 	}
 
 	@Override
@@ -72,15 +77,22 @@ public final class Document extends Container {
 		return false;
 	} 
 	
-	public static class Builder implements Node.Builder {
+	public static Builder builder() {
+		return new Document.Builder();
+	}
+	
+	public static class Builder extends Document implements Container.Builder {
 		
 		private static final NamespaceMap declaredNamespaces = new NamespaceMap(3);
-		private final NodeList contents = new NodeList(2);
 		
 		static {
 			declaredNamespaces.put(Namespace.NO_NAMESPACE.prefix(), Namespace.NO_NAMESPACE);
 			declaredNamespaces.put(Namespace.XML_NAMESPACE.prefix(), Namespace.XML_NAMESPACE);
 			declaredNamespaces.put(Namespace.XMLNS_NAMESPACE.prefix(), Namespace.XMLNS_NAMESPACE);
+		}
+		
+		Builder() {
+			super(new NodeList(1));
 		}
 		
 		@Override
@@ -99,7 +111,7 @@ public final class Document extends Container {
 		}
 
 		@Override
-		public Node.Builder doElementEnd() {
+		public Container.Builder doElementEnd() {
 			throw new IllegalStateException();
 		}
 
@@ -112,19 +124,15 @@ public final class Document extends Container {
 		}
 
 		public Element.Builder doElementStart(@Nonnull CharSequence seq) {
-			return new Element.Builder(this, seq);
+			return Element.builder(this, seq);
 		}
 
 		public void doProcessingInstruction(@Nonnull CharSequence seq) {
 			addContent(new ProcessingInstruction(seq.toString(), ""));
 		}
 
-		public void addContent(@Nonnull Node content) {
-			this.contents.add(content);
-		}
-
 		public Document build() {
-			return new Document(contents);
+			return this;
 		}
 	}
 

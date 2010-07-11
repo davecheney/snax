@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import net.cheney.snax.util.Predicate;
 import net.cheney.snax.util.Predicate.Filter;
 
-abstract class Container extends Node implements Attributed {
+public abstract class Container extends Node implements Attributed {
 
 	private static final class ElementTypePredicate extends Predicate<Node> {
 		@Override
@@ -22,6 +22,8 @@ abstract class Container extends Node implements Attributed {
 	}
 	
 	protected abstract @Nonnull NodeList content();
+	
+	abstract void addContent(@Nonnull Node content);
 	
 	abstract Predicate<Node> childElementPredicate();
 
@@ -63,6 +65,27 @@ abstract class Container extends Node implements Attributed {
 		protected boolean apply(@Nonnull Node t) {
 			return t.type() == Type.ATTRIBUTE;
 		}
+	}
+
+	public interface Builder {
+		
+		void doAttributeName(CharSequence seq);
+		
+		void doAttributeValue(CharSequence seq);
+		
+		void doCharacters(CharSequence seq);
+		
+		void doComment(@Nonnull CharSequence seq);
+		
+		Builder doElementEnd();
+		
+		Element.Builder doElementStart(@Nonnull CharSequence seq);
+		
+		void doProcessingInstruction(@Nonnull CharSequence seq);
+	
+		Namespace declaredNamespaceForPrefix(String prefix);
+
+		void addContent(Node buildElement);
 	}
 
 }
