@@ -68,38 +68,59 @@ public abstract class Node {
 		return XMLWriter.write(detach());
 	}
 	
-	public static abstract class Builder {
-			
-			private final NodeList contents = new NodeList(8);
-			
-			NodeList contents() {
-				return contents;
-			}
+	public interface Builder {
+		
+		void doAttributeName(CharSequence seq);
+		
+		void doAttributeValue(CharSequence seq);
+		
+		void doCharacters(CharSequence seq);
+		
+		void doComment(@Nonnull CharSequence seq);
+		
+		Node.Builder doElementEnd();
+		
+		Element.Builder doElementStart(@Nonnull CharSequence seq);
+		
+		void doProcessingInstruction(@Nonnull CharSequence seq);
 
-			public abstract void doAttributeName(CharSequence seq);
+		void addContent(Node buildElement);
 
-			public abstract void doAttributeValue(CharSequence seq);
-
-			public abstract void doCharacters(CharSequence seq);
-
-			public void doComment(@Nonnull CharSequence seq) {
-				addContent(new Comment(seq.toString()));
-			}
-
-			public abstract Node.Builder doElementEnd();
-
-			public Element.Builder doElementStart(@Nonnull CharSequence seq) {
-				return new Element.Builder(this, seq);
-			}
-
-			public void doProcessingInstruction(@Nonnull CharSequence seq) {
-				addContent(new ProcessingInstruction(seq.toString(), ""));
-			}
-			
-			protected void addContent(@Nonnull Node content) {
-				this.contents.add(content);
-			}
-			
-			protected abstract Namespace declaredNamespaceForPrefix(String prefix);
-		}
+		Namespace declaredNamespaceForPrefix(String prefix);
+	}
+	
+//	public static abstract class Builder {
+//			
+//			private final NodeList contents = new NodeList(8);
+//			
+//			NodeList contents() {
+//				return contents;
+//			}
+//
+//			public abstract void doAttributeName(CharSequence seq);
+//
+//			public abstract void doAttributeValue(CharSequence seq);
+//
+//			public abstract void doCharacters(CharSequence seq);
+//
+//			public void doComment(@Nonnull CharSequence seq) {
+//				addContent(new Comment(seq.toString()));
+//			}
+//
+//			public abstract Node.Builder doElementEnd();
+//
+//			public Element.Builder doElementStart(@Nonnull CharSequence seq) {
+//				return new Element.Builder(this, seq);
+//			}
+//
+//			public void doProcessingInstruction(@Nonnull CharSequence seq) {
+//				addContent(new ProcessingInstruction(seq.toString(), ""));
+//			}
+//			
+//			protected void addContent(@Nonnull Node content) {
+//				this.contents.add(content);
+//			}
+//			
+//			protected abstract Namespace declaredNamespaceForPrefix(String prefix);
+//		}
 }

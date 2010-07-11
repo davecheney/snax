@@ -152,11 +152,13 @@ public class Element extends Container implements Namespaced {
 		visitor.visit(this);
 	}
 	
-	public static class Builder extends Node.Builder {
+	public static class Builder implements Node.Builder {
 		
 		private final Node.Builder parent;
 		
 		private final NamespaceMap declaredNamespaces = new NamespaceMap(1);
+		
+		private final NodeList contents = new NodeList(8);
 		
 		private final String elementName; // unqualified name, possibly containing namespace prefix
 
@@ -196,7 +198,7 @@ public class Element extends Container implements Namespaced {
 		}
 		
 		private Node buildElement() {
-			return new Element(contents(), qname());
+			return new Element(contents, qname());
 		}
 
 		private QName qname() {
@@ -216,8 +218,23 @@ public class Element extends Container implements Namespaced {
 			addContent(new Text(seq.toString()));		
 		}
 		
-		@Override
-		protected Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
+		public void doComment(@Nonnull CharSequence seq) {
+			addContent(new Comment(seq.toString()));
+		}
+
+		public Element.Builder doElementStart(@Nonnull CharSequence seq) {
+			return new Element.Builder(this, seq);
+		}
+
+		public void doProcessingInstruction(@Nonnull CharSequence seq) {
+			addContent(new ProcessingInstruction(seq.toString(), ""));
+		}
+
+		public void addContent(@Nonnull Node content) {
+			this.contents.add(content);
+		}
+		
+		public Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
 			Namespace ns = declaredNamespaces.get(prefix);
 			return ns == null ? parent.declaredNamespaceForPrefix(prefix) : ns;
 		}

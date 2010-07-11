@@ -58,8 +58,10 @@ public final class Document extends Container {
 		visitor.visit(this);
 	}
 	
-	public static class Builder extends Node.Builder {
+	public static class Builder implements Node.Builder {
+		
 		private final NamespaceMap declaredNamespaces = new NamespaceMap(3);
+		private final NodeList contents = new NodeList(2);
 		
 		public Builder() {
 			declaredNamespaces.put(Namespace.NO_NAMESPACE.prefix(), Namespace.NO_NAMESPACE);
@@ -87,13 +89,28 @@ public final class Document extends Container {
 			throw new IllegalStateException();
 		}
 
-		@Override
-		protected Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
+		public Namespace declaredNamespaceForPrefix(@Nonnull String prefix) {
 			return declaredNamespaces.get(prefix);
+		}
+		
+		public void doComment(@Nonnull CharSequence seq) {
+			addContent(new Comment(seq.toString()));
+		}
+
+		public Element.Builder doElementStart(@Nonnull CharSequence seq) {
+			return new Element.Builder(this, seq);
+		}
+
+		public void doProcessingInstruction(@Nonnull CharSequence seq) {
+			addContent(new ProcessingInstruction(seq.toString(), ""));
+		}
+
+		public void addContent(@Nonnull Node content) {
+			this.contents.add(content);
 		}
 
 		public Document build() {
-			return new Document(contents());
+			return new Document(contents);
 		}
 	}
 
