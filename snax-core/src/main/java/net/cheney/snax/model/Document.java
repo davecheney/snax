@@ -64,6 +64,14 @@ public final class Document extends Container {
 		visitor.visit(this);
 	}
 	
+	@Override
+	public boolean equals(Object that) {
+		if (that instanceof Document) {
+			return this.content().equals(((Document) that).content());
+		}
+		return false;
+	} 
+	
 	public static class Builder implements Node.Builder {
 		
 		private static final NamespaceMap declaredNamespaces = new NamespaceMap(3);

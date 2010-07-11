@@ -68,9 +68,9 @@ public class Element extends Container implements Namespaced {
 	
 	@Override
 	protected NodeList content() {
-		return content;
+		return this.content;
 	}
-
+	
 	@Override
 	public final Type type() {
 		return Type.ELEMENT;
@@ -80,7 +80,7 @@ public class Element extends Container implements Namespaced {
 	public final boolean equals(Object that) {
 		if (that instanceof Element) {
 			return this.qname.equals(((Element) that).qname)
-					&& super.equals(that);
+					&& this.content().equals(((Element) that).content());
 		}
 		return false;
 	}
@@ -165,7 +165,7 @@ public class Element extends Container implements Namespaced {
 		
 		private final NamespaceMap declaredNamespaces = new NamespaceMap(1);
 		
-		private final NodeList contents = new NodeList(8);
+		private final NodeList contents = new NodeList(4);
 		
 		private final String elementName; // unqualified name, possibly containing namespace prefix
 
